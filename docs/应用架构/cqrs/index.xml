@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CQRS 简介和案例分析 on Distributed</title>
+    <link>http://localhost:1313/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/</link>
+    <description>Recent content in CQRS 简介和案例分析 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="http://localhost:1313/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

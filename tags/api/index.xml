@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>API on Distributed</title>
+    <link>http://localhost:1313/www6vDistributed/tags/API/</link>
+    <description>Recent content in API on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 01 Nov 2019 03:48:07 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/www6vDistributed/tags/API/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenAPI 设计</title>
+      <link>http://localhost:1313/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/apiDesign/</link>
+      <pubDate>Fri, 01 Nov 2019 03:48:07 +0000</pubDate>
+      <guid>http://localhost:1313/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/apiDesign/</guid>
+      <description>&#xA;一. REST API 设计 规范 # OpenAPI Specification 业界标准&#xA;A Visual Guide to What&amp;rsquo;s New in Swagger 3.0 OpenAPI Specification - Version 3.0.2 Google API Design Guide&#xA;谷歌API设计指南 二. API 设计模式 # RPC ROA(Rest-Oriented Architecture) 通常RESTful风格对API设计者的要求是比较高的，主要的难点在于面向资源设计要求开发者事先做好规划，将后端数据模型与API服务模型相匹配。&#xA;三. 面向资源设计API # 资源模型 资源分类管理 资源关系 ECS TAG功能详解 资源组&#xA;四. 服务容错处理 # 同步请求的Timeout[2] 异步请求方式 错误码 TagResources 错误码 参考: # 云服务OpenAPI的7大挑战，架构师如何应对？ 阿里技术 虚明 超时和重试总结 self </description>
+    </item>
+  </channel>
+</rss>

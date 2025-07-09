@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head><script src="/www6vDistributed/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=www6vDistributed/livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="企业应用之间主要有4种集成方式 # 文件传输 # 文件传输 由各个应用产生文件, 其中包含提供其它应用使用的信息. 特征:　内部数据模式自由(schema free)
+优势: 1. 内部细节透明 2. 松耦合 3. 标准文件格式支持,如xml, json等.
+劣势: 1. 更新慢, 数据不同步, 数据过时 2. 数据不完整, 数据不完全正确时, 数据不一致问题解决困难.3. 产生大量小文件时, 昂贵且不可靠. 4. 语义不一致
+适用于批处理.
+共享数据库 # 共享数据库 把应用的数据存储在一个共享数据库中来集成应用,　并定制数据库模式来处理不同应用的各种需求. 特征:　数据有模式(schema)
+优势: 1. 提供模型一致性 2. 通过事务管理数据一致性 3. 共享数据, 避免语义不一致问题.
+劣势: 1. 统一的数据库模式难设计. 模式改变,　应用也要改变. 2. 遗留系统很难提供一个可扩展的数据库模式供新的应用使用. 3.　性能瓶颈(单点访问) 4. 数据分布迁移困难. 5.应用和数据库紧耦合. 可作为新老系统的集成和改造的候选方案
+远程调用 # 远程调用 应用公开提供过程, 并能够被远程调用, 应用通过调用这些过程来执行操作并交换数据. 特征:　公开外部接口
+优势:　1.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/EAI/">
+  <meta property="og:site_name" content="Distributed">
+  <meta property="og:title" content="应用集成方式">
+  <meta property="og:description" content="企业应用之间主要有4种集成方式 # 文件传输 # 文件传输 由各个应用产生文件, 其中包含提供其它应用使用的信息. 特征:　内部数据模式自由(schema free)
+优势: 1. 内部细节透明 2. 松耦合 3. 标准文件格式支持,如xml, json等.
+劣势: 1. 更新慢, 数据不同步, 数据过时 2. 数据不完整, 数据不完全正确时, 数据不一致问题解决困难.3. 产生大量小文件时, 昂贵且不可靠. 4. 语义不一致
+适用于批处理.
+共享数据库 # 共享数据库 把应用的数据存储在一个共享数据库中来集成应用,　并定制数据库模式来处理不同应用的各种需求. 特征:　数据有模式(schema)
+优势: 1. 提供模型一致性 2. 通过事务管理数据一致性 3. 共享数据, 避免语义不一致问题.
+劣势: 1. 统一的数据库模式难设计. 模式改变,　应用也要改变. 2. 遗留系统很难提供一个可扩展的数据库模式供新的应用使用. 3.　性能瓶颈(单点访问) 4. 数据分布迁移困难. 5.应用和数据库紧耦合. 可作为新老系统的集成和改造的候选方案
+远程调用 # 远程调用 应用公开提供过程, 并能够被远程调用, 应用通过调用这些过程来执行操作并交换数据. 特征:　公开外部接口
+优势:　1.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<title>应用集成方式 | Distributed</title>
+<link rel="icon" href="/www6vDistributed/favicon.png" >
+<link rel="manifest" href="/www6vDistributed/manifest.json">
+<link rel="canonical" href="http://localhost:1313/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/EAI/">
+<link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
+  <script defer src="/www6vDistributed/fuse.min.js"></script>
+  <script defer src="/www6vDistributed/en.search.min.7d58a24a4f17135c7b0a1c91cd43e9b4ac0c74775798d4e4ed4d590eb7855d38.js" integrity="sha256-fViiSk8XE1x7ChyRzUPptKwMdHdXmNTk7U1ZDreFXTg=" crossorigin="anonymous"></script>
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/EAI/index.xml" title="Distributed" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/www6vDistributed/"><span>Distributed</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5ac21df63128203257d2ae2da0ba5dab" class="toggle" checked />
+    <label for="section-5ac21df63128203257d2ae2da0ba5dab" class="flex justify-between">
+      <a role="button" class="">应用架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/apiDesign/" class="">OpenAPI 设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/dddPractice/" class="">DDD-落地实战 Practice</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/EAI/" class="active">应用集成方式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/DomainLogicAndSQL/" class="">领域逻辑和SQL</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>应用集成方式</h3>
+
+  <label for="toc-control">
+    
+    <img src="/www6vDistributed/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#企业应用之间主要有4种集成方式">企业应用之间主要有4种集成方式</a>
+          <ul>
+            <li><a href="#文件传输">文件传输</a></li>
+            <li><a href="#共享数据库">共享数据库</a></li>
+            <li><a href="#远程调用">远程调用</a></li>
+            <li><a href="#消息传递">消息传递</a></li>
+          </ul>
+        </li>
+        <li><a href="#权衡">权衡</a>
+          <ul>
+            <li><a href="#耦合性和依赖性">耦合性和依赖性</a></li>
+            <li><a href="#修改性">修改性</a></li>
+            <li><a href="#数据格式">数据格式</a></li>
+            <li><a href="#数据新鲜度">数据新鲜度</a></li>
+            <li><a href="#数据序列化">数据序列化</a></li>
+            <li><a href="#问题的解决">问题的解决</a></li>
+            <li><a href="#模式之间的组合">模式之间的组合</a></li>
+          </ul>
+        </li>
+        <li><a href="#小结">小结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><p></p>
+<!-- more -->
+<h2 id="企业应用之间主要有4种集成方式">
+  企业应用之间主要有4种集成方式
+  <a class="anchor" href="#%e4%bc%81%e4%b8%9a%e5%ba%94%e7%94%a8%e4%b9%8b%e9%97%b4%e4%b8%bb%e8%a6%81%e6%9c%894%e7%a7%8d%e9%9b%86%e6%88%90%e6%96%b9%e5%bc%8f">#</a>
+</h2>
+<h3 id="文件传输">
+  文件传输
+  <a class="anchor" href="#%e6%96%87%e4%bb%b6%e4%bc%a0%e8%be%93">#</a>
+</h3>
+<ul>
+<li>文件传输
+由各个应用产生文件, 其中包含提供其它应用使用的信息.</li>
+</ul>
+<p>特征:　内部数据模式自由(schema free)<br>
+优势: 1. 内部细节透明 2. 松耦合 3. 标准文件格式支持,如xml, json等.<br>
+劣势: 1. 更新慢, 数据不同步,  数据过时 2. 数据不完整, 数据不完全正确时, 数据不一致问题解决困难.3. 产生大量小文件时, 昂贵且不可靠. 4. 语义不一致<br>
+适用于批处理.</p>
+<h3 id="共享数据库">
+  共享数据库
+  <a class="anchor" href="#%e5%85%b1%e4%ba%ab%e6%95%b0%e6%8d%ae%e5%ba%93">#</a>
+</h3>
+<ul>
+<li>共享数据库
+把应用的数据存储在一个共享数据库中来集成应用,　并定制数据库模式来处理不同应用的各种需求.</li>
+</ul>
+<p>特征:　数据有模式(schema)<br>
+优势:  1. 提供模型一致性 2. 通过事务管理数据一致性 3. 共享数据, 避免语义不一致问题.<br>
+劣势:  1. 统一的数据库模式难设计. 模式改变,　应用也要改变. 2. 遗留系统很难提供一个可扩展的数据库模式供新的应用使用.  3.　性能瓶颈(单点访问)  4. 数据分布迁移困难. 5.应用和数据库紧耦合.
+可作为新老系统的集成和改造的候选方案</p>
+<h3 id="远程调用">
+  远程调用
+  <a class="anchor" href="#%e8%bf%9c%e7%a8%8b%e8%b0%83%e7%94%a8">#</a>
+</h3>
+<ul>
+<li>远程调用
+应用公开提供过程, 并能够被远程调用, 应用通过调用这些过程来执行操作并交换数据.</li>
+</ul>
+<p>特征:　公开外部接口<br>
+优势:　1. 提供语义一致性 2. 接口多样化, 有可兼容性并能扩展 3. 技术实现广泛, 如Java, .Net, CORBA, Web Services  4. 接口内部数据完整性和透明性.<br>
+劣势:　１.　性能瓶颈,　不可靠(与本地访问相比)　２.　应用之间紧耦合, 可能会有时序上的耦合</p>
+<h3 id="消息传递">
+  消息传递
+  <a class="anchor" href="#%e6%b6%88%e6%81%af%e4%bc%a0%e9%80%92">#</a>
+</h3>
+<ul>
+<li>消息传递
+应用连接到一个公共的消息传递系统上,　并通过消息来交换数据和调用行为.</li>
+</ul>
+<p>特征:　隐式调用, 完全隐藏接口<br>
+优势:　1. 松耦合  2. 快速响应 3. 可靠  3. 通过消息转换解决语义不一致(实现方式: DDD 防腐层, ESB提供消息转换功能 )<br>
+劣势:  1. 设计, 开发复杂(消息消费能力不够, 会引起消息的大量堆叠); 测试, 调试困难(可通过同步方式来测试) 2. 数据不完全同步  3. 有学习曲线</p>
+<h2 id="权衡">
+  权衡
+  <a class="anchor" href="#%e6%9d%83%e8%a1%a1">#</a>
+</h2>
+<h3 id="耦合性和依赖性">
+  耦合性和依赖性
+  <a class="anchor" href="#%e8%80%a6%e5%90%88%e6%80%a7%e5%92%8c%e4%be%9d%e8%b5%96%e6%80%a7">#</a>
+</h3>
+<p>１.　消息传递和文件传输属于非直接耦合,　耦合性最低.<br>
+２.　远程调用属于数据耦合,　耦合性次之.<br>
+３.　共享数据库属于内容耦合,　耦合性最高.</p>
+<p>使用远程调用或共享数据库的应用之间是强依赖的关系<br>
+使用消息传递或文件传输的应用之间是弱依赖的关系.</p>
+<h3 id="修改性">
+  修改性
+  <a class="anchor" href="#%e4%bf%ae%e6%94%b9%e6%80%a7">#</a>
+</h3>
+<p>共享数据库中的表结构一旦修改, 应用多少会做一些修改加以应对, 有的甚至是对整个应用的改造.</p>
+<h3 id="数据格式">
+  数据格式
+  <a class="anchor" href="#%e6%95%b0%e6%8d%ae%e6%a0%bc%e5%bc%8f">#</a>
+</h3>
+<p>文件传输保持所产生的文件内容及格式不变就可以, 以文件作为公共接口,  内部格式可以不段变化.  远程调用, 共享数据库使用接口参数定义数据格式, 内部数据格式对外不可见. 共享数据库中数据格式的演化和扩展性相对于其它方式最弱.</p>
+<h3 id="数据新鲜度">
+  数据新鲜度
+  <a class="anchor" href="#%e6%95%b0%e6%8d%ae%e6%96%b0%e9%b2%9c%e5%ba%a6">#</a>
+</h3>
+<p>文件传输使用低频率的大文件传输会造成过时的信息, 有时可以容忍数据不一致, 但也可能造成灾难. 消息传递通过频繁和立即的发送数据来提高数据的新鲜度.</p>
+<h3 id="数据序列化">
+  数据序列化
+  <a class="anchor" href="#%e6%95%b0%e6%8d%ae%e5%ba%8f%e5%88%97%e5%8c%96">#</a>
+</h3>
+<p>数据需要序列化,反序列化. 格式可以是文本或者是二进制的. 传输的格式可以是json, xml或者PB.</p>
+<h3 id="问题的解决">
+  问题的解决
+  <a class="anchor" href="#%e9%97%ae%e9%a2%98%e7%9a%84%e8%a7%a3%e5%86%b3">#</a>
+</h3>
+<p>共享数据库和远程调用解决了文件传输语义不一致的问题.
+消息传递相对于远程调用,共享数据库提高了性能和可靠性.</p>
+<h3 id="模式之间的组合">
+  模式之间的组合
+  <a class="anchor" href="#%e6%a8%a1%e5%bc%8f%e4%b9%8b%e9%97%b4%e7%9a%84%e7%bb%84%e5%90%88">#</a>
+</h3>
+<ol>
+<li>消息传递和消息传递的组合(全异步化 SEDA)</li>
+<li>消息传递和远程调用的组合(Half-Sync/Half-Async 半同步/半异步 POSA4)</li>
+<li>远程调用和共享数据库的组合</li>
+</ol>
+<p><img src="%22%281%29%e5%ba%94%e7%94%a8%e4%b9%8b%e9%97%b4%e6%b2%a1%e6%9c%89%e5%90%8c%e6%ad%a5%e6%95%b0%e6%8d%ae%e7%9a%84%e9%97%ae%e9%a2%98%22" alt="(1)应用之间没有同步数据的问题" /></p>
+<p>![(2) 变体, 应用之间有同步数据的问题, 实时或非实时同步]( &ldquo;(2) 变体, 应用之间有同步数据的问题, 实时或非实时同步&rdquo;)</p>
+<h2 id="小结">
+  小结
+  <a class="anchor" href="#%e5%b0%8f%e7%bb%93">#</a>
+</h2>
+<p>4种方式, 每种模式都建立在前一种模式的基础之上, 以解决以前的集成方法所存在的问题. 相对于前一种模式也更抽象, 成熟度更高, 复杂度也更高.</p>
+<p><img src="http://www6v.github.io/www6vHome/EAI.files/EAI-1726.png" alt="" /><br>
+<img src="http://www6v.github.io/www6vHome/EAI.files/EAI-1730.png" alt="" /><br>
+<img src="http://www6v.github.io/www6vHome/EAI.files/EAI-1733.png" alt="" /><br>
+<img src="http://www6v.github.io/www6vHome/EAI.files/EAI-1737.png" alt="" /></p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#企业应用之间主要有4种集成方式">企业应用之间主要有4种集成方式</a>
+          <ul>
+            <li><a href="#文件传输">文件传输</a></li>
+            <li><a href="#共享数据库">共享数据库</a></li>
+            <li><a href="#远程调用">远程调用</a></li>
+            <li><a href="#消息传递">消息传递</a></li>
+          </ul>
+        </li>
+        <li><a href="#权衡">权衡</a>
+          <ul>
+            <li><a href="#耦合性和依赖性">耦合性和依赖性</a></li>
+            <li><a href="#修改性">修改性</a></li>
+            <li><a href="#数据格式">数据格式</a></li>
+            <li><a href="#数据新鲜度">数据新鲜度</a></li>
+            <li><a href="#数据序列化">数据序列化</a></li>
+            <li><a href="#问题的解决">问题的解决</a></li>
+            <li><a href="#模式之间的组合">模式之间的组合</a></li>
+          </ul>
+        </li>
+        <li><a href="#小结">小结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

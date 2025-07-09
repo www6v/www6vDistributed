@@ -1,0 +1,15 @@
+{
+  "name": "Distributed",
+  "short_name": "Distributed",
+  "start_url": "/www6vDistributed/",
+  "scope": "/www6vDistributed/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/www6vDistributed/favicon.svg",
+      "sizes": "512x512"
+    }
+  ]
+}
