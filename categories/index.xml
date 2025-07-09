@@ -2,59 +2,59 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Distributed</title>
-    <link>http://localhost:1313/www6vDistributed/categories/</link>
+    <link>https://www6v.github.io/www6vDistributed/categories/</link>
     <description>Recent content in Categories on Distributed</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Thu, 06 Jul 2023 10:13:28 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/www6vDistributed/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www6v.github.io/www6vDistributed/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DDD</title>
-      <link>http://localhost:1313/www6vDistributed/categories/DDD/</link>
+      <link>https://www6v.github.io/www6vDistributed/categories/DDD/</link>
       <pubDate>Thu, 06 Jul 2023 10:13:28 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/categories/DDD/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/categories/DDD/</guid>
       <description></description>
     </item>
     <item>
       <title>应用架构</title>
-      <link>http://localhost:1313/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/</link>
+      <link>https://www6v.github.io/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/</link>
       <pubDate>Thu, 06 Jul 2023 10:13:28 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/</guid>
       <description></description>
     </item>
     <item>
       <title>架构</title>
-      <link>http://localhost:1313/www6vDistributed/categories/%E6%9E%B6%E6%9E%84/</link>
+      <link>https://www6v.github.io/www6vDistributed/categories/%E6%9E%B6%E6%9E%84/</link>
       <pubDate>Thu, 06 Jul 2023 10:13:28 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/categories/%E6%9E%B6%E6%9E%84/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/categories/%E6%9E%B6%E6%9E%84/</guid>
       <description></description>
     </item>
     <item>
       <title>API</title>
-      <link>http://localhost:1313/www6vDistributed/categories/API/</link>
+      <link>https://www6v.github.io/www6vDistributed/categories/API/</link>
       <pubDate>Fri, 01 Nov 2019 03:48:07 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/categories/API/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/categories/API/</guid>
       <description></description>
     </item>
     <item>
       <title>应用集成</title>
-      <link>http://localhost:1313/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/</link>
+      <link>https://www6v.github.io/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/</link>
       <pubDate>Sat, 07 Apr 2018 10:01:24 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/</guid>
       <description></description>
     </item>
     <item>
       <title>领域建模</title>
-      <link>http://localhost:1313/www6vDistributed/categories/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/</link>
+      <link>https://www6v.github.io/www6vDistributed/categories/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/</link>
       <pubDate>Sat, 17 Mar 2018 10:00:45 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/categories/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/categories/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/</guid>
       <description></description>
     </item>
     <item>
       <title>CQRS</title>
-      <link>http://localhost:1313/www6vDistributed/categories/CQRS/</link>
+      <link>https://www6v.github.io/www6vDistributed/categories/CQRS/</link>
       <pubDate>Sun, 25 Feb 2018 10:00:12 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/categories/CQRS/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/categories/CQRS/</guid>
       <description></description>
     </item>
   </channel>

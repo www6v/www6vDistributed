@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Distributed</title>
-    <link>http://localhost:1313/www6vDistributed/tags/</link>
+    <link>https://www6v.github.io/www6vDistributed/tags/</link>
     <description>Recent content in Tags on Distributed</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Thu, 06 Jul 2023 10:13:28 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/www6vDistributed/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DDD</title>
-      <link>http://localhost:1313/www6vDistributed/tags/DDD/</link>
+      <link>https://www6v.github.io/www6vDistributed/tags/DDD/</link>
       <pubDate>Thu, 06 Jul 2023 10:13:28 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/tags/DDD/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/tags/DDD/</guid>
       <description></description>
     </item>
     <item>
       <title>API</title>
-      <link>http://localhost:1313/www6vDistributed/tags/API/</link>
+      <link>https://www6v.github.io/www6vDistributed/tags/API/</link>
       <pubDate>Fri, 01 Nov 2019 03:48:07 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/tags/API/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/tags/API/</guid>
       <description></description>
     </item>
     <item>
       <title>应用集成</title>
-      <link>http://localhost:1313/www6vDistributed/tags/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/</link>
+      <link>https://www6v.github.io/www6vDistributed/tags/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/</link>
       <pubDate>Sat, 07 Apr 2018 10:01:24 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/tags/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/tags/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/</guid>
       <description></description>
     </item>
     <item>
       <title>领域建模</title>
-      <link>http://localhost:1313/www6vDistributed/tags/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/</link>
+      <link>https://www6v.github.io/www6vDistributed/tags/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/</link>
       <pubDate>Sat, 17 Mar 2018 10:00:45 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/tags/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/tags/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/</guid>
       <description></description>
     </item>
     <item>
       <title>CQRS</title>
-      <link>http://localhost:1313/www6vDistributed/tags/CQRS/</link>
+      <link>https://www6v.github.io/www6vDistributed/tags/CQRS/</link>
       <pubDate>Sun, 25 Feb 2018 10:00:12 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/tags/CQRS/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/tags/CQRS/</guid>
       <description></description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CQRS on Distributed</title>
-    <link>http://localhost:1313/www6vDistributed/categories/CQRS/</link>
+    <link>https://www6v.github.io/www6vDistributed/categories/CQRS/</link>
     <description>Recent content in CQRS on Distributed</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sun, 25 Feb 2018 10:00:12 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/www6vDistributed/categories/CQRS/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www6v.github.io/www6vDistributed/categories/CQRS/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CQRS 简介和案例分析</title>
-      <link>http://localhost:1313/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/</link>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/</link>
       <pubDate>Sun, 25 Feb 2018 10:00:12 +0000</pubDate>
-      <guid>http://localhost:1313/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/</guid>
       <description>&lt;p&gt;&lt;/p&gt;</description>
     </item>
   </channel>
