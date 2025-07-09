@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="目录 # 目标 # DDD的精髓是降低系统复杂度 规则 三个核心 # 统一语言 # 核心领域词汇表 统一语言重构迭代： 模型-》实现-》 重构-》 隐喻 -》 再到模型 命名规范 DSL - Domain Specific Language 领域划分 # 领域 子域 边界上下文（Bounded Context） 上下文映射（Context Mapping) 共享内核（Shared Kernel） 防腐层（Anti-Corruption）： 类似adaptor、facade， 对内部领域模型的隔离和屏蔽。 领域模型 # 抽象： 是从具体事物抽取、概括出它们共同的方面、本质属性与关系等。
+领域建模方法论： UML用例分析、 UML用例分析法 四色建模法 事件风暴
+模式 [3] # {% asset_img &lsquo;ddd.png&rsquo; %}
+实体 [4]
+可变性是实体的特点
+值对象 [4] 不变性是值对象的本质
+service 领域服务是多个实体组合出来的一段业务逻辑
+聚合[5] 真实世界中整体与部分的关系 正是因为有这样的关系，在操作整体的时候，整体就封装了对部分的操作。 所谓的整体与部分的关系，就是当整体不存在时，部分就变得没有了意义。
+每个聚合对应一个Repo interface [7] 对聚合内的数据一致性负责[7] 聚合根 外部访问的唯一入口">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/">
+  <meta property="og:site_name" content="Distributed">
+  <meta property="og:title" content="DDD  领域驱动设计">
+  <meta property="og:description" content="目录 # 目标 # DDD的精髓是降低系统复杂度 规则 三个核心 # 统一语言 # 核心领域词汇表 统一语言重构迭代： 模型-》实现-》 重构-》 隐喻 -》 再到模型 命名规范 DSL - Domain Specific Language 领域划分 # 领域 子域 边界上下文（Bounded Context） 上下文映射（Context Mapping) 共享内核（Shared Kernel） 防腐层（Anti-Corruption）： 类似adaptor、facade， 对内部领域模型的隔离和屏蔽。 领域模型 # 抽象： 是从具体事物抽取、概括出它们共同的方面、本质属性与关系等。
+领域建模方法论： UML用例分析、 UML用例分析法 四色建模法 事件风暴
+模式 [3] # {% asset_img ‘ddd.png’ %}
+实体 [4]
+可变性是实体的特点
+值对象 [4] 不变性是值对象的本质
+service 领域服务是多个实体组合出来的一段业务逻辑
+聚合[5] 真实世界中整体与部分的关系 正是因为有这样的关系，在操作整体的时候，整体就封装了对部分的操作。 所谓的整体与部分的关系，就是当整体不存在时，部分就变得没有了意义。
+每个聚合对应一个Repo interface [7] 对聚合内的数据一致性负责[7] 聚合根 外部访问的唯一入口">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<title>DDD  领域驱动设计 | Distributed</title>
+<link rel="icon" href="/www6vDistributed/favicon.png" >
+<link rel="manifest" href="/www6vDistributed/manifest.json">
+<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/">
+<link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
+  <script defer src="/www6vDistributed/fuse.min.js"></script>
+  <script defer src="/www6vDistributed/en.search.min.a1dcdf3fdd34f2e5db1daf7b505f2ea3f4ccf518b199106bf8100549abbaa423.js" integrity="sha256-odzfP9008uXbHa97UF8uo/TM9RixmRBr&#43;BAFSau6pCM=" crossorigin="anonymous"></script>
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/index.xml" title="Distributed" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/www6vDistributed/"><span>Distributed</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5ac21df63128203257d2ae2da0ba5dab" class="toggle" checked />
+    <label for="section-5ac21df63128203257d2ae2da0ba5dab" class="flex justify-between">
+      <a role="button" class="">应用架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/apiDesign/" class="">OpenAPI 设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="active">DDD  领域驱动设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/dddPractice/" class="">DDD-落地实战 Practice</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/EAI/" class="">应用集成方式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/DomainLogicAndSQL/" class="">领域逻辑和SQL</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>DDD  领域驱动设计</h3>
+
+  <label for="toc-control">
+    
+    <img src="/www6vDistributed/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#目录">目录</a></li>
+      </ul>
+    </li>
+    <li><a href="#目标">目标</a></li>
+    <li><a href="#三个核心">三个核心</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#统一语言">统一语言</a></li>
+            <li><a href="#领域划分">领域划分</a></li>
+            <li><a href="#领域模型">领域模型</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#模式-3">模式 [3]</a></li>
+    <li><a href="#架构">架构</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#六边形架构">六边形架构</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#资源">资源</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><p></p>
+<!-- more -->
+<h2 id="目录">
+  目录
+  <a class="anchor" href="#%e7%9b%ae%e5%bd%95">#</a>
+</h2>
+<!-- toc -->
+<h1 id="目标">
+  目标
+  <a class="anchor" href="#%e7%9b%ae%e6%a0%87">#</a>
+</h1>
+<ul>
+<li>DDD的精髓是降低<strong>系统复杂度</strong></li>
+<li>规则</li>
+</ul>
+<h1 id="三个核心">
+  三个核心
+  <a class="anchor" href="#%e4%b8%89%e4%b8%aa%e6%a0%b8%e5%bf%83">#</a>
+</h1>
+<h3 id="统一语言">
+  统一语言
+  <a class="anchor" href="#%e7%bb%9f%e4%b8%80%e8%af%ad%e8%a8%80">#</a>
+</h3>
+<ul>
+<li>核心领域词汇表</li>
+<li>统一语言重构迭代： 模型-》实现-》 重构-》 隐喻 -》 再到模型</li>
+<li>命名规范</li>
+<li>DSL - Domain Specific Language</li>
+</ul>
+<h3 id="领域划分">
+  领域划分
+  <a class="anchor" href="#%e9%a2%86%e5%9f%9f%e5%88%92%e5%88%86">#</a>
+</h3>
+<ul>
+<li>领域</li>
+<li>子域</li>
+<li>边界上下文（Bounded Context）</li>
+<li>上下文映射（Context Mapping)
+共享内核（Shared Kernel）
+防腐层（Anti-Corruption）： 类似adaptor、facade， 对内部领域模型的隔离和屏蔽。</li>
+</ul>
+<h3 id="领域模型">
+  领域模型
+  <a class="anchor" href="#%e9%a2%86%e5%9f%9f%e6%a8%a1%e5%9e%8b">#</a>
+</h3>
+<ul>
+<li>
+<p>抽象：
+是从具体事物抽取、概括出它们共同的方面、本质属性与关系等。</p>
+</li>
+<li>
+<p>领域建模方法论：
+UML用例分析、 UML用例分析法
+四色建模法
+<a href="https://www.eventstorming.com/">事件风暴</a></p>
+</li>
+</ul>
+<h1 id="模式-3">
+  模式 [3]
+  <a class="anchor" href="#%e6%a8%a1%e5%bc%8f-3">#</a>
+</h1>
+<p>{% asset_img  &lsquo;ddd.png&rsquo; %}</p>
+<ul>
+<li>
+<p><strong>实体</strong> [4]<br>
+<strong>可变性</strong>是实体的特点</p>
+</li>
+<li>
+<p><strong>值对象</strong>  [4]
+<strong>不变性</strong>是值对象的本质</p>
+</li>
+<li>
+<p>service
+领域服务是多个实体组合出来的一段业务逻辑</p>
+</li>
+<li>
+<p>聚合[5]
+真实世界中<strong>整体与部分</strong>的关系
+正是因为有这样的关系，在操作整体的时候，整体就封装了对部分的操作。
+所谓的整体与部分的关系，就是当整体不存在时，部分就变得没有了意义。</p>
+<ul>
+<li><strong>每个聚合对应一个Repo interface</strong> [7]</li>
+<li>对聚合内的<strong>数据一致性</strong>负责[7]</li>
+</ul>
+</li>
+<li>
+<p>聚合根
+外部访问的唯一入口</p>
+</li>
+</ul>
+<h1 id="架构">
+  架构
+  <a class="anchor" href="#%e6%9e%b6%e6%9e%84">#</a>
+</h1>
+<h3 id="六边形架构">
+  六边形架构
+  <a class="anchor" href="#%e5%85%ad%e8%be%b9%e5%bd%a2%e6%9e%b6%e6%9e%84">#</a>
+</h3>
+<p>又被称之为<strong>Ports and Adapters（端口和适配器架构）</strong></p>
+<h1 id="参考">
+  参考
+  <a class="anchor" href="#%e5%8f%82%e8%80%83">#</a>
+</h1>
+<ol>
+<li>《DDD（Domain Driven Design)的精髓》  直播+ppt  阿里张建飞  钉钉2020.05.21视频</li>
+<li>xxx</li>
+<li><a href="https://www.cnblogs.com/netfocus/archive/2011/10/10/2204949.html">领域驱动设计之领域模型</a> ***</li>
+<li>《04  领域模型是如何指导程序设计的？》 DDD 微服务落地实战-拉钩专栏</li>
+<li>《05  聚合、仓库与工厂：傻傻分不清楚》  DDD 微服务落地实战-拉钩专栏</li>
+<li>{% post_link &lsquo;DomainLogicAndSQL&rsquo; %}  self</li>
+</ol>
+<h3 id="资源">
+  资源
+  <a class="anchor" href="#%e8%b5%84%e6%ba%90">#</a>
+</h3>
+<ol>
+<li>《实现领域驱动设计》 B  ***</li>
+<li>《领域专用语言实战》 B  没纸质</li>
+<li>《领域驱动设计精粹》B  没纸质</li>
+<li>《中台架构与实现 : 基于DDD和微服务》 B  没纸质</li>
+<li><a href="https://developer.aliyun.com/live/2874">事件风暴和领域建模在阿里巴巴的落地实践</a>  未</li>
+<li>《DDD实战课》</li>
+<li>《mksz541-DDD（领域驱动设计）思想解读及优秀实践~4》 V</li>
+<li>《lg2061-DDD 微服务落地实战-拉钩专栏》 V  ***   有代码</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#目录">目录</a></li>
+      </ul>
+    </li>
+    <li><a href="#目标">目标</a></li>
+    <li><a href="#三个核心">三个核心</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#统一语言">统一语言</a></li>
+            <li><a href="#领域划分">领域划分</a></li>
+            <li><a href="#领域模型">领域模型</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#模式-3">模式 [3]</a></li>
+    <li><a href="#架构">架构</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#六边形架构">六边形架构</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#资源">资源</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
