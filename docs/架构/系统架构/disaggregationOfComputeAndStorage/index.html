@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="存算分离 存算一体 RMDB MySQL Cluster MySQL Group Replicatoin(MGR) NewSQL,HTAP TiDB[tidb,tikv] , openGaussDB[2], CockroachDB? Aurora[10], PolarDB[3], PGXC风格[1] 大数据 clickhouse, hbase ES MQ Pulsar kafka, rocketmq 文件系统 Ceph[PG, ODS], PolarFS[5] KV GaussDB(for Redis) [4], Codis redis Cluster 其他 serverless[FasS, BaaS] PolarDB [7] 基于Redo Log物理复制实现的一写多读共享存储集群 参考 # [1] 《04 | 架构风格：NewSQL和PGXC到底有啥不一样？》 王磊
+[2] opengauss系统架构
+[3] PolarDB Serverless: A Cloud Native Database for Disaggregated Data Centers
+[4] GaussDB(for Redis)揭秘：Redis存算分离架构最全解析
+[5] 阿里推出PolarFS分布式文件系统，存储与计算分开！附论文
+[6] Go to Page self">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/">
+  <meta property="og:site_name" content="Distributed">
+  <meta property="og:title" content="存算分离-数据应用">
+  <meta property="og:description" content="存算分离 存算一体 RMDB MySQL Cluster MySQL Group Replicatoin(MGR) NewSQL,HTAP TiDB[tidb,tikv] , openGaussDB[2], CockroachDB? Aurora[10], PolarDB[3], PGXC风格[1] 大数据 clickhouse, hbase ES MQ Pulsar kafka, rocketmq 文件系统 Ceph[PG, ODS], PolarFS[5] KV GaussDB(for Redis) [4], Codis redis Cluster 其他 serverless[FasS, BaaS] PolarDB [7] 基于Redo Log物理复制实现的一写多读共享存储集群 参考 # [1] 《04 | 架构风格：NewSQL和PGXC到底有啥不一样？》 王磊
+[2] opengauss系统架构
+[3] PolarDB Serverless: A Cloud Native Database for Disaggregated Data Centers
+[4] GaussDB(for Redis)揭秘：Redis存算分离架构最全解析
+[5] 阿里推出PolarFS分布式文件系统，存储与计算分开！附论文
+[6] Go to Page self">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<title>存算分离-数据应用 | Distributed</title>
+<link rel="icon" href="/www6vDistributed/favicon.png" >
+<link rel="manifest" href="/www6vDistributed/manifest.json">
+<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/">
+<link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
+  <script defer src="/www6vDistributed/fuse.min.js"></script>
+  <script defer src="/www6vDistributed/en.search.min.068c4183451f6aed6ec73303457a8d34cb93f150a27aa51ddc55fb3b24429715.js" integrity="sha256-BoxBg0Ufau1uxzMDRXqNNMuT8VCieqUd3FX7OyRClxU=" crossorigin="anonymous"></script>
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/index.xml" title="Distributed" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/www6vDistributed/"><span>Distributed</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-dc526a21eace5d63b5b3ef1b0a218aec" class="toggle" checked />
+    <label for="section-dc526a21eace5d63b5b3ef1b0a218aec" class="flex justify-between">
+      <a role="button" class="">架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-065452b69a9ada69f879d79882f67ab3" class="toggle"  />
+    <label for="section-065452b69a9ada69f879d79882f67ab3" class="flex justify-between">
+      <a role="button" class="">应用架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/api_design/" class="">OpenAPI 设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/" class="">DDD-落地实战 Practice</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/" class="">应用集成方式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/domain_logic_and_sql/" class="">领域逻辑和SQL</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8dfaa356172b6c5a6e357373ef77a465" class="toggle" checked />
+    <label for="section-8dfaa356172b6c5a6e357373ef77a465" class="flex justify-between">
+      <a role="button" class="">系统架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/" class="">中台战略</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/" class="active">存算分离-数据应用</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/" class="">高可用 Available</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/" class="">统一模型</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/" class="">异地多活 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>存算分离-数据应用</h3>
+
+  <label for="toc-control">
+    
+    <img src="/www6vDistributed/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><p></p>
+<!-- more -->
+<table>
+<thead>
+<tr>
+<th></th>
+<th>存算分离</th>
+<th>存算一体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RMDB</td>
+<td>MySQL Cluster</td>
+<td>MySQL Group Replicatoin(MGR)</td>
+</tr>
+<tr>
+<td>NewSQL,HTAP</td>
+<td>TiDB[tidb,tikv] , openGaussDB[2], CockroachDB? <br/> Aurora[10], PolarDB[3],</td>
+<td>PGXC风格[1]</td>
+</tr>
+<tr>
+<td>大数据</td>
+<td>clickhouse, hbase</td>
+<td>ES</td>
+</tr>
+<tr>
+<td>MQ</td>
+<td>Pulsar</td>
+<td>kafka, rocketmq</td>
+</tr>
+<tr>
+<td>文件系统</td>
+<td>Ceph[PG, ODS], PolarFS[5]</td>
+<td></td>
+</tr>
+<tr>
+<td>KV</td>
+<td>GaussDB(for Redis) [4], Codis</td>
+<td>redis Cluster</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>serverless[FasS, BaaS]</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>PolarDB [7]
+<strong>基于Redo Log物理复制实现的一写多读共享存储集群</strong></li>
+</ul>
+<h2 id="参考">
+  参考
+  <a class="anchor" href="#%e5%8f%82%e8%80%83">#</a>
+</h2>
+<p>[1] 《04 | 架构风格：NewSQL和PGXC到底有啥不一样？》  王磊<br>
+[2]  <a href="https://docs.opengauss.org/zh/docs/3.1.1/docs/Description/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84.html">opengauss系统架构</a><br>
+[3]  PolarDB Serverless: A Cloud Native Database for Disaggregated Data Centers<br>
+[4]  <a href="https://blog.csdn.net/devcloud/article/details/118360126">GaussDB(for Redis)揭秘：Redis存算分离架构最全解析</a><br>
+[5] <a href="https://zhuanlan.zhihu.com/p/42754631">阿里推出PolarFS分布式文件系统，存储与计算分开！附论文</a><br>
+[6]  <a href="mysqlReliability.md">Go to Page</a>  self<br>
+[7] &laquo;云原生数据库 原理与实践&raquo; 5.2  5.3<br>
+[10] VERBITSKI A，GUPTA A，SAHA D，et al. Amazon aurora：design considerations for high throughput cloud-native relational databases ［C］. Proceedings of the 2017 ACM International Conference on Man⁃ agement of Data，2017 ：1041-1052.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

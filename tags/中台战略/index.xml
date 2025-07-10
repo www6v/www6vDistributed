@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>中台战略 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/tags/%E4%B8%AD%E5%8F%B0%E6%88%98%E7%95%A5/</link>
+    <description>Recent content in 中台战略 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 02 May 2019 00:29:04 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/%E4%B8%AD%E5%8F%B0%E6%88%98%E7%95%A5/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>中台战略</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/</link>
+      <pubDate>Thu, 02 May 2019 00:29:04 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/</guid>
+      <description>&#xA;目录 # 中台全景图 # 中台全景图[6] 中台和微服务[4] 中台&#xA;业务中台 核心业务层 技术中台 iaas+paas 数据中台 理念 阿里提出： 大中台， 小前台&#xA;业务中台 # 业务中台 # 阿里共享服务 [6] 淘宝 天猫 共享 商品，交易，店铺等服务 京东业务中台 [5] 技术中台 [1][2][3] # 参考 # 《企业IT架构转型之道-阿里巴巴中台战略思想与架构实战》 钟华 全面异步化：淘宝反应式架构升级探索 淘宝应用柔性架构的探索 《微服务架构核心20讲-如何理解阿里巴巴提出的微服务中台战略？》 杨波 中小型电商相当适配：京东商城系统架构设计原则精炼 </description>
+    </item>
+  </channel>
+</rss>

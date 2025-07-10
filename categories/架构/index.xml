@@ -16,11 +16,32 @@
       <description>&#xA;REST API 设计 规范 # OpenAPI Specification 业界标准&#xA;A Visual Guide to What&amp;rsquo;s New in Swagger 3.0 OpenAPI Specification - Version 3.0.2 Google API Design Guide&#xA;谷歌API设计指南 API 设计模式 # RPC ROA(Rest-Oriented Architecture) 通常RESTful风格对API设计者的要求是比较高的，主要的难点在于面向资源设计要求开发者事先做好规划，将后端数据模型与API服务模型相匹配。&#xA;面向资源设计API # 资源模型 资源分类管理 资源关系 ECS TAG功能详解 资源组&#xA;服务容错处理 # 同步请求的Timeout[2] 异步请求方式 错误码&#xA;TagResources 错误码 参考: # 云服务OpenAPI的7大挑战，架构师如何应对？ 阿里技术 虚明 超时和重试总结 self </description>
     </item>
     <item>
+      <title>中台战略</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/</link>
+      <pubDate>Thu, 02 May 2019 00:29:04 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/</guid>
+      <description>&#xA;目录 # 中台全景图 # 中台全景图[6] 中台和微服务[4] 中台&#xA;业务中台 核心业务层 技术中台 iaas+paas 数据中台 理念 阿里提出： 大中台， 小前台&#xA;业务中台 # 业务中台 # 阿里共享服务 [6] 淘宝 天猫 共享 商品，交易，店铺等服务 京东业务中台 [5] 技术中台 [1][2][3] # 参考 # 《企业IT架构转型之道-阿里巴巴中台战略思想与架构实战》 钟华 全面异步化：淘宝反应式架构升级探索 淘宝应用柔性架构的探索 《微服务架构核心20讲-如何理解阿里巴巴提出的微服务中台战略？》 杨波 中小型电商相当适配：京东商城系统架构设计原则精炼 </description>
+    </item>
+    <item>
+      <title>存算分离-数据应用</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/</link>
+      <pubDate>Wed, 02 Feb 2022 18:07:53 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/</guid>
+      <description>存算分离 存算一体 RMDB MySQL Cluster MySQL Group Replicatoin(MGR) NewSQL,HTAP TiDB[tidb,tikv] , openGaussDB[2], CockroachDB? Aurora[10], PolarDB[3], PGXC风格[1] 大数据 clickhouse, hbase ES MQ Pulsar kafka, rocketmq 文件系统 Ceph[PG, ODS], PolarFS[5] KV GaussDB(for Redis) [4], Codis redis Cluster 其他 serverless[FasS, BaaS] PolarDB [7] 基于Redo Log物理复制实现的一写多读共享存储集群 参考 # [1] 《04 | 架构风格：NewSQL和PGXC到底有啥不一样？》 王磊&#xA;[2] opengauss系统架构&#xA;[3] PolarDB Serverless: A Cloud Native Database for Disaggregated Data Centers&#xA;[4] GaussDB(for Redis)揭秘：Redis存算分离架构最全解析&#xA;[5] 阿里推出PolarFS分布式文件系统，存储与计算分开！附论文&#xA;[6] Go to Page self</description>
+    </item>
+    <item>
       <title>CQRS 简介和案例分析</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/</link>
       <pubDate>Sun, 25 Feb 2018 10:00:12 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/</guid>
       <description>&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>高可用 Available</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/</link>
+      <pubDate>Sun, 26 Jun 2022 21:55:43 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/</guid>
+      <description>目录 # 原理 # CAP # CP系统: hbase, zookeeper AP系统: cassandra, eureka&#xA;nPRT公式 [1] # 可以推导出风险期望的公式 # 控制风险的4大因素（nPRT） # 减少风险数量，n 降低风险变故障的概率（即：增加风险变故障的难度），P 减小故障影响范围，R 缩短故障影响时长，T 高可用架构设计的7大核心原则 # 少依赖原则：能不依赖的，尽可能不依赖，越少越好（n） 弱依赖原则：一定要依赖的，尽可能弱依赖，越弱越好（P） 分散原则：鸡蛋不要放一个篮子，分散风险（R） 均衡原则：均匀分散风险，避免不均衡（R） 隔离原则：控制风险不扩散，不放大（R） 无单点原则：要有冗余或其他版本,做到有路可退（T） 自我保护原则：少流血，牺牲一部分，保护另外一部分（P&amp;amp;R&amp;amp;T） 可用性 7 级图表 [成熟度] [5] # 当一个服务挂了的时候&#xA;第一级：Crash with data corruption, destruction. 第二级：Crash with new data loss. 第三级：Crash without data loss. 数据高可用-冗余, destruction 测试 第四级：No crash, but with no or very limited service, low service quality.&#xA;流控系统， eg.</description>
     </item>
     <item>
       <title>DDD  领域驱动设计</title>
@@ -37,11 +58,25 @@
       <description>DDD 落地 # 基于DDD应用架构的核心 # 分离业务复杂度和技术复杂度&#xA;设计思路 [4] # 贫血模型&#xA;实现 业务逻辑放到Service中 缺点 [7] 业务逻辑被埋没在存储业务中 贫血模型的缺陷 [21] 无法保护模型对象的完整性和一致性 对象操作的可发现性极差 代码逻辑重复 代码的健壮性差 强依赖底层实现 99%的代码都是基于贫血模型 [21] 数据库思维 贫血模型“简单” 脚本思维 充血模型&#xA;实现 业务逻辑放到领域对象中(实体对象中有实现方法) 开闭原则 保持了对象的封装性，使得领域模型在面临多态、继承等复杂结构时，易于变更 适用场景 类似继承、多态的情况 在软件设计的过程中需要将一些类型或者编码进行转换 更好地表现领域对象之间的关系 “聚合”，也就是在真实世界中那些代表整体与部分的事 比较&#xA;贫血模型比充血模型更加简单易行 贫血模型 不需要 仓库、工厂、缓存，简单粗暴 充血模型需要更强的设计与协作能力 充血模型 需要开发人员有更强的OOA/D能力、分析业务、业务建模与设计能力 要有较强的团队协作能力 贫血模型 所有业务处理过程都交给Service完成 贫血模型更容易应对复杂的业务处理场景 分层 [2] # 用户接口层(Controller层) Application层 Domain层 Infrastructure层 代码分层 [2] # Interface&#xA;assembler(DTO和领域对象的互转) dto facade（粗粒度的调用接口，将用户请求委派给一个或多个应用服务进行处理） Application&#xA;event（pub， sub）（事件处理相关的核心业务逻辑在领域层实现） service（应用服务） Domain&#xA;aggregate entity 聚合根 实体 值对象 工厂模式（Factory） event 事件实体以及与事件活动相关的业务逻辑代码 repository 所在聚合的查询或持久化领域对象的代码，通常包括仓储接口和仓储实现方法 Data Model只存在于数据层，而Domain Model在领域层，而链接了这两层的关键对象，就是Repository [7] service 领域服务是多个实体组合出来的一段业务逻辑 Infrastructure</description>
     </item>
     <item>
+      <title>统一模型</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/</link>
+      <pubDate>Sat, 13 May 2023 11:10:44 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/</guid>
+      <description>&#xA;计算密集 # 计算密集 技术 产品 微服务 RPC(2th)Service Mesh(3th)&#xA;多运行时(4th ) Dubboistio proxylessdaper 容器 编排 K8s Service Mesh Sidecar 控制面， 数据面 Envoy xDS 微软SMI 可观测 Tracing+Metric+Logs OpenTelemetry=&#xA;OpenCensus+OpenTracing Sererless Sererless+ VMSererless+容器Sererless+服务Sererless+数据库 Ali ECSAli ECIFasSAurora，TiDB Cloud 数据密集 # 数据密集 技术 产品 消息队列 CloudEvent EventMesh 数据库 分离: 存算分离(资源伸缩)&#xA;融合: HTAP(模型) TiDB(TiKV, TiFlash) ，PolarDB 大数据 流计算 Beam，Flink </description>
+    </item>
+    <item>
       <title>应用集成方式</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/</link>
       <pubDate>Sat, 07 Apr 2018 10:01:24 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/</guid>
       <description>企业应用之间主要有4种集成方式 # 文件传输 # 文件传输&#xA;由各个应用产生文件, 其中包含提供其它应用使用的信息. 特征:　内部数据模式自由(schema free)&#xA;优势: 1. 内部细节透明 2. 松耦合 3. 标准文件格式支持,如xml, json等.&#xA;劣势: 1. 更新慢, 数据不同步, 数据过时 2. 数据不完整, 数据不完全正确时, 数据不一致问题解决困难.3. 产生大量小文件时, 昂贵且不可靠. 4. 语义不一致&#xA;适用于批处理.&#xA;共享数据库 # 共享数据库&#xA;把应用的数据存储在一个共享数据库中来集成应用,　并定制数据库模式来处理不同应用的各种需求. 特征:　数据有模式(schema)&#xA;优势: 1. 提供模型一致性 2. 通过事务管理数据一致性 3. 共享数据, 避免语义不一致问题.&#xA;劣势: 1. 统一的数据库模式难设计. 模式改变,　应用也要改变. 2. 遗留系统很难提供一个可扩展的数据库模式供新的应用使用. 3.　性能瓶颈(单点访问) 4. 数据分布迁移困难. 5.应用和数据库紧耦合. 可作为新老系统的集成和改造的候选方案&#xA;远程调用 # 远程调用 应用公开提供过程, 并能够被远程调用, 应用通过调用这些过程来执行操作并交换数据. 特征:　公开外部接口&#xA;优势:　1.</description>
+    </item>
+    <item>
+      <title>异地多活 总结</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/</link>
+      <pubDate>Sat, 17 Jun 2017 22:42:53 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/</guid>
+      <description>同城双活 [3] # 【跨机房写，同机房读】&#xA;异地多活 [3] # 一般来说，数据同步的方案有两种：&#xA;一种基于存储系统的主从复制，比如 MySQL 和 Redis。也就是在一个机房部署主库， 在异地机房部署从库，两者同步主从复制, 实现数据的同步。 另一种是基于消息队列的方式。一个机房产生写入请求后，会写一条消息到消息队列， 另一个机房的应用消费这条消息后，再执行业务处理逻辑，写入到存储服务中。 【异步方式同步数据】&#xA;无论是采取哪种方案，数据从一个机房，传输到另一个机房都会有延迟，所以，你需要尽量 保证用户在读取自己的数据时，读取数据主库所在的机房。为了达到这一点，你需要对用户 做分片，让一个用户每次的读写都尽量在同一个机房中。同时，在数据读取和服务调用时， 也要尽量调用本机房的服务。&#xA;【单元化，流量调度】&#xA;总结 [3] # 不同机房的数据传输延迟，是造成多机房部署困难的主要原因，你需要知道，同城多机 房的延迟一般在 1ms~3ms，异地机房的延迟在 50ms 以下，而跨国机房的延迟在200ms 以下。&#xA;同城多机房方案可以允许有跨机房数据写入的发生，但是数据的读取，和服务的调用应该尽量保证在同一个机房中。&#xA;异地多活方案则应该避免跨机房同步的数据写入和读取，而是采取异步的方式，将数据从一个机房同步到另一个机房。&#xA;案例 # 异地多活 阿里 【1】 基于Userid的单元化异地多活 主要改造整个交易链路 交易链路（单元）和非交易链路（中心）之间通过DRC同步数据。单元里的数据是全量、只读的 饿了么 【2】 思路+原则 基于地理位置的异地多活。用户、商家、骑手都会在相同的机房 可用性优先，放宽数据一致性 主要组件 GZS（元数据）+APIRouter（流量路由） SOA Proxy：内部网关、IDC之间调用 Data Replication Center：数据库复制、数据库和cache之间的一致性 Data Access Layer zk,mq在IDC之间的同步 数据一致性 [1][2] # 数据一致性 强一致场景 都读主节点 最终一致性场景 DRC异步同步数据 业务层异步分发数据 数据丢失 通过算法在不同机房都能生成相同的 参考 # 参考 # 《尽在双11:阿里巴巴技术演进与超越》 1.</description>
     </item>
     <item>
       <title>领域逻辑和SQL</title>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>统一模型 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/tags/%E7%BB%9F%E4%B8%80%E6%A8%A1%E5%9E%8B/</link>
+    <description>Recent content in 统一模型 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 13 May 2023 11:10:44 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/%E7%BB%9F%E4%B8%80%E6%A8%A1%E5%9E%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>统一模型</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/</link>
+      <pubDate>Sat, 13 May 2023 11:10:44 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/</guid>
+      <description>&#xA;计算密集 # 计算密集 技术 产品 微服务 RPC(2th)Service Mesh(3th)&#xA;多运行时(4th ) Dubboistio proxylessdaper 容器 编排 K8s Service Mesh Sidecar 控制面， 数据面 Envoy xDS 微软SMI 可观测 Tracing+Metric+Logs OpenTelemetry=&#xA;OpenCensus+OpenTracing Sererless Sererless+ VMSererless+容器Sererless+服务Sererless+数据库 Ali ECSAli ECIFasSAurora，TiDB Cloud 数据密集 # 数据密集 技术 产品 消息队列 CloudEvent EventMesh 数据库 分离: 存算分离(资源伸缩)&#xA;融合: HTAP(模型) TiDB(TiKV, TiFlash) ，PolarDB 大数据 流计算 Beam，Flink </description>
+    </item>
+  </channel>
+</rss>
