@@ -13,7 +13,7 @@ event（pub， sub）（事件处理相关的核心业务逻辑在领域层实�
 aggregate entity 聚合根 实体 值对象 工厂模式（Factory） event 事件实体以及与事件活动相关的业务逻辑代码 repository 所在聚合的查询或持久化领域对象的代码，通常包括仓储接口和仓储实现方法 Data Model只存在于数据层，而Domain Model在领域层，而链接了这两层的关键对象，就是Repository [7] service 领域服务是多个实体组合出来的一段业务逻辑 Infrastructure">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
-<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/dddPractice/">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/">
   <meta property="og:site_name" content="Distributed">
   <meta property="og:title" content="DDD-落地实战 Practice">
   <meta property="og:description" content="DDD 落地 # 基于DDD应用架构的核心 # 分离业务复杂度和技术复杂度
@@ -29,14 +29,14 @@ aggregate entity 聚合根 实体 值对象 工厂模式（Factory） event 事�
 <title>DDD-落地实战 Practice | Distributed</title>
 <link rel="icon" href="/www6vDistributed/favicon.png" >
 <link rel="manifest" href="/www6vDistributed/manifest.json">
-<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/dddPractice/">
+<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/">
 <link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
   <script defer src="/www6vDistributed/fuse.min.js"></script>
-  <script defer src="/www6vDistributed/en.search.min.a1dcdf3fdd34f2e5db1daf7b505f2ea3f4ccf518b199106bf8100549abbaa423.js" integrity="sha256-odzfP9008uXbHa97UF8uo/TM9RixmRBr&#43;BAFSau6pCM=" crossorigin="anonymous"></script>
+  <script defer src="/www6vDistributed/en.search.min.16e1a2e7042b1874c5a67fa6907d6eb5c28c375fb392e8b9a5af11a124ea5086.js" integrity="sha256-FuGi5wQrGHTFpn&#43;mkH1utcKMN1&#43;zkui5pa8RoSTqUIY=" crossorigin="anonymous"></script>
 
   
 
-<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/dddPractice/index.xml" title="Distributed" />
+<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/index.xml" title="Distributed" />
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -88,8 +88,24 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <input type="checkbox" id="section-5ac21df63128203257d2ae2da0ba5dab" class="toggle" checked />
-    <label for="section-5ac21df63128203257d2ae2da0ba5dab" class="flex justify-between">
+    <input type="checkbox" id="section-dc526a21eace5d63b5b3ef1b0a218aec" class="toggle" checked />
+    <label for="section-dc526a21eace5d63b5b3ef1b0a218aec" class="flex justify-between">
+      <a role="button" class="">架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-065452b69a9ada69f879d79882f67ab3" class="toggle" checked />
+    <label for="section-065452b69a9ada69f879d79882f67ab3" class="flex justify-between">
       <a role="button" class="">应用架构</a>
     </label>
   
@@ -104,7 +120,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/apiDesign/" class="">OpenAPI 设计</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/api_design/" class="">OpenAPI 设计</a>
   
 
           
@@ -122,7 +138,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
   
 
           
@@ -140,7 +156,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计</a>
   
 
           
@@ -158,7 +174,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/dddPractice/" class="active">DDD-落地实战 Practice</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/" class="active">DDD-落地实战 Practice</a>
   
 
           
@@ -176,7 +192,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/EAI/" class="">应用集成方式</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/" class="">应用集成方式</a>
   
 
           
@@ -194,11 +210,16 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/DomainLogicAndSQL/" class="">领域逻辑和SQL</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/domain_logic_and_sql/" class="">领域逻辑和SQL</a>
   
 
           
   <ul>
+    
+  </ul>
+
+        </li>
+      
     
   </ul>
 

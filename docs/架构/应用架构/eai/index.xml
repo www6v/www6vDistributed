@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>应用集成方式 on Distributed</title>
-    <link>https://www6v.github.io/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/EAI/</link>
+    <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/</link>
     <description>Recent content in 应用集成方式 on Distributed</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="https://www6v.github.io/www6vDistributed/docs/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/EAI/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
