@@ -16,11 +16,39 @@
       <description>&#xA;REST API 设计 规范 # OpenAPI Specification 业界标准&#xA;A Visual Guide to What&amp;rsquo;s New in Swagger 3.0 OpenAPI Specification - Version 3.0.2 Google API Design Guide&#xA;谷歌API设计指南 API 设计模式 # RPC ROA(Rest-Oriented Architecture) 通常RESTful风格对API设计者的要求是比较高的，主要的难点在于面向资源设计要求开发者事先做好规划，将后端数据模型与API服务模型相匹配。&#xA;面向资源设计API # 资源模型 资源分类管理 资源关系 ECS TAG功能详解 资源组&#xA;服务容错处理 # 同步请求的Timeout[2] 异步请求方式 错误码&#xA;TagResources 错误码 参考: # 云服务OpenAPI的7大挑战，架构师如何应对？ 阿里技术 虚明 超时和重试总结 self </description>
     </item>
     <item>
+      <title>Feed流 总结</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/feed/</link>
+      <pubDate>Fri, 13 Sep 2019 19:35:02 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/feed/</guid>
+      <description>&#xA;Feed总结 # 消息同步模型 # 消息同步模型- 左:BCDEF的发件箱，右:A的收件箱&#xA;基于Timeline的消息库设计 # 基于Timeline的消息库设计 - 上：用于写扩散消息同步，下：全量历史消息，读扩散消息同步&#xA;推拉结合 # 基于用户类型的Timeline推拉结合(读扩散/写扩散混合) - 上面是发布流程，下面是阅读流程&#xA;读扩散 vs 写扩散 # 拉模式(读扩散) 推模式(写扩散)[推荐使用] 发布 个人页Timeline（发件箱） 粉丝的关注页（收件箱） 阅读 所有关注者的个人页Timeline 自己的关注页Timeline 网络最大开销 用户刷新时 发布Feed时 读写放大 放大读：读写比例到1万:1 放大写减少读：读写比例到50:50 优点 只要写一次 接收端消息同步逻辑会非常简单 缺点、副作用 1.读被大大的放大&#xA;2.响应时间长 消息写入会被放大， 数据会极大膨胀， 针对副作用的优化-推拉结合 1.大V采用拉模式，普通用户使用推模式&#xA;2.对活跃粉丝采用推模式，非活跃粉丝采用拉模式 场景 # 场景 Timeline IM单聊 三个Timeline IM群聊 1 + N个Timeline 朋友圈 1 + N个Timeline 微博 大V发一条微博就是 1 + M个Timeline（M &amp;laquo; N，N是粉丝数） Rank # 参考 # feed流拉取，读扩散，究竟是啥？ 如何打造千万级Feed流系统 TableStore Timeline：轻松构建千万级IM和Feed流系统 现代IM系统中消息推送和存储架构的实现 Feed流系统设计-总纲 未 </description>
+    </item>
+    <item>
       <title>中台战略</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/</link>
       <pubDate>Thu, 02 May 2019 00:29:04 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/</guid>
       <description>&#xA;目录 # 中台全景图 # 中台全景图[6] 中台和微服务[4] 中台&#xA;业务中台 核心业务层 技术中台 iaas+paas 数据中台 理念 阿里提出： 大中台， 小前台&#xA;业务中台 # 业务中台 # 阿里共享服务 [6] 淘宝 天猫 共享 商品，交易，店铺等服务 京东业务中台 [5] 技术中台 [1][2][3] # 参考 # 《企业IT架构转型之道-阿里巴巴中台战略思想与架构实战》 钟华 全面异步化：淘宝反应式架构升级探索 淘宝应用柔性架构的探索 《微服务架构核心20讲-如何理解阿里巴巴提出的微服务中台战略？》 杨波 中小型电商相当适配：京东商城系统架构设计原则精炼 </description>
+    </item>
+    <item>
+      <title>设计原则</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/</link>
+      <pubDate>Fri, 28 Sep 2018 10:31:52 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/</guid>
+      <description>Law 定律 # 奥卡姆剃刀原理 *** # 如果对于一个现象有好几种解释, 那么最简单的解释往往是最正确的.&#xA;排队理论 # Little&amp;rsquo;s 定律 -&amp;gt; 应用 ： 线程池中多线程个数的确定。&#xA;康威定律 # organizations which design systems &amp;hellip; are constrained to produce designs which are copies of the communication structures of these organizations&#xA;衍生: 1).DDD context 2).微服务模块划分 Amdahl定律, 通用扩展定律(Universal Scalability Law, USL) # CAP/BASE # 复杂度 简化本质复杂度，消除偶发复杂性. # 有三个问题可能会产生偶发复杂度。&#xA;第一个：由于日程或其他外部压力而导致临时大量削减代码。 第二个是复制。 第三个诱因是不可逆性，您做出的无法逆转的所有决定都将最终导致某种程度的偶发复杂度。 架构师： 去熵， 去复杂度。&#xA;原则 Principle # SOLID *** # 开闭原则 [3] 对于扩展是开放的（Open for extension） 对于修改是关闭的（Closed for modification） Happy path &amp;amp; Sad path 代码执行路径： happy path 和 sad path分离。 # 测试用例： happy path用例。 sad path用例， 使用@Exception（Junit4）， fail（JUnit3）。</description>
+    </item>
+    <item>
+      <title>开闭原则 - SPI</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/</link>
+      <pubDate>Sun, 02 Apr 2023 18:37:42 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/</guid>
+      <description>开闭原则（Open Closed Principle） # open for extension, but closed for modification&#xA;开闭原则实现 - SPI # SPI Java SPI Dubbo SPI ExtensionLoader Spring SPI @FunctionalInterface @Order(Ordered.LOWEST_PRECEDENCE) public interface MyBeanPostProcessor extends BeanPostProcessor { // define your methods here } 参考 # Java SPI机制以及和Dubbo/Spring SPI对比 面试官问烂的Dubbo中SPI机制的源码解析 *** 未&#xA;源码级深度理解 Java SPI 未&#xA;剖析 SPI 在 Spring 中的应用 未</description>
+    </item>
+    <item>
+      <title>系统设计 总结</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/</link>
+      <pubDate>Wed, 02 Mar 2022 19:19:10 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/</guid>
+      <description>特点 设计 Feed流 读写比例100:1&#xA;消息必达性要求高 非稳定的账号关系 {% post_link &amp;lsquo;feed&amp;rsquo; %} 秒杀系统 {% post_link &amp;lsquo;secKillSummary&amp;rsquo; %} {% post_link &amp;lsquo;seckill&amp;rsquo; %} 计数系统[2] 数据量巨大&#xA;访问量大，性能要求高&#xA;对于可用性、数字的准确性要求高 + 方案1 数据库 + 缓存 -&amp;gt; 按照 weibo_id做分库分表。数据库和缓存之间无法保证数据的一致性 [2]&#xA;+方案2 全部写入redis -&amp;gt; MQ异步写，批量合并写。redis昂贵， 存储优化，冷热分离 [2] 抢红包系统[3] 交易类信息:红包发、抢、拆、详情列表 展示类信息: 收红包列表、发红包列表 + 架构设计，理论基础是快慢分离。红包入账是一个分布事务，属于慢接口。而拆红包凭证落地则速度快 [3]&#xA;+ 高并发 set化， 局部化-控制同一红包并发个数 排行榜系统 参考 # 计数系统 # 计数系统架构实践一次搞定 | 架构师之路 未&#xA;&amp;laquo;37丨计数系统设计（一）：面对海量数据的计数器要如何做？&amp;raquo; 唐扬&#xA;红包系统 # 揭秘微信红包架构、抢红包算法和高并发和降级方案 微信红包&#xA;揭秘微信红包：架构、抢红包算法、高并发和降级方案&#xA;微信红包后台系统设计 未&#xA;微信高并发资金交易系统设计方案&amp;mdash;&amp;ndash;百亿红包背后的技术支撑&#xA;SET化、请求排队串行化、双维度分库表 未</description>
     </item>
     <item>
       <title>存算分离-数据应用</title>
@@ -51,6 +79,13 @@
       <description>目录 # 目标 # DDD的精髓是降低系统复杂度 规则 三个核心 # 统一语言 # 核心领域词汇表 统一语言重构迭代： 模型-》实现-》 重构-》 隐喻 -》 再到模型 命名规范 DSL - Domain Specific Language 领域划分 # 领域 子域 边界上下文（Bounded Context） 上下文映射（Context Mapping) 共享内核（Shared Kernel） 防腐层（Anti-Corruption）： 类似adaptor、facade， 对内部领域模型的隔离和屏蔽。 领域模型 # 抽象： 是从具体事物抽取、概括出它们共同的方面、本质属性与关系等。&#xA;领域建模方法论： UML用例分析、 UML用例分析法 四色建模法 事件风暴&#xA;模式 [3] # {% asset_img &amp;lsquo;ddd.png&amp;rsquo; %}&#xA;实体 [4]&#xA;可变性是实体的特点&#xA;值对象 [4] 不变性是值对象的本质&#xA;service 领域服务是多个实体组合出来的一段业务逻辑&#xA;聚合[5] 真实世界中整体与部分的关系 正是因为有这样的关系，在操作整体的时候，整体就封装了对部分的操作。 所谓的整体与部分的关系，就是当整体不存在时，部分就变得没有了意义。&#xA;每个聚合对应一个Repo interface [7] 对聚合内的数据一致性负责[7] 聚合根 外部访问的唯一入口</description>
     </item>
     <item>
+      <title>秒杀系统总结</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/secKillSummary/</link>
+      <pubDate>Mon, 21 May 2018 10:27:51 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/secKillSummary/</guid>
+      <description>&#xA;参考： # 阿里大秒系统 秒杀系统架构优化思路 58沈剑 如何设计一个高可用、高并发秒杀系统 未 </description>
+    </item>
+    <item>
       <title>DDD-落地实战 Practice</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/</link>
       <pubDate>Thu, 06 Jul 2023 10:13:28 +0000</pubDate>
@@ -63,6 +98,13 @@
       <pubDate>Sat, 13 May 2023 11:10:44 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/</guid>
       <description>&#xA;计算密集 # 计算密集 技术 产品 微服务 RPC(2th)Service Mesh(3th)&#xA;多运行时(4th ) Dubboistio proxylessdaper 容器 编排 K8s Service Mesh Sidecar 控制面， 数据面 Envoy xDS 微软SMI 可观测 Tracing+Metric+Logs OpenTelemetry=&#xA;OpenCensus+OpenTracing Sererless Sererless+ VMSererless+容器Sererless+服务Sererless+数据库 Ali ECSAli ECIFasSAurora，TiDB Cloud 数据密集 # 数据密集 技术 产品 消息队列 CloudEvent EventMesh 数据库 分离: 存算分离(资源伸缩)&#xA;融合: HTAP(模型) TiDB(TiKV, TiFlash) ，PolarDB 大数据 流计算 Beam，Flink </description>
+    </item>
+    <item>
+      <title>秒杀系统和商品详情页系统(培训讲义)</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/seckill/</link>
+      <pubDate>Sun, 06 May 2018 00:04:34 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/seckill/</guid>
+      <description>秒杀系统和商品详情页系统(培训讲义)</description>
     </item>
     <item>
       <title>应用集成方式</title>

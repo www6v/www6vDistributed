@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="特点 设计 Feed流 读写比例100:1
+消息必达性要求高 非稳定的账号关系 {% post_link &lsquo;feed&rsquo; %} 秒杀系统 {% post_link &lsquo;secKillSummary&rsquo; %} {% post_link &lsquo;seckill&rsquo; %} 计数系统[2] 数据量巨大
+访问量大，性能要求高
+对于可用性、数字的准确性要求高 &#43; 方案1 数据库 &#43; 缓存 -&gt; 按照 weibo_id做分库分表。数据库和缓存之间无法保证数据的一致性 [2]
+&#43;方案2 全部写入redis -&gt; MQ异步写，批量合并写。redis昂贵， 存储优化，冷热分离 [2] 抢红包系统[3] 交易类信息:红包发、抢、拆、详情列表 展示类信息: 收红包列表、发红包列表 &#43; 架构设计，理论基础是快慢分离。红包入账是一个分布事务，属于慢接口。而拆红包凭证落地则速度快 [3]
+&#43; 高并发 set化， 局部化-控制同一红包并发个数 排行榜系统 参考 # 计数系统 # 计数系统架构实践一次搞定 | 架构师之路 未
+&laquo;37丨计数系统设计（一）：面对海量数据的计数器要如何做？&raquo; 唐扬
+红包系统 # 揭秘微信红包架构、抢红包算法和高并发和降级方案 微信红包
+揭秘微信红包：架构、抢红包算法、高并发和降级方案
+微信红包后台系统设计 未
+微信高并发资金交易系统设计方案&mdash;&ndash;百亿红包背后的技术支撑
+SET化、请求排队串行化、双维度分库表 未">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/">
+  <meta property="og:site_name" content="Distributed">
+  <meta property="og:title" content="系统设计 总结">
+  <meta property="og:description" content="特点 设计 Feed流 读写比例100:1
+消息必达性要求高 非稳定的账号关系 {% post_link ‘feed’ %} 秒杀系统 {% post_link ‘secKillSummary’ %} {% post_link ‘seckill’ %} 计数系统[2] 数据量巨大
+访问量大，性能要求高
+对于可用性、数字的准确性要求高 &#43; 方案1 数据库 &#43; 缓存 -&gt; 按照 weibo_id做分库分表。数据库和缓存之间无法保证数据的一致性 [2]
+&#43;方案2 全部写入redis -&gt; MQ异步写，批量合并写。redis昂贵， 存储优化，冷热分离 [2] 抢红包系统[3] 交易类信息:红包发、抢、拆、详情列表 展示类信息: 收红包列表、发红包列表 &#43; 架构设计，理论基础是快慢分离。红包入账是一个分布事务，属于慢接口。而拆红包凭证落地则速度快 [3]
+&#43; 高并发 set化， 局部化-控制同一红包并发个数 排行榜系统 参考 # 计数系统 # 计数系统架构实践一次搞定 | 架构师之路 未
+«37丨计数系统设计（一）：面对海量数据的计数器要如何做？» 唐扬
+红包系统 # 揭秘微信红包架构、抢红包算法和高并发和降级方案 微信红包
+揭秘微信红包：架构、抢红包算法、高并发和降级方案
+微信红包后台系统设计 未
+微信高并发资金交易系统设计方案—–百亿红包背后的技术支撑
+SET化、请求排队串行化、双维度分库表 未">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<title>系统设计 总结 | Distributed</title>
+<link rel="icon" href="/www6vDistributed/favicon.png" >
+<link rel="manifest" href="/www6vDistributed/manifest.json">
+<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/">
+<link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
+  <script defer src="/www6vDistributed/fuse.min.js"></script>
+  <script defer src="/www6vDistributed/en.search.min.371cb237a0ef38acd5e36c251b39216c61e53f3ffd037dfb01a37f088e2c62ed.js" integrity="sha256-NxyyN6DvOKzV42wlGzkhbGHlPz/9A337AaN/CI4sYu0=" crossorigin="anonymous"></script>
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/index.xml" title="Distributed" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/www6vDistributed/"><span>Distributed</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-dc526a21eace5d63b5b3ef1b0a218aec" class="toggle" checked />
+    <label for="section-dc526a21eace5d63b5b3ef1b0a218aec" class="flex justify-between">
+      <a role="button" class="">架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-065452b69a9ada69f879d79882f67ab3" class="toggle"  />
+    <label for="section-065452b69a9ada69f879d79882f67ab3" class="flex justify-between">
+      <a role="button" class="">应用架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/api_design/" class="">OpenAPI 设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/" class="">DDD-落地实战 Practice</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/" class="">应用集成方式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/domain_logic_and_sql/" class="">领域逻辑和SQL</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8dfaa356172b6c5a6e357373ef77a465" class="toggle"  />
+    <label for="section-8dfaa356172b6c5a6e357373ef77a465" class="flex justify-between">
+      <a role="button" class="">系统架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/" class="">中台战略</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/" class="">存算分离-数据应用</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/" class="">高可用 Available</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/" class="">统一模型</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/" class="">异地多活 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6ee81443818922e9faa7277839b2081c" class="toggle" checked />
+    <label for="section-6ee81443818922e9faa7277839b2081c" class="flex justify-between">
+      <a role="button" class="">系统设计</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/feed/" class="">Feed流 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/" class="active">系统设计 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/secKillSummary/" class="">秒杀系统总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/seckill/" class="">秒杀系统和商品详情页系统(培训讲义)</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="toggle"  />
+    <label for="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="flex justify-between">
+      <a role="button" class="">设计原则</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/" class="">设计原则</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/" class="">开闭原则 - SPI</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>系统设计 总结</h3>
+
+  <label for="toc-control">
+    
+    <img src="/www6vDistributed/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#参考">参考</a>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><p></p>
+<!-- more -->
+<table>
+<thead>
+<tr>
+<th></th>
+<th>特点</th>
+<th>设计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feed流</td>
+<td>读写比例100:1<br> 消息必达性要求高<br/> 非稳定的账号关系</td>
+<td>{% post_link &lsquo;feed&rsquo; %}</td>
+</tr>
+<tr>
+<td>秒杀系统</td>
+<td></td>
+<td>{% post_link &lsquo;secKillSummary&rsquo; %}  <br>  {% post_link &lsquo;seckill&rsquo; %}</td>
+</tr>
+<tr>
+<td>计数系统[2]</td>
+<td>数据量巨大<br>  访问量大，性能要求高<br>对于可用性、数字的准确性要求高</td>
+<td>+ 方案1 数据库 + 缓存 -&gt; 按照 weibo_id做分库分表。数据库和缓存之间无法保证数据的一致性 [2]<br>+方案2  全部写入redis -&gt; MQ异步写，批量合并写。redis昂贵， 存储优化，冷热分离 [2]</td>
+</tr>
+<tr>
+<td>抢红包系统[3]</td>
+<td>交易类信息:红包发、抢、拆、详情列表 <br> 展示类信息: 收红包列表、发红包列表</td>
+<td>+ 架构设计，理论基础是快慢分离。红包入账是一个分布事务，属于慢接口。而拆红包凭证落地则速度快 [3]<br>+ 高并发   set化， 局部化-控制同一红包并发个数</td>
+</tr>
+<tr>
+<td>排行榜系统</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考">
+  参考
+  <a class="anchor" href="#%e5%8f%82%e8%80%83">#</a>
+</h2>
+<h5 id="计数系统">
+  计数系统
+  <a class="anchor" href="#%e8%ae%a1%e6%95%b0%e7%b3%bb%e7%bb%9f">#</a>
+</h5>
+<ol>
+<li>
+<p><a href="https://mp.weixin.qq.com/s/cCnPGRQ6LZHg8-7FRJLaKQ">计数系统架构实践一次搞定 | 架构师之路 </a>  未</p>
+</li>
+<li>
+<p>&laquo;37丨计数系统设计（一）：面对海量数据的计数器要如何做？&raquo;  唐扬</p>
+</li>
+</ol>
+<h5 id="红包系统">
+  红包系统
+  <a class="anchor" href="#%e7%ba%a2%e5%8c%85%e7%b3%bb%e7%bb%9f">#</a>
+</h5>
+<ol start="3">
+<li>
+<p><a href="https://blog.csdn.net/code52/article/details/51168854">揭秘微信红包架构、抢红包算法和高并发和降级方案</a>  微信红包</p>
+<p><a href="https://blog.csdn.net/itfly8/article/details/100890926">揭秘微信红包：架构、抢红包算法、高并发和降级方案</a></p>
+</li>
+<li>
+<p><a href="https://cloud.tencent.com/developer/article/1637408">微信红包后台系统设计</a> 未</p>
+</li>
+<li>
+<p><a href="https://melonshell.github.io/2020/01/23/tech2_wx_red_packet/">微信高并发资金交易系统设计方案&mdash;&ndash;百亿红包背后的技术支撑</a></p>
+<p>SET化、请求排队串行化、双维度分库表 未</p>
+</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#参考">参考</a>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

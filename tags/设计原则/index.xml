@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>设计原则 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</link>
+    <description>Recent content in 设计原则 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 02 Apr 2023 18:37:42 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>设计原则</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/</link>
+      <pubDate>Fri, 28 Sep 2018 10:31:52 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/</guid>
+      <description>Law 定律 # 奥卡姆剃刀原理 *** # 如果对于一个现象有好几种解释, 那么最简单的解释往往是最正确的.&#xA;排队理论 # Little&amp;rsquo;s 定律 -&amp;gt; 应用 ： 线程池中多线程个数的确定。&#xA;康威定律 # organizations which design systems &amp;hellip; are constrained to produce designs which are copies of the communication structures of these organizations&#xA;衍生: 1).DDD context 2).微服务模块划分 Amdahl定律, 通用扩展定律(Universal Scalability Law, USL) # CAP/BASE # 复杂度 简化本质复杂度，消除偶发复杂性. # 有三个问题可能会产生偶发复杂度。&#xA;第一个：由于日程或其他外部压力而导致临时大量削减代码。 第二个是复制。 第三个诱因是不可逆性，您做出的无法逆转的所有决定都将最终导致某种程度的偶发复杂度。 架构师： 去熵， 去复杂度。&#xA;原则 Principle # SOLID *** # 开闭原则 [3] 对于扩展是开放的（Open for extension） 对于修改是关闭的（Closed for modification） Happy path &amp;amp; Sad path 代码执行路径： happy path 和 sad path分离。 # 测试用例： happy path用例。 sad path用例， 使用@Exception（Junit4）， fail（JUnit3）。</description>
+    </item>
+    <item>
+      <title>开闭原则 - SPI</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/</link>
+      <pubDate>Sun, 02 Apr 2023 18:37:42 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/</guid>
+      <description>开闭原则（Open Closed Principle） # open for extension, but closed for modification&#xA;开闭原则实现 - SPI # SPI Java SPI Dubbo SPI ExtensionLoader Spring SPI @FunctionalInterface @Order(Ordered.LOWEST_PRECEDENCE) public interface MyBeanPostProcessor extends BeanPostProcessor { // define your methods here } 参考 # Java SPI机制以及和Dubbo/Spring SPI对比 面试官问烂的Dubbo中SPI机制的源码解析 *** 未&#xA;源码级深度理解 Java SPI 未&#xA;剖析 SPI 在 Spring 中的应用 未</description>
+    </item>
+  </channel>
+</rss>
