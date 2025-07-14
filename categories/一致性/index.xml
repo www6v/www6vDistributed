@@ -10,10 +10,17 @@
     <atom:link href="https://www6v.github.io/www6vDistributed/categories/%E4%B8%80%E8%87%B4%E6%80%A7/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Raft协议</title>
-      <link>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/</link>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/raft/</link>
       <pubDate>Fri, 21 Jun 2019 18:18:07 +0000</pubDate>
-      <guid>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/raft/</guid>
       <description>&#xA;总结 # 从本质上说，Raft 算法是通过一切以领导者为准的方式，实现一系列值的共识和各节点日志的一致.&#xA;Raft： leader + term + peers&#xA;Raft-分区脑裂（成员变更的问题） # 分区脑裂[非majority有uncommited log、 term1]&#xA;分区脑裂[majority可以同步log、 term2]&#xA;Raft-领导者选举 # Raft-复制日志 # 副本数据是以日志的形式存在的，其中日志项中的指令表示用户指定的数据。 Raft 是通过以领导者的日志为准，来实现日志的一致的。 在 Raft 中日志必须是连续的 日志完整性最高的节点才能当选领导者 参考 # raft 动画 good The Raft Consensus Algorithm good 动画 各种系统实现 未 Raft Distributed Consensus Algorithm Visualization 动画 未 Raft对比ZAB协议 raft协议和zab协议有啥区别？ 一张图看懂Raft 未 Raft 为什么是更易理解的分布式一致性算法 未 分布式协议与算法实战 - 07 | Raft算法（一）：如何选举领导者？ 韩健 *** 分布式协议与算法实战 - 08丨Raft算法（二）：如何复制日志？.pdf 韩健 *** Raft 分布式系统一致性协议探讨 腾讯 未 论文 Raft一致性算法论文译文 In Search of an Understandable Consensus Algorithm(Extended Version) raft </description>
+    </item>
+    <item>
+      <title>幂等</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/idempotent/</link>
+      <pubDate>Tue, 21 Mar 2017 22:20:32 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/idempotent/</guid>
+      <description>&#xA;三种实现方式： # 1. 利用数据库的唯一约束实现幂等 # 在数据库中建一张转账流水表，这个表有三个字段：转账单 ID、账户 ID 和变更金额，然后给转账单 ID 和账户 ID 这两个字段联合起来创建一个唯一约束，这样对于相同的转账单 ID 和账户 ID，表里至多只能存在一条记录。&#xA;基于这个思路，不光是可以使用关系型数据库，只要是支持类似**“INSERT IF NOT EXIST”语义**的存储类系统都可以用于实现幂等，比如，你可以用 Redis 的 SETNX 命令来替代数据库中的唯一约束，来实现幂等消费。&#xA;2. 为更新的数据设置前置条件 # “将账户 X 的余额增加 100 元”这个操作并不满足幂等性，我们可以把这个操作加上一个前置条件，变为：“如果账户 X 当前的余额为 500 元，将余额加100 元”，这个操作就具备了幂等性。&#xA;更加通用的方法， 数据增加一个版本号属性，每次更数据前，比较当前数据的版本号是否和消息中的版本号一致，如果不一致就拒绝更新数据，更新数据的同时将版本号 +1，一样可以实现幂等更新。&#xA;3. 记录并检查操作 # 通用性最强，适用范围最广的实现幂等性方法：记录并检查操作，也称为“Token 机制或者 GUID（全局唯一 ID）机制”。&#xA;具体的实现方法是，在发送消息时，给每条消息指定一个全局唯一的 ID，消费时，先根据这个 ID 检查这条消息是否有被消费过，如果没有消费过，才更新数据，然后将消费状态置为已消费。&#xA;这种方法适用范围最广，但是实现难度和复杂度也比较高，一般不推荐使用。&#xA;参考： # 分布式系统互斥性与幂等性问题的分析与解决 蒋谞 消息总线真的能保证幂等？ 58沈剑 《微服务设计》 11.6节 Sam Newman 《消息队列高手课 - 如何处理消费过程中的重复消息？》 李玥 </description>
     </item>
     <item>
       <title>分布式一致性 总结</title>

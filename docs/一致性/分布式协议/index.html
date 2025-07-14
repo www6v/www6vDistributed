@@ -3,36 +3,25 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="
-总结 # 从本质上说，Raft 算法是通过一切以领导者为准的方式，实现一系列值的共识和各节点日志的一致.
-Raft： leader &#43; term &#43; peers
-Raft-分区脑裂（成员变更的问题） # 分区脑裂[非majority有uncommited log、 term1]
-分区脑裂[majority可以同步log、 term2]
-Raft-领导者选举 # Raft-复制日志 # 副本数据是以日志的形式存在的，其中日志项中的指令表示用户指定的数据。 Raft 是通过以领导者的日志为准，来实现日志的一致的。 在 Raft 中日志必须是连续的 日志完整性最高的节点才能当选领导者 参考 # raft 动画 good The Raft Consensus Algorithm good 动画 各种系统实现 未 Raft Distributed Consensus Algorithm Visualization 动画 未 Raft对比ZAB协议 raft协议和zab协议有啥区别？ 一张图看懂Raft 未 Raft 为什么是更易理解的分布式一致性算法 未 分布式协议与算法实战 - 07 | Raft算法（一）：如何选举领导者？ 韩健 *** 分布式协议与算法实战 - 08丨Raft算法（二）：如何复制日志？.pdf 韩健 *** Raft 分布式系统一致性协议探讨 腾讯 未 论文 Raft一致性算法论文译文 In Search of an Understandable Consensus Algorithm(Extended Version) raft ">
+<meta name="description" content="">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
-<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/">
   <meta property="og:site_name" content="Distributed">
-  <meta property="og:title" content="Raft协议">
-  <meta property="og:description" content="
-总结 # 从本质上说，Raft 算法是通过一切以领导者为准的方式，实现一系列值的共识和各节点日志的一致.
-Raft： leader &#43; term &#43; peers
-Raft-分区脑裂（成员变更的问题） # 分区脑裂[非majority有uncommited log、 term1]
-分区脑裂[majority可以同步log、 term2]
-Raft-领导者选举 # Raft-复制日志 # 副本数据是以日志的形式存在的，其中日志项中的指令表示用户指定的数据。 Raft 是通过以领导者的日志为准，来实现日志的一致的。 在 Raft 中日志必须是连续的 日志完整性最高的节点才能当选领导者 参考 # raft 动画 good The Raft Consensus Algorithm good 动画 各种系统实现 未 Raft Distributed Consensus Algorithm Visualization 动画 未 Raft对比ZAB协议 raft协议和zab协议有啥区别？ 一张图看懂Raft 未 Raft 为什么是更易理解的分布式一致性算法 未 分布式协议与算法实战 - 07 | Raft算法（一）：如何选举领导者？ 韩健 *** 分布式协议与算法实战 - 08丨Raft算法（二）：如何复制日志？.pdf 韩健 *** Raft 分布式系统一致性协议探讨 腾讯 未 论文 Raft一致性算法论文译文 In Search of an Understandable Consensus Algorithm(Extended Version) raft ">
+  <meta property="og:title" content="分布式协议">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="website">
-<title>Raft协议 | Distributed</title>
+<title>分布式协议 | Distributed</title>
 <link rel="icon" href="/www6vDistributed/favicon.png" >
 <link rel="manifest" href="/www6vDistributed/manifest.json">
-<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/">
+<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/">
 <link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
   <script defer src="/www6vDistributed/fuse.min.js"></script>
-  <script defer src="/www6vDistributed/en.search.min.a386de4f4a34d274e61d165d4032677e18c3bd2d2f9f83cebbbd7c9fb3a3fdaa.js" integrity="sha256-o4beT0o00nTmHRZdQDJnfhjDvS0vn4POu718n7Oj/ao=" crossorigin="anonymous"></script>
+  <script defer src="/www6vDistributed/en.search.min.9c5c83ae7dd35cdc7e2f07f7eafd284cd67a27bf17b30e5048404c7f61a6a9a5.js" integrity="sha256-nFyDrn3TXNx&#43;Lwf36v0oTNZ6J78Xsw5QSEBMf2GmqaU=" crossorigin="anonymous"></script>
 
   
 
-<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/index.xml" title="Distributed" />
+<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/index.xml" title="Distributed" />
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -525,7 +514,7 @@ https://github.com/alex-shpak/hugo-book
       
     
       
-        <li>
+        <li class="book-section-flat" >
           
   
   
@@ -533,7 +522,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-23b63dcecf4d9c084a8c88b211cf499a" class="toggle"  />
     <label for="section-23b63dcecf4d9c084a8c88b211cf499a" class="flex justify-between">
-      <a role="button" class="">SRE</a>
+      <a role="button" class="">稳定性</a>
     </label>
   
 
@@ -871,7 +860,64 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/" class="active">Raft协议</a>
+    <input type="checkbox" id="section-ea41d27b1f25c7f3a6b2250f2dc23cf0" class="toggle" checked />
+    <label for="section-ea41d27b1f25c7f3a6b2250f2dc23cf0" class="flex justify-between">
+      <a role="button" class="active">分布式协议</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/raft/" class="">Raft协议</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/zookeeperZab/" class="">Zookeeper-Zab</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/idempotent/" class="">幂等</a>
   
 
           
@@ -958,7 +1004,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <h3>Raft协议</h3>
+  <h3>分布式协议</h3>
 
   <label for="toc-control">
     
@@ -972,19 +1018,7 @@ https://github.com/alex-shpak/hugo-book
   <aside class="hidden clearfix">
     
   
-<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#总结">总结</a></li>
-        <li><a href="#raft-分区脑裂成员变更的问题">Raft-分区脑裂（成员变更的问题）</a></li>
-        <li><a href="#raft-领导者选举">Raft-领导者选举</a></li>
-        <li><a href="#raft-复制日志">Raft-复制日志</a></li>
-        <li><a href="#参考">参考</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+<nav id="TableOfContents"></nav>
 
 
 
@@ -995,69 +1029,7 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  <article class="markdown book-article"><p></p>
-<!-- more -->
-<h2 id="总结">
-  总结
-  <a class="anchor" href="#%e6%80%bb%e7%bb%93">#</a>
-</h2>
-<p>从本质上说，<strong>Raft 算法是通过一切以领导者为准的方式，实现一系列值的共识和各节点日志的一致.</strong></p>
-<p><img src="./images/raft.jpg" alt="raft协议" /></p>
-<p>Raft： leader + term + peers</p>
-<h2 id="raft-分区脑裂成员变更的问题">
-  Raft-分区脑裂（成员变更的问题）
-  <a class="anchor" href="#raft-%e5%88%86%e5%8c%ba%e8%84%91%e8%a3%82%e6%88%90%e5%91%98%e5%8f%98%e6%9b%b4%e7%9a%84%e9%97%ae%e9%a2%98">#</a>
-</h2>
-<div style="text-align: center;">
-<p><img src="https://user-images.githubusercontent.com/5608425/64484884-1c425480-d24b-11e9-92c1-865111cc016d.JPG" alt="raft-patition" /><br>
-分区脑裂[非majority有uncommited log、 term1]</p>
-<p><img src="https://user-images.githubusercontent.com/5608425/64484885-1c425480-d24b-11e9-8375-102d20506265.JPG" alt="raft-patition-1" /><br>
-分区脑裂[majority可以同步log、 term2]</p>
-</div>
-<h2 id="raft-领导者选举">
-  Raft-领导者选举
-  <a class="anchor" href="#raft-%e9%a2%86%e5%af%bc%e8%80%85%e9%80%89%e4%b8%be">#</a>
-</h2>
-<p><img src="./images/raft-leader-1.JPG" alt="raft选举-步骤1-Election Timeout" /></p>
-<p><img src="./images/raft-leader-2.JPG" alt="raft选举-步骤2" /></p>
-<p><img src="./images/raft-leader-3.JPG" alt="raft选举-步骤3" /></p>
-<p><img src="./images/raft-leader-4.JPG" alt="raft选举-步骤4" /></p>
-<p><img src="./images/raft-leader-5.JPG" alt="raft选举-步骤5" /></p>
-<h2 id="raft-复制日志">
-  Raft-复制日志
-  <a class="anchor" href="#raft-%e5%a4%8d%e5%88%b6%e6%97%a5%e5%bf%97">#</a>
-</h2>
-<ul>
-<li>副本数据是以日志的形式存在的，其中日志项中的指令表示用户指定的数据。</li>
-<li>Raft 是通过以领导者的日志为准，来实现日志的一致的。</li>
-<li>在 Raft 中日志必须是<strong>连续的</strong></li>
-<li><strong>日志完整性最高的节点才能当选领导者</strong></li>
-</ul>
-<h2 id="参考">
-  参考
-  <a class="anchor" href="#%e5%8f%82%e8%80%83">#</a>
-</h2>
-<ol>
-<li><a href="http://thesecretlivesofdata.com/raft/">raft</a>  动画 good</li>
-<li><a href="https://raft.github.io/">The Raft Consensus Algorithm</a>  good 动画 各种系统实现 未</li>
-<li><a href="http://kanaka.github.io/raft.js/">Raft Distributed Consensus Algorithm Visualization</a> 动画 未</li>
-<li><a href="https://my.oschina.net/pingpangkuangmo/blog/782702">Raft对比ZAB协议</a></li>
-<li><a href="https://www.zhihu.com/question/28242561">raft协议和zab协议有啥区别？</a></li>
-<li><a href="http://www.seflerzhou.net/post-109.html">一张图看懂Raft</a> 未</li>
-<li><a href="https://www.cnblogs.com/mindwind/p/5231986.html">Raft 为什么是更易理解的分布式一致性算法</a>  未</li>
-<li><a href="">分布式协议与算法实战 - 07 | Raft算法（一）：如何选举领导者？</a> 韩健 ***</li>
-<li><a href="">分布式协议与算法实战 - 08丨Raft算法（二）：如何复制日志？.pdf</a> 韩健 ***</li>
-<li><a href="https://zhuanlan.zhihu.com/p/510220698">Raft 分布式系统一致性协议探讨</a>  腾讯 未</li>
-</ol>
-<hr>
-<ul>
-<li>论文</li>
-</ul>
-<ol>
-<li><a href="https://www.infoq.cn/article/raft-paper/">Raft一致性算法论文译文</a></li>
-<li><a href="https://raft.github.io/raft.pdf">In Search of an Understandable Consensus Algorithm(Extended Version)</a>  raft</li>
-</ol>
-</article>
+  <article class="markdown book-article"></article>
  
       
 
@@ -1082,10 +1054,6 @@ https://github.com/alex-shpak/hugo-book
 
       
   
-  <div class="book-comments">
-
-</div>
-  
  
 
       <label for="menu-control" class="hidden book-menu-overlay"></label>
@@ -1096,19 +1064,7 @@ https://github.com/alex-shpak/hugo-book
       <div class="book-toc-content">
         
   
-<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#总结">总结</a></li>
-        <li><a href="#raft-分区脑裂成员变更的问题">Raft-分区脑裂（成员变更的问题）</a></li>
-        <li><a href="#raft-领导者选举">Raft-领导者选举</a></li>
-        <li><a href="#raft-复制日志">Raft-复制日志</a></li>
-        <li><a href="#参考">参考</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+<nav id="TableOfContents"></nav>
 
 
  

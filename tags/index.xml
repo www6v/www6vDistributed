@@ -156,10 +156,24 @@
       <description></description>
     </item>
     <item>
+      <title>幂等</title>
+      <link>https://www6v.github.io/www6vDistributed/tags/%E5%B9%82%E7%AD%89/</link>
+      <pubDate>Tue, 21 Mar 2017 22:20:32 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/tags/%E5%B9%82%E7%AD%89/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>事务</title>
       <link>https://www6v.github.io/www6vDistributed/tags/%E4%BA%8B%E5%8A%A1/</link>
       <pubDate>Tue, 09 Feb 2016 18:19:56 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/tags/%E4%BA%8B%E5%8A%A1/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zookeeper</title>
+      <link>https://www6v.github.io/www6vDistributed/tags/Zookeeper/</link>
+      <pubDate>Sun, 29 Nov 2015 12:06:43 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/tags/Zookeeper/</guid>
       <description></description>
     </item>
   </channel>

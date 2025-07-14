@@ -205,10 +205,31 @@
       <description></description>
     </item>
     <item>
+      <title>幂等</title>
+      <link>https://www6v.github.io/www6vDistributed/categories/%E5%B9%82%E7%AD%89/</link>
+      <pubDate>Tue, 21 Mar 2017 22:20:32 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/categories/%E5%B9%82%E7%AD%89/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>SplitBrain</title>
       <link>https://www6v.github.io/www6vDistributed/categories/SplitBrain/</link>
       <pubDate>Sun, 19 Feb 2017 23:44:11 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/categories/SplitBrain/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zookeeper</title>
+      <link>https://www6v.github.io/www6vDistributed/categories/Zookeeper/</link>
+      <pubDate>Sun, 29 Nov 2015 12:06:43 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/categories/Zookeeper/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>中间件</title>
+      <link>https://www6v.github.io/www6vDistributed/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+      <pubDate>Sun, 29 Nov 2015 12:06:43 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/</guid>
       <description></description>
     </item>
   </channel>

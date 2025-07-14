@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/categories/Zookeeper/">
+  <meta property="og:site_name" content="Distributed">
+  <meta property="og:title" content="Zookeeper">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<title>Zookeeper | Distributed</title>
+<link rel="icon" href="/www6vDistributed/favicon.png" >
+<link rel="manifest" href="/www6vDistributed/manifest.json">
+<link rel="canonical" href="https://www6v.github.io/www6vDistributed/categories/Zookeeper/">
+<link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
+  <script defer src="/www6vDistributed/fuse.min.js"></script>
+  <script defer src="/www6vDistributed/en.search.min.9c5c83ae7dd35cdc7e2f07f7eafd284cd67a27bf17b30e5048404c7f61a6a9a5.js" integrity="sha256-nFyDrn3TXNx&#43;Lwf36v0oTNZ6J78Xsw5QSEBMf2GmqaU=" crossorigin="anonymous"></script>
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/categories/Zookeeper/index.xml" title="Distributed" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/www6vDistributed/"><span>Distributed</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-dc526a21eace5d63b5b3ef1b0a218aec" class="toggle"  />
+    <label for="section-dc526a21eace5d63b5b3ef1b0a218aec" class="flex justify-between">
+      <a role="button" class="">架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-065452b69a9ada69f879d79882f67ab3" class="toggle"  />
+    <label for="section-065452b69a9ada69f879d79882f67ab3" class="flex justify-between">
+      <a role="button" class="">应用架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cleanCode/" class="">整洁架构 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/api_design/" class="">OpenAPI 设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/" class="">DDD-落地实战 Practice</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/" class="">应用集成方式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/domain_logic_and_sql/" class="">领域逻辑和SQL</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8dfaa356172b6c5a6e357373ef77a465" class="toggle"  />
+    <label for="section-8dfaa356172b6c5a6e357373ef77a465" class="flex justify-between">
+      <a role="button" class="">系统架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/distributedSystemPattern/" class="">分布式系统 模式 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/" class="">中台战略</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/" class="">存算分离-数据应用</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/" class="">高可用 Available</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/" class="">统一模型</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/" class="">异地多活 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6ee81443818922e9faa7277839b2081c" class="toggle"  />
+    <label for="section-6ee81443818922e9faa7277839b2081c" class="flex justify-between">
+      <a role="button" class="">系统设计</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/feed/" class="">Feed流 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/" class="">系统设计 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/secKillSummary/" class="">秒杀系统总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/seckill/" class="">秒杀系统和商品详情页系统(培训讲义)</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="toggle"  />
+    <label for="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="flex justify-between">
+      <a role="button" class="">设计原则</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/" class="">设计原则</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/" class="">开闭原则 - SPI</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-23b63dcecf4d9c084a8c88b211cf499a" class="toggle"  />
+    <label for="section-23b63dcecf4d9c084a8c88b211cf499a" class="flex justify-between">
+      <a role="button" class="">稳定性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/" class="">稳定性总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-2076d033ca0f2a4b9e7fd2ae4af29968" class="toggle"  />
+    <label for="section-2076d033ca0f2a4b9e7fd2ae4af29968" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-97c2762f26202e064bb1f79576b1647c" class="toggle"  />
+    <label for="section-97c2762f26202e064bb1f79576b1647c" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sre/" class="">SRE 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbook/" class="">《SRE 工作手册》</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasic/" class="">SRE 五大根基</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicSLO/" class="">SRE 五大根基-SLO</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicAlert/" class="">SRE 五大根基-报警</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5a63c3d0341b5adfc60e0fcb26c38e55" class="toggle"  />
+    <label for="section-5a63c3d0341b5adfc60e0fcb26c38e55" class="flex justify-between">
+      <a role="button" class="">故障模型</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/" class="">故障模型-应用层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/" class="">故障模型-中间件层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/" class="">故障模型-基础设施层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0de79ccd754460f367973a662985e1a2" class="toggle"  />
+    <label for="section-0de79ccd754460f367973a662985e1a2" class="flex justify-between">
+      <a role="button" class="">容量保障</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E5%AE%B9%E9%87%8F%E4%BF%9D%E9%9A%9C/capacityGuarantee/" class="">容量保障与全链路压测</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-785be346d86e1cb84ec2723dc37036a0" class="toggle"  />
+    <label for="section-785be346d86e1cb84ec2723dc37036a0" class="flex justify-between">
+      <a role="button" class="">混沌工程</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/chaosEngineering/" class="">混沌工程</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-92b9126fb99c3be4bacb6589793762b5" class="toggle"  />
+    <label for="section-92b9126fb99c3be4bacb6589793762b5" class="flex justify-between">
+      <a role="button" class="">一致性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-ea41d27b1f25c7f3a6b2250f2dc23cf0" class="toggle"  />
+    <label for="section-ea41d27b1f25c7f3a6b2250f2dc23cf0" class="flex justify-between">
+      <a role="button" class="">分布式协议</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/raft/" class="">Raft协议</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/zookeeperZab/" class="">Zookeeper-Zab</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/idempotent/" class="">幂等</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/splitBrain/" class="">Split Brain</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/consistent/" class="">分布式一致性 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Zookeeper</h3>
+
+  <label for="toc-control">
+    
+    <img src="/www6vDistributed/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  <nav>
+  <ul>
+  
+    
+    <li class="book-section-flat">
+      <strong>Categories</strong>
+      <ul>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/DDD/">DDD</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/">应用架构</a>
+          <span>7</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%9E%B6%E6%9E%84/">架构</a>
+          <span>18</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/">系统架构</a>
+          <span>5</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E7%BB%9F%E4%B8%80%E6%A8%A1%E5%9E%8B/">统一模型</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/">设计原则</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/sre/">Sre</a>
+          <span>5</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E7%A8%B3%E5%AE%9A%E6%80%A7/">稳定性</a>
+          <span>12</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%95%B4%E6%B4%81%E6%9E%B6%E6%9E%84/">整洁架构</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%AE%B9%E9%87%8F%E4%BF%9D%E9%9A%9C/">容量保障</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%80%BB%E7%BB%93/">总结</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%A8%A1%E5%BC%8F/">模式</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%AD%98%E7%AE%97%E5%88%86%E7%A6%BB/">存算分离</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/API/">API</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/">混沌工程</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/feed/">Feed</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/raft/">Raft</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E4%B8%80%E8%87%B4%E6%80%A7/">一致性</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E4%B8%AD%E5%8F%B0%E6%88%98%E7%95%A5/">中台战略</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/">故障模型</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F/">秒杀系统</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/">应用集成</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/">领域建模</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/CQRS/">CQRS</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%BC%82%E5%9C%B0%E5%A4%9A%E6%B4%BB/">异地多活</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%B9%82%E7%AD%89/">幂等</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/SplitBrain/">SplitBrain</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/Zookeeper/">Zookeeper</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>
+          <span>1</span>
+        </li>
+      
+      </ul>
+    </li>
+    
+  
+    
+    <li class="book-section-flat">
+      <strong>Tags</strong>
+      <ul>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/DDD/">DDD</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E7%BB%9F%E4%B8%80%E6%A8%A1%E5%9E%8B/">统一模型</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/">设计原则</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/sre/">Sre</a>
+          <span>5</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/">应用架构</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%AE%B9%E9%87%8F%E4%BF%9D%E9%9A%9C/">容量保障</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/feed/">Feed</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/API/">API</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/">混沌工程</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/raft/">Raft</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E4%B8%80%E8%87%B4%E6%80%A7/">一致性</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E4%B8%AD%E5%8F%B0%E6%88%98%E7%95%A5/">中台战略</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/">故障模型</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F/">秒杀系统</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/">应用集成</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/">领域建模</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/CQRS/">CQRS</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%BC%82%E5%9C%B0%E5%A4%9A%E6%B4%BB/">异地多活</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/">稳定性</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%B9%82%E7%AD%89/">幂等</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E4%BA%8B%E5%8A%A1/">事务</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/Zookeeper/">Zookeeper</a>
+          <span>1</span>
+        </li>
+      
+      </ul>
+    </li>
+    
+  
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/zookeeperZab/">Zookeeper-Zab</a>
+    </h2>
+    
+  <div class="flex align-center text-small book-post-date">
+    <img src="/www6vDistributed/svg/calendar.svg" class="book-icon " alt="" />
+    <span>November 29, 2015</span>
+  </div>
+
+
+
+  
+  <div class="text-small">
+    
+      <a href="/www6vDistributed/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>, 
+      <a href="/www6vDistributed/categories/Zookeeper/">Zookeeper</a>
+  </div>
+  
+
+  
+  <div class="text-small">
+    
+      <a href="/www6vDistributed/tags/Zookeeper/">Zookeeper</a>
+  </div>
+  
+
+
+    <p>Zab协议 # Overview [1] # ZAB的四个阶段 [3] # 后三个阶段 [5] # 阶段一 选举阶段（Leader Election） [4] # 成为Leader的条件：
+选epoch最大的 epoch相等，选zxid最大的 epoch和zxid都相等，选server_id最大的（zoo.cfg 中配置的 myid） 服务器状态
+LOOKING 不确定Leader状态。该状态下的服务器认为当前集群中没有Leader，会发起Leader选举 FOLLOWING 跟随者状态。表明当前服务器角色是Follower，并且它知道Leader是谁 LEADING 领导者状态。表明当前服务器角色是Leader，它会维护与Follower间的心跳 OBSERVING 观察者状态。表明当前服务器角色是Observer，与Folower唯一的不同在于不参与选举，也不参与集群写操作时的投票 快速选举（Fast Leader Election） 节点在选举开始时，都默认投票给自己，当接收其他节点的选票时，会根据上面的 Leader条件 判断并且更改自己的选票，然后重新发送选票给其他节点。当有一个节点的得票超过半数，该节点会设置自己的状态为 Leading ，其他节点会设置自己的状态为 Following。
+阶段二 发现阶段 # 在这个阶段中，Followers和上一轮选举出的准Leader进行通信，同步Followers最近接受的事务Proposal。这个阶段主要目的是发现当前大多数节点接受的最新提议，并且准Leader生成新的epoch，让Followers接受，更新它们的acceptedEpoch。
+一个Follower只会连接一个Leader，如果有一个节点F认为另一个Follower P是Leader，F在尝试连接P时会被拒绝，F被拒绝后，就会进入选举阶段。
+阶段三 同步阶段 # 同步阶段主要是利用 Leader 前一阶段获得的最新 Proposal 历史，同步集群中所有的副本。
+只有当 quorum（超过半数的节点） 都同步完成，准 Leader 才会成为真正的 Leader。Follower 只会接收 zxid 比自己 lastZxid 大的 Proposal。
+阶段四 广播阶段 # 到了这个阶段，Zookeeper 集群才能正式对外提供事务服务，并且 Leader 可以进行消息广播。同时，如果有新的节点加入，还需要对新节点进行同步。 需要注意的是，Zab 提交事务并不像 2PC 一样需要全部 Follower 都 Ack，只需要得到 quorum（超过半数的节点）的Ack 就可以。
+        <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/zookeeperZab/">...</a>
+      
+    </p>
+  </article>
+  
+
+  
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  <nav>
+  <ul>
+  
+    
+    <li class="book-section-flat">
+      <strong>Categories</strong>
+      <ul>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/DDD/">DDD</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/">应用架构</a>
+          <span>7</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%9E%B6%E6%9E%84/">架构</a>
+          <span>18</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/">系统架构</a>
+          <span>5</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E7%BB%9F%E4%B8%80%E6%A8%A1%E5%9E%8B/">统一模型</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/">设计原则</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/sre/">Sre</a>
+          <span>5</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E7%A8%B3%E5%AE%9A%E6%80%A7/">稳定性</a>
+          <span>12</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%95%B4%E6%B4%81%E6%9E%B6%E6%9E%84/">整洁架构</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%AE%B9%E9%87%8F%E4%BF%9D%E9%9A%9C/">容量保障</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%80%BB%E7%BB%93/">总结</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%A8%A1%E5%BC%8F/">模式</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%AD%98%E7%AE%97%E5%88%86%E7%A6%BB/">存算分离</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/API/">API</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/">混沌工程</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/feed/">Feed</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/raft/">Raft</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E4%B8%80%E8%87%B4%E6%80%A7/">一致性</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E4%B8%AD%E5%8F%B0%E6%88%98%E7%95%A5/">中台战略</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/">故障模型</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F/">秒杀系统</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/">应用集成</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/">领域建模</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/CQRS/">CQRS</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%BC%82%E5%9C%B0%E5%A4%9A%E6%B4%BB/">异地多活</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E5%B9%82%E7%AD%89/">幂等</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/SplitBrain/">SplitBrain</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/Zookeeper/">Zookeeper</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>
+          <span>1</span>
+        </li>
+      
+      </ul>
+    </li>
+    
+  
+    
+    <li class="book-section-flat">
+      <strong>Tags</strong>
+      <ul>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/DDD/">DDD</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E7%BB%9F%E4%B8%80%E6%A8%A1%E5%9E%8B/">统一模型</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/">设计原则</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/sre/">Sre</a>
+          <span>5</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/">应用架构</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%AE%B9%E9%87%8F%E4%BF%9D%E9%9A%9C/">容量保障</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/feed/">Feed</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/API/">API</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/">混沌工程</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/raft/">Raft</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E4%B8%80%E8%87%B4%E6%80%A7/">一致性</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E4%B8%AD%E5%8F%B0%E6%88%98%E7%95%A5/">中台战略</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/">故障模型</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F/">秒杀系统</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90/">应用集成</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E9%A2%86%E5%9F%9F%E5%BB%BA%E6%A8%A1/">领域建模</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/CQRS/">CQRS</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%BC%82%E5%9C%B0%E5%A4%9A%E6%B4%BB/">异地多活</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/">稳定性</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E5%B9%82%E7%AD%89/">幂等</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/%E4%BA%8B%E5%8A%A1/">事务</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/www6vDistributed/tags/Zookeeper/">Zookeeper</a>
+          <span>1</span>
+        </li>
+      
+      </ul>
+    </li>
+    
+  
+  </ul>
+</nav>
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
