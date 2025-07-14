@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>稳定性 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/</link>
+    <description>Recent content in 稳定性 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 09 May 2017 22:34:54 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>稳定性总结</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</link>
+      <pubDate>Tue, 09 May 2017 22:34:54 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</guid>
+      <description>&#xA;关键词: 容量规划, 压测, 强弱依赖, 关键词: 故障模型, 故障演练, 故障注入&#xA;稳定性总结 # 参考： # 超全总结 | 阿里如何应对电商故障？神秘演练细节曝光 阿里巴巴-周洋（花名中亭） 故障注入， 故障演练 稳定性思考-强弱依赖 阿里中间件团队博客 稳定性思考-强弱依赖2 阿里中间件团队博客 中间件技术及双十一实践·稳定性平台篇 阿里中间件（Aliware） 强弱依赖， 容量规划 &amp;laquo;尽在双11阿里巴巴技术演进与超越&amp;raquo; </description>
+    </item>
+  </channel>
+</rss>

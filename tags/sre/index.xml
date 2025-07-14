@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sre on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/tags/sre/</link>
+    <description>Recent content in Sre on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 01 Feb 2023 16:14:47 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/sre/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SRE 总结</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sre/</link>
+      <pubDate>Sun, 13 Mar 2022 22:36:50 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sre/</guid>
+      <description>SRE [1] # SRE = PE（Production Engineer） + 工具平台开发 + 稳定性平台开发 工具平台团队，负责效能工具的研发，比如实现 CMDB、运维自动化、持续交付流水线以 及部分技术运营报表的实现，为基础运维和应用运维提供效率平台支持。 稳定性平台团队，负责稳定性保障相关的标准和平台，比如监控、服务治理相关的限流降 级、全链路跟踪、容量压测和规划。 组织架构图 [1] # 故障复盘 [2] # 黄金三问 第一问：故障原因有哪些？ 第二问：我们做什么，怎么做才能确保下次不会再出现类似故障？ 第三问：当时如果我们做了什么，可以用更短的时间恢复业务？ 故障判定的三原则 健壮性原则。 第三方默认无责。 分段判定原则。 5W 分析法 Google SRE Principle [5] # 运营是软件问题 服务水平目标SLO 减少琐事 用自动化的方式减少琐事 自动化 ** 统一环境， IaC CaC， ** IaC: Terraform, Ansible, Pulumi 生产环境中进行测试 统一 版本管理，制品库，cmdb 可观测性 降低失败成本 复盘 从失败中学习 共享所有权 个人安全，责任共担 拥抱风险 + 错误预算 Google SRE 实践总结 [5] # 确保长期关注研发工作 在保障SLO的前提下最大化迭代速度 监控系统 + insight，根因 应急事件处理 变更管理 ITIL 需求预测和容量规划 + AIOps 资源部署 效率与性能 参考 # 《09｜案例：互联网典型的SRE组织架构是怎样的？》 赵成 《08｜故障复盘：黄金三问与判定三原则》 赵成 xxx SRE 的工作介绍 SRE大佬 未 SRE核心概念与可观测性介绍 中国DevOps社区 刘峰 +《SRE google 运维解密》</description>
+    </item>
+    <item>
+      <title>《SRE 工作手册》</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbook/</link>
+      <pubDate>Wed, 01 Feb 2023 16:14:47 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbook/</guid>
+      <description>参考 # SRE 实践的知识体系梳理</description>
+    </item>
+    <item>
+      <title>SRE 五大根基</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasic/</link>
+      <pubDate>Wed, 27 Apr 2022 22:33:17 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasic/</guid>
+      <description>&#xA;目录 # SRE五大根基 # 实践SLO # 监控 # 告警 # 减少琐事 # 简单化 # 参考 # 《Google SRE工作手册》第二期SRE五大根基之一：SLO V *** 《Google SRE工作手册》第二期SRE五大根基之二：监控 V *** {% post_link &amp;lsquo;sreWorkbook&amp;rsquo; %} self {% post_link &amp;lsquo;sreWorkbookBasicSLO&amp;rsquo; %} </description>
+    </item>
+    <item>
+      <title>SRE 五大根基-SLO</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicSLO/</link>
+      <pubDate>Mon, 02 May 2022 18:06:40 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicSLO/</guid>
+      <description>&#xA;目录 # SRE 五大根基 之 SLO[1] # 步骤1. 制定SLO # 服务的SLO # VALET[Home Depot] Volume Avail Latency Errors Ticket 数据服务的SLO # Go to Page {% post_link &amp;lsquo;kafkaSLO&amp;rsquo; %} SLI # 服务类型 SLI类型 请求驱动 可用性，延迟，质量 流水线 时效性，正确率，覆盖率 存储 持久性 步骤2. 获得干系人认同 # SLO 仪表板[趋势] # 步骤3. 持续监控 改进SLO # 变更SLO 变更SLI实现 着手于现实的SLO 迭代 步骤4. 错误预算 SLO决策 # 基于SLO和错误预算的决策 # 步骤5. 进阶 # 用户旅程建模 依赖关系建模 参考 # 《Google SRE工作手册》第二期SRE五大根基之一：SLO V *** 《Google SRE工作手册》 第二章 </description>
+    </item>
+    <item>
+      <title>SRE 五大根基-报警</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicAlert/</link>
+      <pubDate>Mon, 02 May 2022 18:51:42 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicAlert/</guid>
+      <description>&#xA;告警设定考量 # 精准率&#xA;减少误告警&#xA;查全率&#xA;减少漏告警&#xA;检测用时&#xA;过长 影响错误预算 重置用时&#xA;过长 增长内存和IO开销 告警设定方法 # 基础 方法1 目标错误率 &amp;gt;= SLO阈值 window 方法2 延长报警时间窗口 方法3 延长告警触发前的持续时间 燃烧率 方法4 根据燃烧率发出告警 方法5 基于多个燃烧率的告警 方法6 基于多个窗口 多个燃烧率的告警 参考 # 《Google SRE工作手册》第四期基于SLO的告警配置及实践分享 V 《Google SRE工作手册》 第5章 </description>
+    </item>
+  </channel>
+</rss>

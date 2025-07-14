@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>故障模型 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/categories/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/</link>
+    <description>Recent content in 故障模型 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 27 Oct 2018 14:39:20 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/categories/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>故障模型-应用层</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/</link>
+      <pubDate>Sat, 27 Oct 2018 14:39:20 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/</guid>
+      <description>故障模型-Application &amp;amp; Data # OOM # + 堆内 【10】&#xD;- PermGen&#xD;+ 原因：反射类多&#xD;+ 解决&#xD;先jmap，后btrace【11、12 case2】&#xD;- heap&#xD;解决：对比Fullgc后的相同对象的数量、大小&#xD;+ 堆外Native&#xD;参考 Go to Page self 如何排查Java内存泄露(内附各种排查工具介绍) 不闻 生产环境下持久带满导致FullGC，如何跟踪 Go to Page self 应用性能变差 # + 原因&#xD;- 锁 - heap&#xD;+ fullgc后没有空间&#xD;原因：内存泄露&#xD;工具：heap dump&#xD;+ fullgc后有空间&#xD;解决：设置门槛，过滤大量短生命周期对象【12 case1，13】&#xD;- gc停顿长&#xD;解决：【12 case3，13】&#xD;参考 Go to Page self Go to Page self 听阿里巴巴JVM工程师为你分析常见Java故障案例 *** Load过高 # + cpu load高【13】&#xD;- 启动阶段&#xD;原因：JIT编译器&#xD;解决：分层编译&#xD;- 运行阶段&#xD;原因：有热点方法&#xD;工具：MAT&#xD;- 解决&#xD;工具【8、9】&#xD;数据收集 4、5&#xD;参考</description>
+    </item>
+    <item>
+      <title>故障模型-中间件层</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/</link>
+      <pubDate>Thu, 03 May 2018 21:59:42 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/</guid>
+      <description>故障模型-中间件层 # 故障模型-Runtime&amp;amp;Middleware&amp;amp;OS 负载均衡失效 数据库 数据库热点 数据库连接满 数据库宕机 数据库同步延迟 数据库主备延迟【参考2】 缓存 缓存热点【参考1】 缓存限流 OS资源 CPU抢占 案例 : HashMap并发访问，CPU100%【参考1】 案例：正则表达式回溯，CPU100% 内存抢占 案例：OOM killer 上下文切换 参考 # 大纲 # 超全总结 | 阿里如何应对电商故障？神秘演练细节曝光 阿里巴巴 周洋 Runtime &amp;amp; Middleware &amp;amp; OS # Go to Page self&#xA;UCloud高可用数据库UDB主从复制延时的解决</description>
+    </item>
+    <item>
+      <title>故障模型-基础设施层</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/</link>
+      <pubDate>Thu, 03 May 2018 21:59:57 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/</guid>
+      <description>&#xA;故障模型-基础设施层 # 故障模型-Virtualization&amp;amp;Storage&amp;amp;Networking 服务器宕机&amp;amp;假死 断电 解决：异地多活 超卖 混和部署【3】 存储【2】 磁盘满，坏 不可写，不可读 网络【1】 网络抖动、丢包、超时 网卡满 DNS故障 断网 参考 # Virtualization &amp;amp; Storage &amp;amp; Networking # Kubernetes 网络疑难杂症排查分享 腾讯云 *** kubernetes 最佳实践：处理容器数据磁盘被写满 腾讯云 百度大规模战略性混部系统演进 </description>
+    </item>
+  </channel>
+</rss>
