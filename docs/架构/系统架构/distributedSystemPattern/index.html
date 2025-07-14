@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Fault Tolerant Consensus # 英文 中文 Paxos Paxos Quorum *** Quorum Generation Clock *** 世代时钟（Generation Clock） Pattern Sequence for implementing replicated log # 英文 中文 Example &amp; 扩展 Replicated Log *** 复制日志（Replicated Log） Raft Write-Ahead Log *** 预写日志（Write-Ahead Log） MySQL redo log
+HBase WAL
+Redis aof Low-Water Mark *** 低水位标记（Low-Water Mark） High-Water Mark *** 高水位标记（High-Water Mark） kafka HW {% post_link &lsquo;streamingFlinkWatermarkWindow&rsquo; %} HeartBeat *** 心跳（HeartBeat） {% post_link &lsquo;crashDetect&rsquo; %} Leader and Followers ***">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/distributedSystemPattern/">
+  <meta property="og:site_name" content="Distributed">
+  <meta property="og:title" content="分布式系统 模式 *">
+  <meta property="og:description" content="Fault Tolerant Consensus # 英文 中文 Paxos Paxos Quorum *** Quorum Generation Clock *** 世代时钟（Generation Clock） Pattern Sequence for implementing replicated log # 英文 中文 Example &amp; 扩展 Replicated Log *** 复制日志（Replicated Log） Raft Write-Ahead Log *** 预写日志（Write-Ahead Log） MySQL redo log
+HBase WAL
+Redis aof Low-Water Mark *** 低水位标记（Low-Water Mark） High-Water Mark *** 高水位标记（High-Water Mark） kafka HW {% post_link ‘streamingFlinkWatermarkWindow’ %} HeartBeat *** 心跳（HeartBeat） {% post_link ‘crashDetect’ %} Leader and Followers ***">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<title>分布式系统 模式 * | Distributed</title>
+<link rel="icon" href="/www6vDistributed/favicon.png" >
+<link rel="manifest" href="/www6vDistributed/manifest.json">
+<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/distributedSystemPattern/">
+<link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
+  <script defer src="/www6vDistributed/fuse.min.js"></script>
+  <script defer src="/www6vDistributed/en.search.min.baf17e8f30678e33912dfa29a282631b7423bdf4d57fbe0daf1cdacab77e4264.js" integrity="sha256-uvF&#43;jzBnjjORLfopooJjG3QjvfTVf74Nrxzayrd&#43;QmQ=" crossorigin="anonymous"></script>
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/distributedSystemPattern/index.xml" title="Distributed" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/www6vDistributed/"><span>Distributed</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-dc526a21eace5d63b5b3ef1b0a218aec" class="toggle" checked />
+    <label for="section-dc526a21eace5d63b5b3ef1b0a218aec" class="flex justify-between">
+      <a role="button" class="">架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-065452b69a9ada69f879d79882f67ab3" class="toggle"  />
+    <label for="section-065452b69a9ada69f879d79882f67ab3" class="flex justify-between">
+      <a role="button" class="">应用架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cleanCode/" class="">整洁架构 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/api_design/" class="">OpenAPI 设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/" class="">DDD-落地实战 Practice</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/" class="">应用集成方式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/domain_logic_and_sql/" class="">领域逻辑和SQL</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8dfaa356172b6c5a6e357373ef77a465" class="toggle" checked />
+    <label for="section-8dfaa356172b6c5a6e357373ef77a465" class="flex justify-between">
+      <a role="button" class="">系统架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/distributedSystemPattern/" class="active">分布式系统 模式 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/" class="">中台战略</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/" class="">存算分离-数据应用</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/" class="">高可用 Available</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/" class="">统一模型</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/" class="">异地多活 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6ee81443818922e9faa7277839b2081c" class="toggle"  />
+    <label for="section-6ee81443818922e9faa7277839b2081c" class="flex justify-between">
+      <a role="button" class="">系统设计</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/feed/" class="">Feed流 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/" class="">系统设计 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/secKillSummary/" class="">秒杀系统总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/seckill/" class="">秒杀系统和商品详情页系统(培训讲义)</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="toggle"  />
+    <label for="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="flex justify-between">
+      <a role="button" class="">设计原则</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/" class="">设计原则</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/" class="">开闭原则 - SPI</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-23b63dcecf4d9c084a8c88b211cf499a" class="toggle"  />
+    <label for="section-23b63dcecf4d9c084a8c88b211cf499a" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/" class="">稳定性总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-2076d033ca0f2a4b9e7fd2ae4af29968" class="toggle"  />
+    <label for="section-2076d033ca0f2a4b9e7fd2ae4af29968" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-97c2762f26202e064bb1f79576b1647c" class="toggle"  />
+    <label for="section-97c2762f26202e064bb1f79576b1647c" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sre/" class="">SRE 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbook/" class="">《SRE 工作手册》</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasic/" class="">SRE 五大根基</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicSLO/" class="">SRE 五大根基-SLO</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicAlert/" class="">SRE 五大根基-报警</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5a63c3d0341b5adfc60e0fcb26c38e55" class="toggle"  />
+    <label for="section-5a63c3d0341b5adfc60e0fcb26c38e55" class="flex justify-between">
+      <a role="button" class="">故障模型</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/" class="">故障模型-应用层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/" class="">故障模型-中间件层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/" class="">故障模型-基础设施层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0de79ccd754460f367973a662985e1a2" class="toggle"  />
+    <label for="section-0de79ccd754460f367973a662985e1a2" class="flex justify-between">
+      <a role="button" class="">容量保障</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E5%AE%B9%E9%87%8F%E4%BF%9D%E9%9A%9C/capacityGuarantee/" class="">容量保障与全链路压测</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-92b9126fb99c3be4bacb6589793762b5" class="toggle"  />
+    <label for="section-92b9126fb99c3be4bacb6589793762b5" class="flex justify-between">
+      <a role="button" class="">一致性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/" class="">Raft协议</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/splitBrain/" class="">Split Brain</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/consistent/" class="">分布式一致性 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>分布式系统 模式 *</h3>
+
+  <label for="toc-control">
+    
+    <img src="/www6vDistributed/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#fault-tolerant-consensus">Fault Tolerant Consensus</a></li>
+            <li><a href="#pattern-sequence-for-implementing-replicated-log">Pattern Sequence for implementing replicated log</a></li>
+            <li><a href="#atomic-commit">Atomic Commit</a></li>
+            <li><a href="#kubernetes-or-kafka-control-plane">Kubernetes or Kafka Control Plane</a></li>
+            <li><a href="#logical-timestamp-usage">Logical Timestamp usage</a></li>
+            <li><a href="#others">Others</a></li>
+          </ul>
+        </li>
+        <li><a href="#self">Self</a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><p></p>
+<!-- more -->
+<h3 id="fault-tolerant-consensus">
+  Fault Tolerant Consensus
+  <a class="anchor" href="#fault-tolerant-consensus">#</a>
+</h3>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/paxos.html">Paxos</a></td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/paxos.md">Paxos</a></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/quorum.html">Quorum</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/quorum.md">Quorum</a></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/generation.html">Generation Clock</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/generation-clock.md">世代时钟（Generation Clock）</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="pattern-sequence-for-implementing-replicated-log">
+  Pattern Sequence for implementing replicated log
+  <a class="anchor" href="#pattern-sequence-for-implementing-replicated-log">#</a>
+</h3>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>Example &amp; 扩展</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/replicated-log.html">Replicated Log</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/replicated-log.md">复制日志（Replicated Log）</a></td>
+<td>Raft</td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/wal.html">Write-Ahead Log</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/write-ahead-log.md">预写日志（Write-Ahead Log）</a></td>
+<td>MySQL redo log<br>HBase WAL<br>Redis aof</td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/low-watermark.html">Low-Water Mark</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/low-water-mark.md">低水位标记（Low-Water Mark）</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/high-watermark.html">High-Water Mark</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/high-water-mark.md">高水位标记（High-Water Mark）</a></td>
+<td>kafka HW <br>{% post_link &lsquo;streamingFlinkWatermarkWindow&rsquo; %}</td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/heartbeat.html">HeartBeat</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/heartbeat.md">心跳（HeartBeat）</a></td>
+<td>{% post_link &lsquo;crashDetect&rsquo; %}</td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/leader-follower.html">Leader and Followers</a> ***<br>leader election</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/leader-and-followers.md">领导者和追随者（Leader and Followers）</a></td>
+<td><a href="kafkaElection.md">Go to Page</a> <br> <a href="raft.md">Go to Page</a> <br>{% post_link &lsquo;zookeeperZab&rsquo; %}<br>es 选主[todo]</td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/follower-reads.html">Follower Reads</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/follower-reads.md">追随者读取（Follower Reads）</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/log-segmentation.html">Segmented Log</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/segmented-log.md">分段日志（Segmented Log）</a></td>
+<td>Kafka segment</td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/request-pipeline.html">Request Pipeline</a></td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/request-pipeline.md">请求管道（Request Pipeline）</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/singular-update-queue.html">Singular Update Queue</a></td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/singular-update-queue.md">单一更新队列（Singular Update Queue）</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/single-socket-channel.html">Single Socket Channel</a></td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/single-socket-channel.md">单一 Socket 通道（Single Socket Channel）</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="atomic-commit">
+  Atomic Commit
+  <a class="anchor" href="#atomic-commit">#</a>
+</h3>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>Example &amp; 扩展</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/two-phase-commit.html">Two Phase Commit</a></td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/two-phase-commit.md">两阶段提交（Two Phase Commit）</a></td>
+<td>两阶段变种</td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/fixed-partitions.html">Fixed Partitions</a></td>
+<td>/</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/key-range-partitions.html">Key-Range Partitions</a></td>
+<td>/</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="kubernetes-or-kafka-control-plane">
+  Kubernetes or Kafka Control Plane
+  <a class="anchor" href="#kubernetes-or-kafka-control-plane">#</a>
+</h3>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>Example &amp; 扩展</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/time-bound-lease.html">Lease</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/lease.md">租约（Lease）</a></td>
+<td>{% post_link &lsquo;crashDetect&rsquo; %} <br>ETCD  Lease <br/>K8s Lease<br />Eureka Lease</td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/state-watch.html">State Watch</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/state-watch.md">状态监控（State Watch）</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/idempotent-receiver.html">Idempotent Receiver</a></td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/idempotent-receiver.md">幂等接收者（Idempotent Receiver）</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="logical-timestamp-usage">
+  Logical Timestamp usage
+  <a class="anchor" href="#logical-timestamp-usage">#</a>
+</h3>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>Example &amp; 扩展</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/lamport-clock.html">Lamport Clock</a></td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/lamport-clock.md">Lamport 时钟（Lamport Clock）</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/versioned-value.html">Versioned Value</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/versioned-value.md">有版本的值（Versioned Values）</a></td>
+<td>tikv mvcc[TSO]<br><a href="https://www.cockroachlabs.com/docs/stable/">CockroachDB</a> mvcc[HLC]<br></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/hybrid-clock.html">Hybrid Clock</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/hybrid-clock.md">混合时钟（Hybrid Clock）</a></td>
+<td><a href="https://www.cockroachlabs.com/docs/stable/">CockroachDB</a></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/gossip-dissemination.html">Gossip Dissemination</a> ***</td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/gossip-dissemination.md">Gossip 传播（Gossip Dissemination）</a></td>
+<td>Redis Gossip</td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/consistent-core.html">Consistent Core</a></td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/consistent-core.md">一致性内核（Consistent Core）</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/version-vector.html">Version Vector</a></td>
+<td><a href="https://github.com/www6v/patterns-of-distributed-systems/blob/master/content/version-vector.md">版本向量（Version Vector）</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="others">
+  Others
+  <a class="anchor" href="#others">#</a>
+</h3>
+<ul>
+<li><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/request-batch.html">Request Batch</a></li>
+<li><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/clock-bound.html">Clock-Bound Wait</a></li>
+<li><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/emergent-leader.html">Emergent Leader</a></li>
+<li><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/request-waiting-list.html">Request Waiting List</a></li>
+</ul>
+<h2 id="self">
+  Self
+  <a class="anchor" href="#self">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Example &amp; 扩展</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time wheel</td>
+<td>{% post_link &rsquo;timedTask&rsquo; %}</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考">
+  参考
+  <a class="anchor" href="#%e5%8f%82%e8%80%83">#</a>
+</h2>
+<ol>
+<li><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/">Patterns of Distributed Systems</a>
+<a href="https://github.com/www6v/patterns-of-distributed-systems">《分布式系统模式》中文版</a></li>
+<li><a href="distributedDatabaseGlobalTime.md">Go to Page</a>  self</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#fault-tolerant-consensus">Fault Tolerant Consensus</a></li>
+            <li><a href="#pattern-sequence-for-implementing-replicated-log">Pattern Sequence for implementing replicated log</a></li>
+            <li><a href="#atomic-commit">Atomic Commit</a></li>
+            <li><a href="#kubernetes-or-kafka-control-plane">Kubernetes or Kafka Control Plane</a></li>
+            <li><a href="#logical-timestamp-usage">Logical Timestamp usage</a></li>
+            <li><a href="#others">Others</a></li>
+          </ul>
+        </li>
+        <li><a href="#self">Self</a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

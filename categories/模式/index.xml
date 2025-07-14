@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>模式 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/categories/%E6%A8%A1%E5%BC%8F/</link>
+    <description>Recent content in 模式 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 01 Mar 2022 18:07:28 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/categories/%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>分布式系统 模式 *</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/distributedSystemPattern/</link>
+      <pubDate>Tue, 01 Mar 2022 18:07:28 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/distributedSystemPattern/</guid>
+      <description>Fault Tolerant Consensus # 英文 中文 Paxos Paxos Quorum *** Quorum Generation Clock *** 世代时钟（Generation Clock） Pattern Sequence for implementing replicated log # 英文 中文 Example &amp;amp; 扩展 Replicated Log *** 复制日志（Replicated Log） Raft Write-Ahead Log *** 预写日志（Write-Ahead Log） MySQL redo log&#xA;HBase WAL&#xA;Redis aof Low-Water Mark *** 低水位标记（Low-Water Mark） High-Water Mark *** 高水位标记（High-Water Mark） kafka HW {% post_link &amp;lsquo;streamingFlinkWatermarkWindow&amp;rsquo; %} HeartBeat *** 心跳（HeartBeat） {% post_link &amp;lsquo;crashDetect&amp;rsquo; %} Leader and Followers ***</description>
+    </item>
+  </channel>
+</rss>

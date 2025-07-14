@@ -16,6 +16,13 @@
       <description>&#xA;总结 # 从本质上说，Raft 算法是通过一切以领导者为准的方式，实现一系列值的共识和各节点日志的一致.&#xA;Raft： leader + term + peers&#xA;Raft-分区脑裂（成员变更的问题） # 分区脑裂[非majority有uncommited log、 term1]&#xA;分区脑裂[majority可以同步log、 term2]&#xA;Raft-领导者选举 # Raft-复制日志 # 副本数据是以日志的形式存在的，其中日志项中的指令表示用户指定的数据。 Raft 是通过以领导者的日志为准，来实现日志的一致的。 在 Raft 中日志必须是连续的 日志完整性最高的节点才能当选领导者 参考 # raft 动画 good The Raft Consensus Algorithm good 动画 各种系统实现 未 Raft Distributed Consensus Algorithm Visualization 动画 未 Raft对比ZAB协议 raft协议和zab协议有啥区别？ 一张图看懂Raft 未 Raft 为什么是更易理解的分布式一致性算法 未 分布式协议与算法实战 - 07 | Raft算法（一）：如何选举领导者？ 韩健 *** 分布式协议与算法实战 - 08丨Raft算法（二）：如何复制日志？.pdf 韩健 *** Raft 分布式系统一致性协议探讨 腾讯 未 论文 Raft一致性算法论文译文 In Search of an Understandable Consensus Algorithm(Extended Version) raft </description>
     </item>
     <item>
+      <title>Split Brain</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/splitBrain/</link>
+      <pubDate>Sun, 19 Feb 2017 23:44:11 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/splitBrain/</guid>
+      <description>关键词: 脑裂, fence, Quorums , epoch&#xA;脑裂： 类似 CAP中的P Partition tolerance(分区容错性): 网络分区发生时，一致性和可用性两难全&#xA;一. 通用解决方案 # Quorums Redundant communications，冗余通信的方式 Fencing 二. 系统 # / 现象 解决方案 kafka kafka脑裂现象:1. 存在多个controller 2. consumer的splitBrain controller使用epoch来避免脑裂 elastic search 配置discovery.zen.minimum_master_nodes，类似Quorums zookeeper 两个leader[3] Quorums leader单调递增的epoch raft脑裂 两个majority [2] Quorums + term redis脑裂、mysql脑裂&#xA;参考: # redis 脑裂等极端情况分析 Redis Cluster is not able to guarantee strong consistency. / In general Redis + Sentinel as a whole are a an eventually consistent system</description>
+    </item>
+    <item>
       <title>分布式一致性 总结</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/consistent/</link>
       <pubDate>Tue, 09 Feb 2016 18:19:56 +0000</pubDate>

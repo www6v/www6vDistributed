@@ -15,5 +15,12 @@
       <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</guid>
       <description>&#xA;关键词: 容量规划, 压测, 强弱依赖, 关键词: 故障模型, 故障演练, 故障注入&#xA;稳定性总结 # 参考： # 超全总结 | 阿里如何应对电商故障？神秘演练细节曝光 阿里巴巴-周洋（花名中亭） 故障注入， 故障演练 稳定性思考-强弱依赖 阿里中间件团队博客 稳定性思考-强弱依赖2 阿里中间件团队博客 中间件技术及双十一实践·稳定性平台篇 阿里中间件（Aliware） 强弱依赖， 容量规划 &amp;laquo;尽在双11阿里巴巴技术演进与超越&amp;raquo; </description>
     </item>
+    <item>
+      <title>Split Brain</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/splitBrain/</link>
+      <pubDate>Sun, 19 Feb 2017 23:44:11 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/splitBrain/</guid>
+      <description>关键词: 脑裂, fence, Quorums , epoch&#xA;脑裂： 类似 CAP中的P Partition tolerance(分区容错性): 网络分区发生时，一致性和可用性两难全&#xA;一. 通用解决方案 # Quorums Redundant communications，冗余通信的方式 Fencing 二. 系统 # / 现象 解决方案 kafka kafka脑裂现象:1. 存在多个controller 2. consumer的splitBrain controller使用epoch来避免脑裂 elastic search 配置discovery.zen.minimum_master_nodes，类似Quorums zookeeper 两个leader[3] Quorums leader单调递增的epoch raft脑裂 两个majority [2] Quorums + term redis脑裂、mysql脑裂&#xA;参考: # redis 脑裂等极端情况分析 Redis Cluster is not able to guarantee strong consistency. / In general Redis + Sentinel as a whole are a an eventually consistent system</description>
+    </item>
   </channel>
 </rss>

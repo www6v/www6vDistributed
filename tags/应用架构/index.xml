@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>应用架构 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/tags/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/</link>
+    <description>Recent content in 应用架构 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 22 Jul 2022 11:39:49 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>整洁架构 *</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cleanCode/</link>
+      <pubDate>Fri, 22 Jul 2022 11:39:49 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cleanCode/</guid>
+      <description>整洁架构 Clean Architecture # 核心观点 [7][8]&#xA;不与框架绑定&#xA;java-spring, Quarkus 可测试&#xA;mock- gomock, Testify 不与UI绑定 不与数据库绑定&#xA;DDD 中的Repo 不依赖任何外部代理 Go的实现 [9][10]&#xA;参考 # 《24 直播：框架之上的业务分层》 体系课_Go高级工程师实战营(完结)&#xA;The Clean Architecture&#xA;clean-architecture-go-v2 git&#xA;go-clean-arch&#xA;Golang 简洁架构实战 未&#xA;Go整洁架构实践 未</description>
+    </item>
+  </channel>
+</rss>
