@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>混沌工程 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/categories/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/</link>
+    <description>Recent content in 混沌工程 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 24 Sep 2019 22:20:50 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/categories/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>混沌工程</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/chaosEngineering/</link>
+      <pubDate>Tue, 24 Sep 2019 22:20:50 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/chaosEngineering/</guid>
+      <description>&#xA;混沌工程实践[1,2] # 原则 # 成熟度 # 混沌工程实施步骤 # 制订混沌实验计划 定义系统稳态指标 做出系统容错行为假设 执行混沌实验 检查系统稳态指标 记录&amp;amp;恢复混沌实验 修复发现的问题 自动化持续进行验证 混沌工程产品 # 相关产品ChaosBlade 故障注入 参考 # 分布式服务架构下的混沌工程实践 阿里 穹谷 *** 混沌工程介绍与实践 阿里 穹谷 Netflix 混沌工程手册 Part 1：混沌工程简介 Netflix 混沌工程手册 Part 2：混沌工程原则 Netflix 混沌工程手册 Part 3：实践方法 </description>
+    </item>
+  </channel>
+</rss>
