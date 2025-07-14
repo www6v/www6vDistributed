@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>一致性 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/categories/%E4%B8%80%E8%87%B4%E6%80%A7/</link>
+    <description>Recent content in 一致性 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 21 Jun 2019 18:18:07 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/categories/%E4%B8%80%E8%87%B4%E6%80%A7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Raft协议</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/</link>
+      <pubDate>Fri, 21 Jun 2019 18:18:07 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/</guid>
+      <description>&#xA;总结 # 从本质上说，Raft 算法是通过一切以领导者为准的方式，实现一系列值的共识和各节点日志的一致.&#xA;Raft： leader + term + peers&#xA;Raft-分区脑裂（成员变更的问题） # 分区脑裂[非majority有uncommited log、 term1]&#xA;分区脑裂[majority可以同步log、 term2]&#xA;Raft-领导者选举 # Raft-复制日志 # 副本数据是以日志的形式存在的，其中日志项中的指令表示用户指定的数据。 Raft 是通过以领导者的日志为准，来实现日志的一致的。 在 Raft 中日志必须是连续的 日志完整性最高的节点才能当选领导者 参考 # raft 动画 good The Raft Consensus Algorithm good 动画 各种系统实现 未 Raft Distributed Consensus Algorithm Visualization 动画 未 Raft对比ZAB协议 raft协议和zab协议有啥区别？ 一张图看懂Raft 未 Raft 为什么是更易理解的分布式一致性算法 未 分布式协议与算法实战 - 07 | Raft算法（一）：如何选举领导者？ 韩健 *** 分布式协议与算法实战 - 08丨Raft算法（二）：如何复制日志？.pdf 韩健 *** Raft 分布式系统一致性协议探讨 腾讯 未 论文 Raft一致性算法论文译文 In Search of an Understandable Consensus Algorithm(Extended Version) raft </description>
+    </item>
+    <item>
+      <title>分布式一致性 总结</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/consistent/</link>
+      <pubDate>Tue, 09 Feb 2016 18:19:56 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/consistent/</guid>
+      <description>分布式一致性 # [粉色-Unavailable] 在某些网络故障情况下不可用。为了确保安全，一些或所有节点必须暂停操作。&#xA;[黄色-Sticky Available] 只要客户端只与相同的服务器通信而不切换到新的服务器，就可在每个非故障节点上使用。&#xA;[蓝色-Total Available] 即使网络完全瘫痪，也可在每个非故障节点上使用。&#xA;一致性 # 强一致性模型 # 强一致性 协议 特性 工程 线性一致性[chat] 2PC&#xA;3PC #1 延迟大，吞吐低。全局锁资源 JTA(XA)&#xA;{% post_link &amp;rsquo;transactionSeata&amp;rsquo; Seata XA,AT 非入侵 %} self 顺序一致性[chat] Paxos #1 难理解，延迟大，吞吐中等，全局锁资源 Google Chubby 顺序一致性 {% post_link &amp;lsquo;zookeeperZab&amp;rsquo; Zab %} self&#xA;逻辑时钟 类似多线程程序执行顺序的模型 Zookeeper的读 1.两个主流程，三个阶段 2. Quorum:2f+1个节点，允许f个节点失败 强一致性 {% post_link &amp;lsquo;raft&amp;rsquo; %} self 相对Paxos简单。主从，三个阶段 Go to Page self 逻辑时钟&#xA;Lamport提出逻辑时钟是为了解决分布式系统中的时序问题，即如何定义a在b之前发生. Java中有happen-before 图2. 逻辑时钟 logic-clock&#xA;线性一致性 Linearizability</description>
+    </item>
+  </channel>
+</rss>

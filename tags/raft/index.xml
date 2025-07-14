@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Raft on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/tags/raft/</link>
+    <description>Recent content in Raft on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 21 Jun 2019 18:18:07 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/raft/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Raft协议</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/</link>
+      <pubDate>Fri, 21 Jun 2019 18:18:07 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/raft/</guid>
+      <description>&#xA;总结 # 从本质上说，Raft 算法是通过一切以领导者为准的方式，实现一系列值的共识和各节点日志的一致.&#xA;Raft： leader + term + peers&#xA;Raft-分区脑裂（成员变更的问题） # 分区脑裂[非majority有uncommited log、 term1]&#xA;分区脑裂[majority可以同步log、 term2]&#xA;Raft-领导者选举 # Raft-复制日志 # 副本数据是以日志的形式存在的，其中日志项中的指令表示用户指定的数据。 Raft 是通过以领导者的日志为准，来实现日志的一致的。 在 Raft 中日志必须是连续的 日志完整性最高的节点才能当选领导者 参考 # raft 动画 good The Raft Consensus Algorithm good 动画 各种系统实现 未 Raft Distributed Consensus Algorithm Visualization 动画 未 Raft对比ZAB协议 raft协议和zab协议有啥区别？ 一张图看懂Raft 未 Raft 为什么是更易理解的分布式一致性算法 未 分布式协议与算法实战 - 07 | Raft算法（一）：如何选举领导者？ 韩健 *** 分布式协议与算法实战 - 08丨Raft算法（二）：如何复制日志？.pdf 韩健 *** Raft 分布式系统一致性协议探讨 腾讯 未 论文 Raft一致性算法论文译文 In Search of an Understandable Consensus Algorithm(Extended Version) raft </description>
+    </item>
+  </channel>
+</rss>
