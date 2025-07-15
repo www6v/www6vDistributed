@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Linux observability tools | Linux 性能观测工具 # Linux性能观测工具
+快速性能诊断(快速体检) # 1. 系统平均负载 # # 0.25- 1分钟负载 ， 0.22-5分钟负载， 0.23-15分钟负载[root@10-25-3-55 /]# uptime23:02:19 up 285 days, 11:37, 1 user, load average: 0.25, 0.22, 0.23# 如果cpu个数是4， 则平均负载4是合理的。[root@10-23-25-248]$grep &#39;model name&#39; /proc/cpuinfo | wc -l4 平均负载: 单位时间内，系统处于可运行状态和不可中断状态的平均进程数，也就是单位时间内的活跃进程数。
+场景 CPU 密集型进程，使用大量 CPU 会导致平均负载升高，此时这两者是一致的； I/O 密集型进程，等待 I/O 也会导致平均负载升高，但 CPU 使用率不一定很高； 大量等待 CPU 的进程调度也会导致平均负载升高，此时的CPU使用率也会比较高。
+2. dmesg | tail : 系统信息 导致性能问题的错误 # [9927609.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxProfile/">
+  <meta property="og:site_name" content="Distributed">
+  <meta property="og:title" content="Linux性能分析">
+  <meta property="og:description" content="Linux observability tools | Linux 性能观测工具 # Linux性能观测工具
+快速性能诊断(快速体检) # 1. 系统平均负载 # # 0.25- 1分钟负载 ， 0.22-5分钟负载， 0.23-15分钟负载[root@10-25-3-55 /]# uptime23:02:19 up 285 days, 11:37, 1 user, load average: 0.25, 0.22, 0.23# 如果cpu个数是4， 则平均负载4是合理的。[root@10-23-25-248]$grep &#39;model name&#39; /proc/cpuinfo | wc -l4 平均负载: 单位时间内，系统处于可运行状态和不可中断状态的平均进程数，也就是单位时间内的活跃进程数。
+场景 CPU 密集型进程，使用大量 CPU 会导致平均负载升高，此时这两者是一致的； I/O 密集型进程，等待 I/O 也会导致平均负载升高，但 CPU 使用率不一定很高； 大量等待 CPU 的进程调度也会导致平均负载升高，此时的CPU使用率也会比较高。
+2. dmesg | tail : 系统信息 导致性能问题的错误 # [9927609.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<title>Linux性能分析 | Distributed</title>
+<link rel="icon" href="/www6vDistributed/favicon.png" >
+<link rel="manifest" href="/www6vDistributed/manifest.json">
+<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxProfile/">
+<link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
+  <script defer src="/www6vDistributed/fuse.min.js"></script>
+  <script defer src="/www6vDistributed/en.search.min.019b20270eb21863cb00bf8a078774eea787db74a1fcf9f0ff5434cb5c82d750.js" integrity="sha256-AZsgJw6yGGPLAL&#43;KB4d07qeH23Sh/Pnw/1Q0y1yC11A=" crossorigin="anonymous"></script>
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxProfile/index.xml" title="Distributed" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/www6vDistributed/"><span>Distributed</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-dc526a21eace5d63b5b3ef1b0a218aec" class="toggle"  />
+    <label for="section-dc526a21eace5d63b5b3ef1b0a218aec" class="flex justify-between">
+      <a role="button" class="">架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-065452b69a9ada69f879d79882f67ab3" class="toggle"  />
+    <label for="section-065452b69a9ada69f879d79882f67ab3" class="flex justify-between">
+      <a role="button" class="">应用架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cleanCode/" class="">整洁架构 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/api_design/" class="">OpenAPI 设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/" class="">DDD-落地实战 Practice</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/" class="">应用集成方式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/domain_logic_and_sql/" class="">领域逻辑和SQL</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8dfaa356172b6c5a6e357373ef77a465" class="toggle"  />
+    <label for="section-8dfaa356172b6c5a6e357373ef77a465" class="flex justify-between">
+      <a role="button" class="">系统架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/distributedSystemPattern/" class="">分布式系统 模式 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/" class="">中台战略</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/" class="">存算分离-数据应用</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/" class="">高可用 Available</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/" class="">统一模型</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/" class="">异地多活 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6ee81443818922e9faa7277839b2081c" class="toggle"  />
+    <label for="section-6ee81443818922e9faa7277839b2081c" class="flex justify-between">
+      <a role="button" class="">系统设计</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/feed/" class="">Feed流 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/" class="">系统设计 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/secKillSummary/" class="">秒杀系统总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/seckill/" class="">秒杀系统和商品详情页系统(培训讲义)</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="toggle"  />
+    <label for="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="flex justify-between">
+      <a role="button" class="">设计原则</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/" class="">设计原则</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/" class="">开闭原则 - SPI</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-23b63dcecf4d9c084a8c88b211cf499a" class="toggle"  />
+    <label for="section-23b63dcecf4d9c084a8c88b211cf499a" class="flex justify-between">
+      <a role="button" class="">稳定性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f7c383103f57713855174abe048d532a" class="toggle"  />
+    <label for="section-f7c383103f57713855174abe048d532a" class="flex justify-between">
+      <a role="button" class="">稳定性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/" class="">稳定性总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/tcpFault/" class="">TCP故障模式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/crashDetect/" class="">宕机检测-Lease、心跳</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-2076d033ca0f2a4b9e7fd2ae4af29968" class="toggle"  />
+    <label for="section-2076d033ca0f2a4b9e7fd2ae4af29968" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-97c2762f26202e064bb1f79576b1647c" class="toggle"  />
+    <label for="section-97c2762f26202e064bb1f79576b1647c" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sre/" class="">SRE 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbook/" class="">《SRE 工作手册》</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasic/" class="">SRE 五大根基</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicSLO/" class="">SRE 五大根基-SLO</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicAlert/" class="">SRE 五大根基-报警</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5a63c3d0341b5adfc60e0fcb26c38e55" class="toggle"  />
+    <label for="section-5a63c3d0341b5adfc60e0fcb26c38e55" class="flex justify-between">
+      <a role="button" class="">故障模型</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/" class="">故障模型-应用层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/" class="">故障模型-中间件层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/" class="">故障模型-基础设施层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0de79ccd754460f367973a662985e1a2" class="toggle"  />
+    <label for="section-0de79ccd754460f367973a662985e1a2" class="flex justify-between">
+      <a role="button" class="">容量保障</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E5%AE%B9%E9%87%8F%E4%BF%9D%E9%9A%9C/capacityGuarantee/" class="">容量保障与全链路压测</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-785be346d86e1cb84ec2723dc37036a0" class="toggle"  />
+    <label for="section-785be346d86e1cb84ec2723dc37036a0" class="flex justify-between">
+      <a role="button" class="">混沌工程</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/chaosEngineering/" class="">混沌工程</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-92b9126fb99c3be4bacb6589793762b5" class="toggle"  />
+    <label for="section-92b9126fb99c3be4bacb6589793762b5" class="flex justify-between">
+      <a role="button" class="">一致性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-ea41d27b1f25c7f3a6b2250f2dc23cf0" class="toggle"  />
+    <label for="section-ea41d27b1f25c7f3a6b2250f2dc23cf0" class="flex justify-between">
+      <a role="button" class="">分布式协议</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/raft/" class="">Raft协议</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/zookeeperZab/" class="">Zookeeper-Zab</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/idempotent/" class="">幂等</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/splitBrain/" class="">Split Brain</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/consistent/" class="">分布式一致性 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-607dd6f4c673d54dd39e72765ef574d6" class="toggle" checked />
+    <label for="section-607dd6f4c673d54dd39e72765ef574d6" class="flex justify-between">
+      <a role="button" class="">性能</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-9777b0756e234ce18d7b2097e2e5f075" class="toggle"  />
+    <label for="section-9777b0756e234ce18d7b2097e2e5f075" class="flex justify-between">
+      <a role="button" class="">性能优化</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performancePool/" class="">性能优化-池化Pool</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/" class="">性能优化总结 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-884583e00504e8c0698518fa63f5f16d" class="toggle"  />
+    <label for="section-884583e00504e8c0698518fa63f5f16d" class="flex justify-between">
+      <a role="button" class="">性能测试</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/performanceAnalysis/" class="">性能分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/performanceTest/" class="">性能测试</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-7de680d8e590b56e5550767737c8a098" class="toggle" checked />
+    <label for="section-7de680d8e590b56e5550767737c8a098" class="flex justify-between">
+      <a role="button" class="">Linux性能</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxPerformance-cpu/" class="">Linux性能优化 之 cpu优化</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxPerformance/" class="">Linux性能优化</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxProfile/" class="active">Linux性能分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-28c44b5c4b5e90bbe5f65c616561f697" class="toggle"  />
+    <label for="section-28c44b5c4b5e90bbe5f65c616561f697" class="flex justify-between">
+      <a role="button" class="">网络</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E7%BD%91%E7%BB%9C/tcpTimewait/" class="">TIME_WAIT和优化</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E7%BD%91%E7%BB%9C/tcpUdpControlCongestion/" class="">TCP流控和拥塞控制</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Linux性能分析</h3>
+
+  <label for="toc-control">
+    
+    <img src="/www6vDistributed/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#linux-observability-tools--linux-性能观测工具">Linux observability tools | Linux 性能观测工具</a></li>
+    <li><a href="#快速性能诊断快速体检">快速性能诊断(快速体检)</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#1-系统平均负载">1. 系统平均负载</a></li>
+            <li><a href="#2-dmesg--tail--系统信息--导致性能问题的错误">2. dmesg | tail : 系统信息  导致性能问题的错误</a></li>
+            <li><a href="#3-vmstat-1---虚拟内存">3. vmstat 1  : 虚拟内存</a></li>
+            <li><a href="#4-mpstat--p-all-1---cpu分解时间">4. mpstat -P ALL 1 :  CPU分解时间</a></li>
+            <li><a href="#5-pidstat-1--每个进程的统计摘要">5. pidstat 1 ： 每个进程的统计摘要</a></li>
+            <li><a href="#6-iostat--xz-1--磁盘">6. iostat -xz 1 ： 磁盘</a></li>
+            <li><a href="#7-free--m--内存">7. free -m ： 内存</a></li>
+            <li><a href="#8-sar--n-dev-1--网路吞吐">8. sar -n DEV 1 : 网路吞吐</a></li>
+            <li><a href="#9-sar--n-tcpetcp-1---tcp指标">9. sar -n TCP,ETCP 1 :  TCP指标</a></li>
+            <li><a href="#10-top--变化的负载的汇总">10. top ： 变化的负载的汇总</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#性能">性能</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><p></p>
+<!-- more -->
+<h1 id="linux-observability-tools--linux-性能观测工具">
+  Linux observability tools | Linux 性能观测工具
+  <a class="anchor" href="#linux-observability-tools--linux-%e6%80%a7%e8%83%bd%e8%a7%82%e6%b5%8b%e5%b7%a5%e5%85%b7">#</a>
+</h1>
+<div style="text-align: center;">
+<p><img src="https://user-images.githubusercontent.com/5608425/65083384-fe0eee00-d9da-11e9-9b5f-c3361a273b67.jpg" alt="linux_observe_tools" />
+Linux性能观测工具</p>
+</div>
+<h1 id="快速性能诊断快速体检">
+  快速性能诊断(快速体检)
+  <a class="anchor" href="#%e5%bf%ab%e9%80%9f%e6%80%a7%e8%83%bd%e8%af%8a%e6%96%ad%e5%bf%ab%e9%80%9f%e4%bd%93%e6%a3%80">#</a>
+</h1>
+<h3 id="1-系统平均负载">
+  1. 系统平均负载
+  <a class="anchor" href="#1-%e7%b3%bb%e7%bb%9f%e5%b9%b3%e5%9d%87%e8%b4%9f%e8%bd%bd">#</a>
+</h3>
+<pre tabindex="0"><code> # 0.25- 1分钟负载 ， 0.22-5分钟负载， 0.23-15分钟负载
+ [root@10-25-3-55 /]# uptime
+ 23:02:19 up 285 days, 11:37,  1 user,  load average: 0.25, 0.22, 0.23
+
+# 如果cpu个数是4， 则平均负载4是合理的。
+[root@10-23-25-248]$grep &#39;model name&#39; /proc/cpuinfo | wc -l
+4
+</code></pre><ul>
+<li>
+<p>平均负载:
+单位时间内，系统处于可运行状态和不可中断状态的平均进程数，也就是单位时间内的活跃进程数。</p>
+</li>
+<li>
+<p>场景
+CPU 密集型进程，使用大量 CPU 会导致平均负载升高，此时这两者是一致的；
+I/O 密集型进程，等待 I/O 也会导致平均负载升高，但 CPU 使用率不一定很高；
+大量等待 CPU 的进程调度也会导致平均负载升高，此时的CPU使用率也会比较高。</p>
+</li>
+</ul>
+<h3 id="2-dmesg--tail--系统信息--导致性能问题的错误">
+  2. dmesg | tail : 系统信息  导致性能问题的错误
+  <a class="anchor" href="#2-dmesg--tail--%e7%b3%bb%e7%bb%9f%e4%bf%a1%e6%81%af--%e5%af%bc%e8%87%b4%e6%80%a7%e8%83%bd%e9%97%ae%e9%a2%98%e7%9a%84%e9%94%99%e8%af%af">#</a>
+</h3>
+<pre tabindex="0"><code>[9927609.690053] ffmpeg invoked oom-killer: gfp_mask=0x201da, order=0, oom_score_adj=0
+[9927609.690106]  [&lt;ffffffff81184c7e&gt;] oom_kill_process+0x24e/0x3c0
+[9927609.690109]  [&lt;ffffffff8118471d&gt;] ? oom_unkillable_task+0xcd/0x120
+</code></pre><h3 id="3-vmstat-1---虚拟内存">
+  3. vmstat 1  : 虚拟内存
+  <a class="anchor" href="#3-vmstat-1---%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98">#</a>
+</h3>
+<p>进程(饱和度)   内存    CPU</p>
+<pre tabindex="0"><code>procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 8  0      0 402204 303208 8686376    0    0     2    10    0    0  5  6 89  0  0
+</code></pre><h3 id="4-mpstat--p-all-1---cpu分解时间">
+  4. mpstat -P ALL 1 :  CPU分解时间
+  <a class="anchor" href="#4-mpstat--p-all-1---cpu%e5%88%86%e8%a7%a3%e6%97%b6%e9%97%b4">#</a>
+</h3>
+<pre tabindex="0"><code>11:08:02 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+11:08:03 PM  all   28.68    0.00   60.85    0.00    0.00    0.00    0.00    0.00    0.00   10.47
+11:08:03 PM    0   28.43    0.00   60.78    0.00    0.00    0.00    0.00    0.00    0.00   10.78
+11:08:03 PM    1   28.71    0.00   61.39    0.00    0.00    0.00    0.00    0.00    0.00    9.90
+11:08:03 PM    2   29.00    0.00   59.00    0.00    0.00    0.00    0.00    0.00    0.00   12.00
+11:08:03 PM    3   28.71    0.00   61.39    0.00    0.00    0.00    0.00    0.00    0.00    9.90
+</code></pre><h3 id="5-pidstat-1--每个进程的统计摘要">
+  5. pidstat 1 ： 每个进程的统计摘要
+  <a class="anchor" href="#5-pidstat-1--%e6%af%8f%e4%b8%aa%e8%bf%9b%e7%a8%8b%e7%9a%84%e7%bb%9f%e8%ae%a1%e6%91%98%e8%a6%81">#</a>
+</h3>
+<pre tabindex="0"><code>11:11:14 PM   UID       PID    %usr %system  %guest    %CPU   CPU  Command
+11:11:15 PM     0      8715    1.00    0.00    0.00    1.00     3  pidstat
+11:11:15 PM     0     27930    0.00    1.00    0.00    1.00     2  java
+11:11:15 PM     0     28042    1.00    0.00    0.00    1.00     1  java
+11:11:15 PM     0     28044    1.00    0.00    0.00    1.00     1  java
+
+Average:      UID       PID    %usr %system  %guest    %CPU   CPU  Command
+Average:        0        23    0.00    0.07    0.00    0.07     -  ksoftirqd/3
+Average:       38       531    0.00    0.07    0.00    0.07     -  ntpd
+Average:        0      2642    0.07    0.00    0.00    0.07     -  aliyun-service
+Average:       27      2784    0.00    0.07    0.00    0.07     -  mysqld
+Average:        0      7462    0.73    0.20    0.00    0.93     -  java
+</code></pre><h3 id="6-iostat--xz-1--磁盘">
+  6. iostat -xz 1 ： 磁盘
+  <a class="anchor" href="#6-iostat--xz-1--%e7%a3%81%e7%9b%98">#</a>
+</h3>
+<pre tabindex="0"><code>avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          29.15    0.00   59.30    0.25    0.00   11.31
+
+Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+vda               0.00     0.00    1.00    1.00     8.00     4.00    12.00     0.05   26.50   53.00    0.00  26.50   5.30
+</code></pre><h3 id="7-free--m--内存">
+  7. free -m ： 内存
+  <a class="anchor" href="#7-free--m--%e5%86%85%e5%ad%98">#</a>
+</h3>
+<pre><code>buffer， cache， Swap
+</code></pre>
+<pre tabindex="0"><code>             total        used        free      shared  buff/cache   available
+Mem:          32013       22842         391           1        8779        8723
+Swap:             0           0           0
+</code></pre><h3 id="8-sar--n-dev-1--网路吞吐">
+  8. sar -n DEV 1 : 网路吞吐
+  <a class="anchor" href="#8-sar--n-dev-1--%e7%bd%91%e8%b7%af%e5%90%9e%e5%90%90">#</a>
+</h3>
+<pre tabindex="0"><code>Average:        IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s
+Average:    vethd4593b4      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+Average:         eth0      1.67      1.52      0.17      1.66      0.00      0.00      0.00
+Average:         eth1      2.74     75.08      0.16      8.86      0.00      0.00      0.00
+Average:           lo      4.86      4.86      0.71      0.71      0.00      0.00      0.00
+Average:      docker0      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+</code></pre><h3 id="9-sar--n-tcpetcp-1---tcp指标">
+  9. sar -n TCP,ETCP 1 :  TCP指标
+  <a class="anchor" href="#9-sar--n-tcpetcp-1---tcp%e6%8c%87%e6%a0%87">#</a>
+</h3>
+<p><img src="https://user-images.githubusercontent.com/5608425/65831070-f5c28700-e2e7-11e9-9fe7-51ccdf43451b.png" alt="sar-tcp" /></p>
+<h3 id="10-top--变化的负载的汇总">
+  10. top ： 变化的负载的汇总
+  <a class="anchor" href="#10-top--%e5%8f%98%e5%8c%96%e7%9a%84%e8%b4%9f%e8%bd%bd%e7%9a%84%e6%b1%87%e6%80%bb">#</a>
+</h3>
+<h1 id="参考">
+  参考
+  <a class="anchor" href="#%e5%8f%82%e8%80%83">#</a>
+</h1>
+<h3 id="性能">
+  性能
+  <a class="anchor" href="#%e6%80%a7%e8%83%bd">#</a>
+</h3>
+<ol>
+<li><a href="https://mp.weixin.qq.com/s/yhSJF6Il6iJamYCosVgXYQ">超全整理！Linux性能分析工具汇总合集</a></li>
+<li><a href="https://www.oschina.net/translate/linux-performance-analysis-in-60s?print">60,000毫秒内对Linux的性能诊断</a></li>
+<li><a href="https://coolshell.cn/articles/7829.html">28个UNIX/LINUX的命令行神器</a></li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#linux-observability-tools--linux-性能观测工具">Linux observability tools | Linux 性能观测工具</a></li>
+    <li><a href="#快速性能诊断快速体检">快速性能诊断(快速体检)</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#1-系统平均负载">1. 系统平均负载</a></li>
+            <li><a href="#2-dmesg--tail--系统信息--导致性能问题的错误">2. dmesg | tail : 系统信息  导致性能问题的错误</a></li>
+            <li><a href="#3-vmstat-1---虚拟内存">3. vmstat 1  : 虚拟内存</a></li>
+            <li><a href="#4-mpstat--p-all-1---cpu分解时间">4. mpstat -P ALL 1 :  CPU分解时间</a></li>
+            <li><a href="#5-pidstat-1--每个进程的统计摘要">5. pidstat 1 ： 每个进程的统计摘要</a></li>
+            <li><a href="#6-iostat--xz-1--磁盘">6. iostat -xz 1 ： 磁盘</a></li>
+            <li><a href="#7-free--m--内存">7. free -m ： 内存</a></li>
+            <li><a href="#8-sar--n-dev-1--网路吞吐">8. sar -n DEV 1 : 网路吞吐</a></li>
+            <li><a href="#9-sar--n-tcpetcp-1---tcp指标">9. sar -n TCP,ETCP 1 :  TCP指标</a></li>
+            <li><a href="#10-top--变化的负载的汇总">10. top ： 变化的负载的汇总</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#性能">性能</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

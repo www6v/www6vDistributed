@@ -6,7 +6,7 @@
     <description>Recent content in 故障模型 on Distributed</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 27 Oct 2018 14:39:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Aug 2020 23:17:36 +0000</lastBuildDate>
     <atom:link href="https://www6v.github.io/www6vDistributed/categories/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>故障模型-应用层</title>
@@ -28,6 +28,13 @@
       <pubDate>Thu, 03 May 2018 21:59:57 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/</guid>
       <description>&#xA;故障模型-基础设施层 # 故障模型-Virtualization&amp;amp;Storage&amp;amp;Networking 服务器宕机&amp;amp;假死 断电 解决：异地多活 超卖 混和部署【3】 存储【2】 磁盘满，坏 不可写，不可读 网络【1】 网络抖动、丢包、超时 网卡满 DNS故障 断网 参考 # Virtualization &amp;amp; Storage &amp;amp; Networking # Kubernetes 网络疑难杂症排查分享 腾讯云 *** kubernetes 最佳实践：处理容器数据磁盘被写满 腾讯云 百度大规模战略性混部系统演进 </description>
+    </item>
+    <item>
+      <title>TCP故障模式</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/tcpFault/</link>
+      <pubDate>Sat, 08 Aug 2020 23:17:36 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/tcpFault/</guid>
+      <description>一. 故障模式 # 对端无FIN包发送 # 网络中断 read TIMEOUT（setsockopt）&#xA;先write再read， 持续重传直至TIMEOUT。 之后再write()， 返回SIGPIPE信号（Broken Pipe）。&#xA;write Unreachable&#xA;系统奔溃（如断电） read()或者write()持续重传直至TIMEOUT&#xA;对端重启，read()或者write()返回RST。 read（）调用返回Connection Reset。write()返回SIGPIPE信号（Broken Pipe）。&#xA;对端有FIN包发送（如程序奔溃） # read直接感知FIN&#xA;没有read&#xA;如果不read没办法得到TCP对端的响应.&#xA;通过write()产生RST， read（）感知RST（Connection reset by peer）。&#xA;向一个关闭连接连续写导致SIGPIPE信号（Broken Pipe）。&#xA;二. Java对应的错误 # java.net.SocketTimeoutException # java.net.SocketException: Connection reset/Connect reset by peer: Socket write error # 指连接被重置。这里有两种情况，分别对应两种错误：第一种情况是通信的一方已经将Socket 关闭，可能是主动关闭或者是因为异常退出， 这时如果通信的另一方还在写数据，就会触发这个异常**（Connect reset by peer）； 如果对方还在尝试从 TCP 连接中读数据**，则会抛出 Connection reset 异常。&#xA;为了避免这些异常发生，在编写网络通信程序时要确保： 程序退出前要主动关闭所有的网络连接。 检测通信的另一方的关闭连接操作，当发现另一方关闭连接后自己也要关闭该连接。&#xA;java.net.SocketException: Broken pipe # 指通信管道已坏。发生这个异常的场景是，通信的一方在收到“Connect reset by peer:Socket write error”后，如果再继续写数据则会抛出 Broken pipe 异常，解决方法同上。</description>
     </item>
   </channel>
 </rss>

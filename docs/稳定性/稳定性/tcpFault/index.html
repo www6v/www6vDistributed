@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="一. 故障模式 # 对端无FIN包发送 # 网络中断 read TIMEOUT（setsockopt）
+先write再read， 持续重传直至TIMEOUT。 之后再write()， 返回SIGPIPE信号（Broken Pipe）。
+write Unreachable
+系统奔溃（如断电） read()或者write()持续重传直至TIMEOUT
+对端重启，read()或者write()返回RST。 read（）调用返回Connection Reset。write()返回SIGPIPE信号（Broken Pipe）。
+对端有FIN包发送（如程序奔溃） # read直接感知FIN
+没有read
+如果不read没办法得到TCP对端的响应.
+通过write()产生RST， read（）感知RST（Connection reset by peer）。
+向一个关闭连接连续写导致SIGPIPE信号（Broken Pipe）。
+二. Java对应的错误 # java.net.SocketTimeoutException # java.net.SocketException: Connection reset/Connect reset by peer: Socket write error # 指连接被重置。这里有两种情况，分别对应两种错误：第一种情况是通信的一方已经将Socket 关闭，可能是主动关闭或者是因为异常退出， 这时如果通信的另一方还在写数据，就会触发这个异常**（Connect reset by peer）； 如果对方还在尝试从 TCP 连接中读数据**，则会抛出 Connection reset 异常。
+为了避免这些异常发生，在编写网络通信程序时要确保： 程序退出前要主动关闭所有的网络连接。 检测通信的另一方的关闭连接操作，当发现另一方关闭连接后自己也要关闭该连接。
+java.net.SocketException: Broken pipe # 指通信管道已坏。发生这个异常的场景是，通信的一方在收到“Connect reset by peer:Socket write error”后，如果再继续写数据则会抛出 Broken pipe 异常，解决方法同上。">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/tcpFault/">
+  <meta property="og:site_name" content="Distributed">
+  <meta property="og:title" content="TCP故障模式">
+  <meta property="og:description" content="一. 故障模式 # 对端无FIN包发送 # 网络中断 read TIMEOUT（setsockopt）
+先write再read， 持续重传直至TIMEOUT。 之后再write()， 返回SIGPIPE信号（Broken Pipe）。
+write Unreachable
+系统奔溃（如断电） read()或者write()持续重传直至TIMEOUT
+对端重启，read()或者write()返回RST。 read（）调用返回Connection Reset。write()返回SIGPIPE信号（Broken Pipe）。
+对端有FIN包发送（如程序奔溃） # read直接感知FIN
+没有read
+如果不read没办法得到TCP对端的响应.
+通过write()产生RST， read（）感知RST（Connection reset by peer）。
+向一个关闭连接连续写导致SIGPIPE信号（Broken Pipe）。
+二. Java对应的错误 # java.net.SocketTimeoutException # java.net.SocketException: Connection reset/Connect reset by peer: Socket write error # 指连接被重置。这里有两种情况，分别对应两种错误：第一种情况是通信的一方已经将Socket 关闭，可能是主动关闭或者是因为异常退出， 这时如果通信的另一方还在写数据，就会触发这个异常**（Connect reset by peer）； 如果对方还在尝试从 TCP 连接中读数据**，则会抛出 Connection reset 异常。
+为了避免这些异常发生，在编写网络通信程序时要确保： 程序退出前要主动关闭所有的网络连接。 检测通信的另一方的关闭连接操作，当发现另一方关闭连接后自己也要关闭该连接。
+java.net.SocketException: Broken pipe # 指通信管道已坏。发生这个异常的场景是，通信的一方在收到“Connect reset by peer:Socket write error”后，如果再继续写数据则会抛出 Broken pipe 异常，解决方法同上。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<title>TCP故障模式 | Distributed</title>
+<link rel="icon" href="/www6vDistributed/favicon.png" >
+<link rel="manifest" href="/www6vDistributed/manifest.json">
+<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/tcpFault/">
+<link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
+  <script defer src="/www6vDistributed/fuse.min.js"></script>
+  <script defer src="/www6vDistributed/en.search.min.019b20270eb21863cb00bf8a078774eea787db74a1fcf9f0ff5434cb5c82d750.js" integrity="sha256-AZsgJw6yGGPLAL&#43;KB4d07qeH23Sh/Pnw/1Q0y1yC11A=" crossorigin="anonymous"></script>
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/tcpFault/index.xml" title="Distributed" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/www6vDistributed/"><span>Distributed</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-dc526a21eace5d63b5b3ef1b0a218aec" class="toggle"  />
+    <label for="section-dc526a21eace5d63b5b3ef1b0a218aec" class="flex justify-between">
+      <a role="button" class="">架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-065452b69a9ada69f879d79882f67ab3" class="toggle"  />
+    <label for="section-065452b69a9ada69f879d79882f67ab3" class="flex justify-between">
+      <a role="button" class="">应用架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cleanCode/" class="">整洁架构 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/api_design/" class="">OpenAPI 设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/" class="">DDD-落地实战 Practice</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/" class="">应用集成方式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/domain_logic_and_sql/" class="">领域逻辑和SQL</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8dfaa356172b6c5a6e357373ef77a465" class="toggle"  />
+    <label for="section-8dfaa356172b6c5a6e357373ef77a465" class="flex justify-between">
+      <a role="button" class="">系统架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/distributedSystemPattern/" class="">分布式系统 模式 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/" class="">中台战略</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/" class="">存算分离-数据应用</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/" class="">高可用 Available</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/" class="">统一模型</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/" class="">异地多活 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6ee81443818922e9faa7277839b2081c" class="toggle"  />
+    <label for="section-6ee81443818922e9faa7277839b2081c" class="flex justify-between">
+      <a role="button" class="">系统设计</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/feed/" class="">Feed流 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/" class="">系统设计 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/secKillSummary/" class="">秒杀系统总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/seckill/" class="">秒杀系统和商品详情页系统(培训讲义)</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="toggle"  />
+    <label for="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="flex justify-between">
+      <a role="button" class="">设计原则</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/" class="">设计原则</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/" class="">开闭原则 - SPI</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-23b63dcecf4d9c084a8c88b211cf499a" class="toggle" checked />
+    <label for="section-23b63dcecf4d9c084a8c88b211cf499a" class="flex justify-between">
+      <a role="button" class="">稳定性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f7c383103f57713855174abe048d532a" class="toggle" checked />
+    <label for="section-f7c383103f57713855174abe048d532a" class="flex justify-between">
+      <a role="button" class="">稳定性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/" class="">稳定性总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/tcpFault/" class="active">TCP故障模式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/crashDetect/" class="">宕机检测-Lease、心跳</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-2076d033ca0f2a4b9e7fd2ae4af29968" class="toggle"  />
+    <label for="section-2076d033ca0f2a4b9e7fd2ae4af29968" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-97c2762f26202e064bb1f79576b1647c" class="toggle"  />
+    <label for="section-97c2762f26202e064bb1f79576b1647c" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sre/" class="">SRE 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbook/" class="">《SRE 工作手册》</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasic/" class="">SRE 五大根基</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicSLO/" class="">SRE 五大根基-SLO</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicAlert/" class="">SRE 五大根基-报警</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5a63c3d0341b5adfc60e0fcb26c38e55" class="toggle"  />
+    <label for="section-5a63c3d0341b5adfc60e0fcb26c38e55" class="flex justify-between">
+      <a role="button" class="">故障模型</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/" class="">故障模型-应用层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/" class="">故障模型-中间件层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/" class="">故障模型-基础设施层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0de79ccd754460f367973a662985e1a2" class="toggle"  />
+    <label for="section-0de79ccd754460f367973a662985e1a2" class="flex justify-between">
+      <a role="button" class="">容量保障</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E5%AE%B9%E9%87%8F%E4%BF%9D%E9%9A%9C/capacityGuarantee/" class="">容量保障与全链路压测</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-785be346d86e1cb84ec2723dc37036a0" class="toggle"  />
+    <label for="section-785be346d86e1cb84ec2723dc37036a0" class="flex justify-between">
+      <a role="button" class="">混沌工程</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/chaosEngineering/" class="">混沌工程</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-92b9126fb99c3be4bacb6589793762b5" class="toggle"  />
+    <label for="section-92b9126fb99c3be4bacb6589793762b5" class="flex justify-between">
+      <a role="button" class="">一致性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-ea41d27b1f25c7f3a6b2250f2dc23cf0" class="toggle"  />
+    <label for="section-ea41d27b1f25c7f3a6b2250f2dc23cf0" class="flex justify-between">
+      <a role="button" class="">分布式协议</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/raft/" class="">Raft协议</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/zookeeperZab/" class="">Zookeeper-Zab</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/idempotent/" class="">幂等</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/splitBrain/" class="">Split Brain</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/consistent/" class="">分布式一致性 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-607dd6f4c673d54dd39e72765ef574d6" class="toggle"  />
+    <label for="section-607dd6f4c673d54dd39e72765ef574d6" class="flex justify-between">
+      <a role="button" class="">性能</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-9777b0756e234ce18d7b2097e2e5f075" class="toggle"  />
+    <label for="section-9777b0756e234ce18d7b2097e2e5f075" class="flex justify-between">
+      <a role="button" class="">性能优化</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performancePool/" class="">性能优化-池化Pool</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/" class="">性能优化总结 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-884583e00504e8c0698518fa63f5f16d" class="toggle"  />
+    <label for="section-884583e00504e8c0698518fa63f5f16d" class="flex justify-between">
+      <a role="button" class="">性能测试</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/performanceAnalysis/" class="">性能分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/performanceTest/" class="">性能测试</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-7de680d8e590b56e5550767737c8a098" class="toggle"  />
+    <label for="section-7de680d8e590b56e5550767737c8a098" class="flex justify-between">
+      <a role="button" class="">Linux性能</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxPerformance-cpu/" class="">Linux性能优化 之 cpu优化</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxPerformance/" class="">Linux性能优化</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxProfile/" class="">Linux性能分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-28c44b5c4b5e90bbe5f65c616561f697" class="toggle"  />
+    <label for="section-28c44b5c4b5e90bbe5f65c616561f697" class="flex justify-between">
+      <a role="button" class="">网络</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E7%BD%91%E7%BB%9C/tcpTimewait/" class="">TIME_WAIT和优化</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E7%BD%91%E7%BB%9C/tcpUdpControlCongestion/" class="">TCP流控和拥塞控制</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>TCP故障模式</h3>
+
+  <label for="toc-control">
+    
+    <img src="/www6vDistributed/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一-故障模式">一. 故障模式</a>
+          <ul>
+            <li><a href="#对端无fin包发送">对端无FIN包发送</a></li>
+            <li><a href="#对端有fin包发送如程序奔溃">对端有FIN包发送（如程序奔溃）</a></li>
+          </ul>
+        </li>
+        <li><a href="#二-java对应的错误">二. Java对应的错误</a>
+          <ul>
+            <li><a href="#javanetsockettimeoutexception">java.net.SocketTimeoutException</a></li>
+            <li><a href="#javanetsocketexception-connection-resetconnect-reset-by-peer-socket-write-error">java.net.SocketException: Connection reset/Connect reset by peer: Socket write error</a></li>
+            <li><a href="#javanetsocketexception-broken-pipe">java.net.SocketException: Broken pipe</a></li>
+          </ul>
+        </li>
+        <li><a href="#参考">参考:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><p></p>
+<!-- more -->
+<h2 id="一-故障模式">
+  一. 故障模式
+  <a class="anchor" href="#%e4%b8%80-%e6%95%85%e9%9a%9c%e6%a8%a1%e5%bc%8f">#</a>
+</h2>
+<h3 id="对端无fin包发送">
+  对端无FIN包发送
+  <a class="anchor" href="#%e5%af%b9%e7%ab%af%e6%97%a0fin%e5%8c%85%e5%8f%91%e9%80%81">#</a>
+</h3>
+<ul>
+<li>
+<p>网络中断
+read <strong>TIMEOUT</strong>（setsockopt）<br>
+先write再read， 持续重传直至<strong>TIMEOUT</strong>。 之后再<strong>write()</strong>， 返回<strong>SIGPIPE信号（Broken Pipe）</strong>。<br>
+write Unreachable</p>
+</li>
+<li>
+<p>系统奔溃（如断电）
+read()或者write()持续重传直至<strong>TIMEOUT</strong><br>
+对端重启，read()或者write()返回RST。 <strong>read（）<strong>调用返回</strong>Connection Reset</strong>。<strong>write()<strong>返回</strong>SIGPIPE信号（Broken Pipe）</strong>。</p>
+</li>
+</ul>
+<h3 id="对端有fin包发送如程序奔溃">
+  对端有FIN包发送（如程序奔溃）
+  <a class="anchor" href="#%e5%af%b9%e7%ab%af%e6%9c%89fin%e5%8c%85%e5%8f%91%e9%80%81%e5%a6%82%e7%a8%8b%e5%ba%8f%e5%a5%94%e6%ba%83">#</a>
+</h3>
+<ul>
+<li>
+<p>read直接感知FIN</p>
+</li>
+<li>
+<p>没有read<br>
+如果不read没办法得到TCP对端的响应.</p>
+<p>通过write()产生RST， <strong>read（）<strong>感知</strong>RST（Connection reset by peer）</strong>。<br>
+<img src="./images/tcp-write-read.JPG" alt="tcp-write-read.JPG" /></p>
+<p><strong>向一个关闭连接连续写导致SIGPIPE信号（Broken Pipe）</strong>。<br>
+<img src="./images/tcp-write.JPG" alt="tcp-write.JPG" /></p>
+</li>
+</ul>
+<h2 id="二-java对应的错误">
+  二. Java对应的错误
+  <a class="anchor" href="#%e4%ba%8c-java%e5%af%b9%e5%ba%94%e7%9a%84%e9%94%99%e8%af%af">#</a>
+</h2>
+<h3 id="javanetsockettimeoutexception">
+  java.net.SocketTimeoutException
+  <a class="anchor" href="#javanetsockettimeoutexception">#</a>
+</h3>
+<h3 id="javanetsocketexception-connection-resetconnect-reset-by-peer-socket-write-error">
+  java.net.SocketException: Connection reset/Connect reset by peer: Socket write error
+  <a class="anchor" href="#javanetsocketexception-connection-resetconnect-reset-by-peer-socket-write-error">#</a>
+</h3>
+<p>指连接被重置。这里有两种情况，分别对应两种错误：第一种情况是通信的一方已经将Socket 关闭，可能是主动关闭或者是因为异常退出，
+这时如果通信的另一方还在<strong>写数据</strong>，就会触发这个异常**（Connect reset by peer）<strong>；
+如果对方还在尝试从 TCP 连接中</strong>读数据**，则会抛出 <strong>Connection reset</strong> 异常。</p>
+<blockquote>
+<p>为了避免这些异常发生，在编写网络通信程序时要确保：
+程序退出前要主动关闭所有的网络连接。
+检测通信的另一方的关闭连接操作，当发现另一方关闭连接后自己也要关闭该连接。</p>
+</blockquote>
+<h3 id="javanetsocketexception-broken-pipe">
+  java.net.SocketException: Broken pipe
+  <a class="anchor" href="#javanetsocketexception-broken-pipe">#</a>
+</h3>
+<p>指通信管道已坏。发生这个异常的场景是，通信的一方在<strong>收到“Connect reset by peer:Socket write error”后</strong>，如果再继续<strong>写数据</strong>则会抛出 <strong>Broken pipe</strong> 异常，解决方法同上。</p>
+<h2 id="参考">
+  参考:
+  <a class="anchor" href="#%e5%8f%82%e8%80%83">#</a>
+</h2>
+<ol>
+<li><a href="">网络编程实战 - 17 | TCP并不总是“可靠”的？</a> 盛延敏   操作系统的视角</li>
+<li><a href="">深入拆解Tomcat &amp; Jetty -  38 | Tomcat拒绝连接原因分析及网络优化</a> 李号双  Java的视角</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一-故障模式">一. 故障模式</a>
+          <ul>
+            <li><a href="#对端无fin包发送">对端无FIN包发送</a></li>
+            <li><a href="#对端有fin包发送如程序奔溃">对端有FIN包发送（如程序奔溃）</a></li>
+          </ul>
+        </li>
+        <li><a href="#二-java对应的错误">二. Java对应的错误</a>
+          <ul>
+            <li><a href="#javanetsockettimeoutexception">java.net.SocketTimeoutException</a></li>
+            <li><a href="#javanetsocketexception-connection-resetconnect-reset-by-peer-socket-write-error">java.net.SocketException: Connection reset/Connect reset by peer: Socket write error</a></li>
+            <li><a href="#javanetsocketexception-broken-pipe">java.net.SocketException: Broken pipe</a></li>
+          </ul>
+        </li>
+        <li><a href="#参考">参考:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

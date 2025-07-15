@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>宕机 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/tags/%E5%AE%95%E6%9C%BA/</link>
+    <description>Recent content in 宕机 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 12 Oct 2019 10:50:19 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/%E5%AE%95%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>宕机检测-Lease、心跳</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/crashDetect/</link>
+      <pubDate>Sat, 12 Oct 2019 10:50:19 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/crashDetect/</guid>
+      <description>&#xA;Lease # Kubernetes: 引入了一个新的 build-in Lease API[2]&#xA;心跳 # 模式： ping-ping模式, ping-pong模式&#xA;raft： 心跳选主&#xA;参考 # 【分布式系统工程实现】如何检测一台机器是否宕机？ 阿里中间件 *** 当 K8s 集群达到万级规模，阿里巴巴如何解决系统各组件性能问题？ 曾凡松（逐灵） *** 《面向模式的软件架构-卷4》 20.15节 </description>
+    </item>
+  </channel>
+</rss>

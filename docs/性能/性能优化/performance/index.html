@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="关键词 # 锁优化，池化，数据库优化，架构优化， 系统优化，性能测试， 监控
+应用优化 # 应用
+锁 【4】 粒度 粗化 最小化锁范围 Eg， 单线程写文件 锁拆分，分散锁 减少竞争，race condition eg. ConcurrentHashMap，LongAdder 分离锁 读写锁 读多写少的场景 队头队尾， 两把锁 乐观锁 CAS 并行 【1】 多线程 fork-join模式【2】 本地化 Eg. ThreadLocal Actor Eg. Akka CSP Eg. Goroutie 函数式范性 不可变对象 单核单线程 Eg. Redis, Nginx 池化(重用) Eg. 线程池，数据库连接池 代码调优 字符串操作 多线程调优 锁 【4】 线程个数【9】 异步操作 【8】 简化代码 热点优化 【5】 数值精度 Eg. 双精度 单精度 算法优化 # 算法
+算法调优 分而治之 【6】 fork-join【2】 Map-Reduce 哈希算法 预处理 提前计算(预处理)，最后合并 算法和数据结构 算法复杂度 大O表示【10】 时间复杂度 O(1) 数组访问 栈、链表的插入/删除 Hash Table O(log(n)) 二叉搜索树 自平衡二叉搜索树 AVL树 红黑树 B树(多路树) O(n log(n)) 快排、归并、堆 快排(分治算法【6】) O(n) O(n^2) 选择、插入、冒泡 数据结构 树，链表，栈，队列 通用优化 # 通用方法">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/">
+  <meta property="og:site_name" content="Distributed">
+  <meta property="og:title" content="性能优化总结 *">
+  <meta property="og:description" content="关键词 # 锁优化，池化，数据库优化，架构优化， 系统优化，性能测试， 监控
+应用优化 # 应用
+锁 【4】 粒度 粗化 最小化锁范围 Eg， 单线程写文件 锁拆分，分散锁 减少竞争，race condition eg. ConcurrentHashMap，LongAdder 分离锁 读写锁 读多写少的场景 队头队尾， 两把锁 乐观锁 CAS 并行 【1】 多线程 fork-join模式【2】 本地化 Eg. ThreadLocal Actor Eg. Akka CSP Eg. Goroutie 函数式范性 不可变对象 单核单线程 Eg. Redis, Nginx 池化(重用) Eg. 线程池，数据库连接池 代码调优 字符串操作 多线程调优 锁 【4】 线程个数【9】 异步操作 【8】 简化代码 热点优化 【5】 数值精度 Eg. 双精度 单精度 算法优化 # 算法
+算法调优 分而治之 【6】 fork-join【2】 Map-Reduce 哈希算法 预处理 提前计算(预处理)，最后合并 算法和数据结构 算法复杂度 大O表示【10】 时间复杂度 O(1) 数组访问 栈、链表的插入/删除 Hash Table O(log(n)) 二叉搜索树 自平衡二叉搜索树 AVL树 红黑树 B树(多路树) O(n log(n)) 快排、归并、堆 快排(分治算法【6】) O(n) O(n^2) 选择、插入、冒泡 数据结构 树，链表，栈，队列 通用优化 # 通用方法">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<title>性能优化总结 * | Distributed</title>
+<link rel="icon" href="/www6vDistributed/favicon.png" >
+<link rel="manifest" href="/www6vDistributed/manifest.json">
+<link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/">
+<link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
+  <script defer src="/www6vDistributed/fuse.min.js"></script>
+  <script defer src="/www6vDistributed/en.search.min.019b20270eb21863cb00bf8a078774eea787db74a1fcf9f0ff5434cb5c82d750.js" integrity="sha256-AZsgJw6yGGPLAL&#43;KB4d07qeH23Sh/Pnw/1Q0y1yC11A=" crossorigin="anonymous"></script>
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/index.xml" title="Distributed" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/www6vDistributed/"><span>Distributed</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-dc526a21eace5d63b5b3ef1b0a218aec" class="toggle"  />
+    <label for="section-dc526a21eace5d63b5b3ef1b0a218aec" class="flex justify-between">
+      <a role="button" class="">架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-065452b69a9ada69f879d79882f67ab3" class="toggle"  />
+    <label for="section-065452b69a9ada69f879d79882f67ab3" class="flex justify-between">
+      <a role="button" class="">应用架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cleanCode/" class="">整洁架构 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/api_design/" class="">OpenAPI 设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/cqrs/" class="">CQRS 简介和案例分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/" class="">DDD-落地实战 Practice</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/eai/" class="">应用集成方式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/domain_logic_and_sql/" class="">领域逻辑和SQL</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8dfaa356172b6c5a6e357373ef77a465" class="toggle"  />
+    <label for="section-8dfaa356172b6c5a6e357373ef77a465" class="flex justify-between">
+      <a role="button" class="">系统架构</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/distributedSystemPattern/" class="">分布式系统 模式 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/middleStage/" class="">中台战略</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/disaggregationOfComputeAndStorage/" class="">存算分离-数据应用</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/" class="">高可用 Available</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/unifyModel/" class="">统一模型</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/" class="">异地多活 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6ee81443818922e9faa7277839b2081c" class="toggle"  />
+    <label for="section-6ee81443818922e9faa7277839b2081c" class="flex justify-between">
+      <a role="button" class="">系统设计</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/feed/" class="">Feed流 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/" class="">系统设计 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/secKillSummary/" class="">秒杀系统总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/seckill/" class="">秒杀系统和商品详情页系统(培训讲义)</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="toggle"  />
+    <label for="section-1b9ca81271cafcec3d1bb8cbf0bdcae0" class="flex justify-between">
+      <a role="button" class="">设计原则</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/" class="">设计原则</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/" class="">开闭原则 - SPI</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-23b63dcecf4d9c084a8c88b211cf499a" class="toggle"  />
+    <label for="section-23b63dcecf4d9c084a8c88b211cf499a" class="flex justify-between">
+      <a role="button" class="">稳定性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f7c383103f57713855174abe048d532a" class="toggle"  />
+    <label for="section-f7c383103f57713855174abe048d532a" class="flex justify-between">
+      <a role="button" class="">稳定性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/" class="">稳定性总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/tcpFault/" class="">TCP故障模式</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/crashDetect/" class="">宕机检测-Lease、心跳</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-2076d033ca0f2a4b9e7fd2ae4af29968" class="toggle"  />
+    <label for="section-2076d033ca0f2a4b9e7fd2ae4af29968" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-97c2762f26202e064bb1f79576b1647c" class="toggle"  />
+    <label for="section-97c2762f26202e064bb1f79576b1647c" class="flex justify-between">
+      <a role="button" class="">SRE</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sre/" class="">SRE 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbook/" class="">《SRE 工作手册》</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasic/" class="">SRE 五大根基</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicSLO/" class="">SRE 五大根基-SLO</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/SRE/sreWorkbookBasicAlert/" class="">SRE 五大根基-报警</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5a63c3d0341b5adfc60e0fcb26c38e55" class="toggle"  />
+    <label for="section-5a63c3d0341b5adfc60e0fcb26c38e55" class="flex justify-between">
+      <a role="button" class="">故障模型</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/" class="">故障模型-应用层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/" class="">故障模型-中间件层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/" class="">故障模型-基础设施层</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0de79ccd754460f367973a662985e1a2" class="toggle"  />
+    <label for="section-0de79ccd754460f367973a662985e1a2" class="flex justify-between">
+      <a role="button" class="">容量保障</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E5%AE%B9%E9%87%8F%E4%BF%9D%E9%9A%9C/capacityGuarantee/" class="">容量保障与全链路压测</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-785be346d86e1cb84ec2723dc37036a0" class="toggle"  />
+    <label for="section-785be346d86e1cb84ec2723dc37036a0" class="flex justify-between">
+      <a role="button" class="">混沌工程</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E6%B7%B7%E6%B2%8C%E5%B7%A5%E7%A8%8B/chaosEngineering/" class="">混沌工程</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-92b9126fb99c3be4bacb6589793762b5" class="toggle"  />
+    <label for="section-92b9126fb99c3be4bacb6589793762b5" class="flex justify-between">
+      <a role="button" class="">一致性</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-ea41d27b1f25c7f3a6b2250f2dc23cf0" class="toggle"  />
+    <label for="section-ea41d27b1f25c7f3a6b2250f2dc23cf0" class="flex justify-between">
+      <a role="button" class="">分布式协议</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/raft/" class="">Raft协议</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/zookeeperZab/" class="">Zookeeper-Zab</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/idempotent/" class="">幂等</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/splitBrain/" class="">Split Brain</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/consistent/" class="">分布式一致性 总结</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li class="book-section-flat" >
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-607dd6f4c673d54dd39e72765ef574d6" class="toggle" checked />
+    <label for="section-607dd6f4c673d54dd39e72765ef574d6" class="flex justify-between">
+      <a role="button" class="">性能</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-9777b0756e234ce18d7b2097e2e5f075" class="toggle" checked />
+    <label for="section-9777b0756e234ce18d7b2097e2e5f075" class="flex justify-between">
+      <a role="button" class="">性能优化</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performancePool/" class="">性能优化-池化Pool</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/" class="active">性能优化总结 *</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-884583e00504e8c0698518fa63f5f16d" class="toggle"  />
+    <label for="section-884583e00504e8c0698518fa63f5f16d" class="flex justify-between">
+      <a role="button" class="">性能测试</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/performanceAnalysis/" class="">性能分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/performanceTest/" class="">性能测试</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-7de680d8e590b56e5550767737c8a098" class="toggle"  />
+    <label for="section-7de680d8e590b56e5550767737c8a098" class="flex justify-between">
+      <a role="button" class="">Linux性能</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxPerformance-cpu/" class="">Linux性能优化 之 cpu优化</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxPerformance/" class="">Linux性能优化</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxProfile/" class="">Linux性能分析</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-28c44b5c4b5e90bbe5f65c616561f697" class="toggle"  />
+    <label for="section-28c44b5c4b5e90bbe5f65c616561f697" class="flex justify-between">
+      <a role="button" class="">网络</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E7%BD%91%E7%BB%9C/tcpTimewait/" class="">TIME_WAIT和优化</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E7%BD%91%E7%BB%9C/tcpUdpControlCongestion/" class="">TCP流控和拥塞控制</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>性能优化总结 *</h3>
+
+  <label for="toc-control">
+    
+    <img src="/www6vDistributed/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#关键词">关键词</a></li>
+    <li><a href="#应用优化">应用优化</a></li>
+    <li><a href="#算法优化">算法优化</a></li>
+    <li><a href="#通用优化">通用优化</a></li>
+    <li><a href="#数据库优化">数据库优化</a></li>
+    <li><a href="#架构系统优化">架构/系统优化</a></li>
+    <li><a href="#linux系统优化">Linux系统优化</a></li>
+    <li><a href="#参考">参考</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#其他">其他</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><p></p>
+<!-- more -->
+<h1 id="关键词">
+  关键词
+  <a class="anchor" href="#%e5%85%b3%e9%94%ae%e8%af%8d">#</a>
+</h1>
+<p>锁优化，池化，数据库优化，架构优化， 系统优化，性能测试， 监控</p>
+<h1 id="应用优化">
+  应用优化
+  <a class="anchor" href="#%e5%ba%94%e7%94%a8%e4%bc%98%e5%8c%96">#</a>
+</h1>
+<ul>
+<li>
+<p>应用</p>
+<ul>
+<li>锁 【4】
+<ul>
+<li>粒度
+<ul>
+<li>粗化</li>
+</ul>
+</li>
+<li>最小化锁范围
+<ul>
+<li>Eg， 单线程写文件</li>
+</ul>
+</li>
+<li>锁拆分，分散锁
+<ul>
+<li>减少竞争，race condition</li>
+<li>eg. ConcurrentHashMap，LongAdder</li>
+</ul>
+</li>
+<li>分离锁
+<ul>
+<li>读写锁
+<ul>
+<li>读多写少的场景</li>
+</ul>
+</li>
+<li>队头队尾， 两把锁</li>
+</ul>
+</li>
+<li>乐观锁
+<ul>
+<li>CAS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>并行  【1】
+<ul>
+<li>多线程
+<ul>
+<li>fork-join模式【2】</li>
+<li>本地化 Eg. ThreadLocal</li>
+</ul>
+</li>
+<li>Actor
+<ul>
+<li>Eg. Akka</li>
+</ul>
+</li>
+<li>CSP
+<ul>
+<li>Eg. Goroutie</li>
+</ul>
+</li>
+<li>函数式范性
+<ul>
+<li>不可变对象</li>
+</ul>
+</li>
+<li>单核单线程
+<ul>
+<li>Eg. Redis, Nginx</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>池化(重用)
+<ul>
+<li>Eg. 线程池，数据库连接池</li>
+</ul>
+</li>
+<li>代码调优
+<ul>
+<li>字符串操作</li>
+<li>多线程调优
+<ul>
+<li>锁 【4】</li>
+<li>线程个数【9】</li>
+</ul>
+</li>
+<li>异步操作  【8】</li>
+<li>简化代码</li>
+<li>热点优化  【5】</li>
+<li>数值精度
+<ul>
+<li>Eg. 双精度 单精度</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="算法优化">
+  算法优化
+  <a class="anchor" href="#%e7%ae%97%e6%b3%95%e4%bc%98%e5%8c%96">#</a>
+</h1>
+<ul>
+<li>
+<p>算法</p>
+<ul>
+<li>算法调优
+<ul>
+<li>分而治之 【6】
+<ul>
+<li>fork-join【2】</li>
+<li>Map-Reduce</li>
+</ul>
+</li>
+<li>哈希算法</li>
+<li>预处理
+<ul>
+<li>提前计算(预处理)，最后合并</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>算法和数据结构
+<ul>
+<li>算法复杂度 大O表示【10】
+<ul>
+<li>时间复杂度
+<ul>
+<li>O(1)
+<ul>
+<li>数组访问</li>
+<li>栈、链表的插入/删除</li>
+<li>Hash Table</li>
+</ul>
+</li>
+<li>O(log(n))
+<ul>
+<li>二叉搜索树
+<ul>
+<li>自平衡二叉搜索树
+AVL树
+红黑树</li>
+</ul>
+</li>
+<li>B树(多路树)</li>
+</ul>
+</li>
+<li>O(n log(n))
+<ul>
+<li>快排、归并、堆
+快排(分治算法【6】)</li>
+</ul>
+</li>
+<li>O(n)</li>
+<li>O(n^2)
+<ul>
+<li>选择、插入、冒泡</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据结构
+<ul>
+<li>树，链表，栈，队列</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="通用优化">
+  通用优化
+  <a class="anchor" href="#%e9%80%9a%e7%94%a8%e4%bc%98%e5%8c%96">#</a>
+</h1>
+<ul>
+<li>
+<p>通用方法</p>
+<ul>
+<li>异步化  【8】
+<ul>
+<li>消息
+<ul>
+<li>进程内
+Eg.  Disruptor, EventBus</li>
+<li>Broker</li>
+</ul>
+</li>
+<li>事件
+Eg. EventSource</li>
+<li>服务异步化
+Eg. 异步网关</li>
+</ul>
+</li>
+<li>Batch
+<ul>
+<li>Eg. redis pipeline</li>
+<li>buffer io</li>
+</ul>
+</li>
+<li>Copy on Write
+<ul>
+<li>Eg. mysql MVCC, CopyOnWriteArrayList</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="数据库优化">
+  数据库优化
+  <a class="anchor" href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e4%bc%98%e5%8c%96">#</a>
+</h1>
+<ul>
+<li>索引优化</li>
+<li>大表优化
+<ul>
+<li>水平拆分</li>
+<li>垂直拆分</li>
+</ul>
+</li>
+<li>慢SQL优化</li>
+<li>乐观锁</li>
+</ul>
+<h1 id="架构系统优化">
+  架构/系统优化
+  <a class="anchor" href="#%e6%9e%b6%e6%9e%84%e7%b3%bb%e7%bb%9f%e4%bc%98%e5%8c%96">#</a>
+</h1>
+<ul>
+<li>
+<p>架构/系统优化</p>
+<ul>
+<li>弹性/伸缩
+<ul>
+<li>资源调度 Eg. k8s</li>
+<li>资源扩容</li>
+</ul>
+</li>
+<li>可扩展
+<ul>
+<li>垂直拆分</li>
+<li>水平拆分</li>
+</ul>
+</li>
+<li>分布式
+<ul>
+<li>并行 【1】</li>
+<li>延迟
+Eg.  跨IDC网络延迟 上海&lt;-&gt;北京  50ms</li>
+</ul>
+</li>
+<li>节省空间/时间换空间【8、11】
+<ul>
+<li>不存储，重新计算</li>
+<li>稀疏数据结构
+Eg. 稀疏矩阵</li>
+<li>数据压缩传输
+RSYNC 的核心算法
+Huffman 编码压缩算法</li>
+<li>动态分配策略
+Eg. ArrayList(10)，HashMap(16)的动态扩展</li>
+<li>垃圾回收</li>
+</ul>
+</li>
+<li>空间换时间
+<ul>
+<li>缓存</li>
+<li>数据冗余，replication</li>
+</ul>
+</li>
+<li>系统结构
+<ul>
+<li>大型系统分解成模块
+“粗略估算”，性能分析</li>
+</ul>
+</li>
+<li>系统软件
+<ul>
+<li>替换更快的操作系统、中间件、数据库、编译器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="linux系统优化">
+  Linux系统优化
+  <a class="anchor" href="#linux%e7%b3%bb%e7%bb%9f%e4%bc%98%e5%8c%96">#</a>
+</h1>
+<ul>
+<li>
+<p>系统</p>
+<ul>
+<li>文件系统
+<ul>
+<li>pageCache, 预读
+Eg. Rocketmq</li>
+<li>顺序写，随机读</li>
+<li>大块读优于小块读</li>
+</ul>
+</li>
+<li>CPU
+<ul>
+<li>CPU绑定</li>
+<li>CPU上下文切换
+<ul>
+<li>Eg. Redis单线程
+CPU不是Redis的瓶颈，
+瓶颈可能是内存的大小或者网络带宽</li>
+</ul>
+</li>
+<li>CPU缓存
+<ul>
+<li>问题：伪共享
+解决：cacheline padding</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>网络I/O
+<ul>
+<li>NIO,非阻塞I/O，epoll</li>
+<li>协议调优
+TCP参数</li>
+</ul>
+</li>
+<li>内存
+<ul>
+<li>zeroCopy</li>
+<li>HugePage</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="参考">
+  参考
+  <a class="anchor" href="#%e5%8f%82%e8%80%83">#</a>
+</h1>
+<ol>
+<li><a href="http://dwz.cn/4SrP4L">高性能高并发系统的稳定性保障</a> 京东</li>
+<li><a href="https://time.geekbang.org/column/intro/140">Linux性能优化实战</a>  极客时间</li>
+<li><a href="https://coolshell.cn/articles/17381.html">性能测试应该怎么做？</a>  coolshell  deleted</li>
+<li><a href="stability.md">Go to Page</a>   self  deleted</li>
+<li><a href="http://blog.jobbole.com/88958/">关于容量预估/性能压测的思考</a>  deleted  失效</li>
+<li><a href="stability.md">Go to Page</a>  self  重复的 deleted</li>
+<li>xxx</li>
+<li><a href="https://coolshell.cn/articles/7490.html/comment-page-1">性能调优攻略</a>  coolshell  ***</li>
+<li><a href="threadNum.md">Go to Page</a>   self</li>
+<li><a href="http://www.codeceo.com/article/algorithm-complexity-table.html">每个程序员都应该收藏的算法复杂度速查表</a></li>
+<li>《编程珠玑 第2版》</li>
+<li><a href="https://yq.aliyun.com/articles/25487">wordcount设计与优化</a>  竞赛题</li>
+</ol>
+<h3 id="其他">
+  其他
+  <a class="anchor" href="#%e5%85%b6%e4%bb%96">#</a>
+</h3>
+<ol start="100">
+<li><a href="https://colin-scott.github.io/personal_website/research/interactive_latency.html">latency</a>  未</li>
+<li><a href="mysqlIndex.md">Go to Page</a>  self 未</li>
+<li><a href="nginxOptimize.md">Go to Page</a>  self 未</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#关键词">关键词</a></li>
+    <li><a href="#应用优化">应用优化</a></li>
+    <li><a href="#算法优化">算法优化</a></li>
+    <li><a href="#通用优化">通用优化</a></li>
+    <li><a href="#数据库优化">数据库优化</a></li>
+    <li><a href="#架构系统优化">架构/系统优化</a></li>
+    <li><a href="#linux系统优化">Linux系统优化</a></li>
+    <li><a href="#参考">参考</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#其他">其他</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

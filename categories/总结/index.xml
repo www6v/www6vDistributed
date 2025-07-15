@@ -10,9 +10,9 @@
     <atom:link href="https://www6v.github.io/www6vDistributed/categories/%E6%80%BB%E7%BB%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>稳定性总结</title>
-      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</link>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</link>
       <pubDate>Tue, 09 May 2017 22:34:54 +0000</pubDate>
-      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</guid>
       <description>&#xA;关键词: 容量规划, 压测, 强弱依赖, 关键词: 故障模型, 故障演练, 故障注入&#xA;稳定性总结 # 参考： # 超全总结 | 阿里如何应对电商故障？神秘演练细节曝光 阿里巴巴-周洋（花名中亭） 故障注入， 故障演练 稳定性思考-强弱依赖 阿里中间件团队博客 稳定性思考-强弱依赖2 阿里中间件团队博客 中间件技术及双十一实践·稳定性平台篇 阿里中间件（Aliware） 强弱依赖， 容量规划 &amp;laquo;尽在双11阿里巴巴技术演进与超越&amp;raquo; </description>
     </item>
     <item>
@@ -21,6 +21,13 @@
       <pubDate>Wed, 02 Mar 2022 19:19:10 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/systemDesign/</guid>
       <description>特点 设计 Feed流 读写比例100:1&#xA;消息必达性要求高 非稳定的账号关系 {% post_link &amp;lsquo;feed&amp;rsquo; %} 秒杀系统 {% post_link &amp;lsquo;secKillSummary&amp;rsquo; %} {% post_link &amp;lsquo;seckill&amp;rsquo; %} 计数系统[2] 数据量巨大&#xA;访问量大，性能要求高&#xA;对于可用性、数字的准确性要求高 + 方案1 数据库 + 缓存 -&amp;gt; 按照 weibo_id做分库分表。数据库和缓存之间无法保证数据的一致性 [2]&#xA;+方案2 全部写入redis -&amp;gt; MQ异步写，批量合并写。redis昂贵， 存储优化，冷热分离 [2] 抢红包系统[3] 交易类信息:红包发、抢、拆、详情列表 展示类信息: 收红包列表、发红包列表 + 架构设计，理论基础是快慢分离。红包入账是一个分布事务，属于慢接口。而拆红包凭证落地则速度快 [3]&#xA;+ 高并发 set化， 局部化-控制同一红包并发个数 排行榜系统 参考 # 计数系统 # 计数系统架构实践一次搞定 | 架构师之路 未&#xA;&amp;laquo;37丨计数系统设计（一）：面对海量数据的计数器要如何做？&amp;raquo; 唐扬&#xA;红包系统 # 揭秘微信红包架构、抢红包算法和高并发和降级方案 微信红包&#xA;揭秘微信红包：架构、抢红包算法、高并发和降级方案&#xA;微信红包后台系统设计 未&#xA;微信高并发资金交易系统设计方案&amp;mdash;&amp;ndash;百亿红包背后的技术支撑&#xA;SET化、请求排队串行化、双维度分库表 未</description>
+    </item>
+    <item>
+      <title>性能优化总结 *</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/</link>
+      <pubDate>Wed, 21 Nov 2018 12:11:33 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/</guid>
+      <description>关键词 # 锁优化，池化，数据库优化，架构优化， 系统优化，性能测试， 监控&#xA;应用优化 # 应用&#xA;锁 【4】 粒度 粗化 最小化锁范围 Eg， 单线程写文件 锁拆分，分散锁 减少竞争，race condition eg. ConcurrentHashMap，LongAdder 分离锁 读写锁 读多写少的场景 队头队尾， 两把锁 乐观锁 CAS 并行 【1】 多线程 fork-join模式【2】 本地化 Eg. ThreadLocal Actor Eg. Akka CSP Eg. Goroutie 函数式范性 不可变对象 单核单线程 Eg. Redis, Nginx 池化(重用) Eg. 线程池，数据库连接池 代码调优 字符串操作 多线程调优 锁 【4】 线程个数【9】 异步操作 【8】 简化代码 热点优化 【5】 数值精度 Eg. 双精度 单精度 算法优化 # 算法&#xA;算法调优 分而治之 【6】 fork-join【2】 Map-Reduce 哈希算法 预处理 提前计算(预处理)，最后合并 算法和数据结构 算法复杂度 大O表示【10】 时间复杂度 O(1) 数组访问 栈、链表的插入/删除 Hash Table O(log(n)) 二叉搜索树 自平衡二叉搜索树 AVL树 红黑树 B树(多路树) O(n log(n)) 快排、归并、堆 快排(分治算法【6】) O(n) O(n^2) 选择、插入、冒泡 数据结构 树，链表，栈，队列 通用优化 # 通用方法</description>
     </item>
     <item>
       <title>分布式一致性 总结</title>

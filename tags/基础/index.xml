@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>基础 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/tags/%E5%9F%BA%E7%A1%80/</link>
+    <description>Recent content in 基础 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 21 Nov 2018 12:11:33 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>性能优化总结 *</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/</link>
+      <pubDate>Wed, 21 Nov 2018 12:11:33 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/</guid>
+      <description>关键词 # 锁优化，池化，数据库优化，架构优化， 系统优化，性能测试， 监控&#xA;应用优化 # 应用&#xA;锁 【4】 粒度 粗化 最小化锁范围 Eg， 单线程写文件 锁拆分，分散锁 减少竞争，race condition eg. ConcurrentHashMap，LongAdder 分离锁 读写锁 读多写少的场景 队头队尾， 两把锁 乐观锁 CAS 并行 【1】 多线程 fork-join模式【2】 本地化 Eg. ThreadLocal Actor Eg. Akka CSP Eg. Goroutie 函数式范性 不可变对象 单核单线程 Eg. Redis, Nginx 池化(重用) Eg. 线程池，数据库连接池 代码调优 字符串操作 多线程调优 锁 【4】 线程个数【9】 异步操作 【8】 简化代码 热点优化 【5】 数值精度 Eg. 双精度 单精度 算法优化 # 算法&#xA;算法调优 分而治之 【6】 fork-join【2】 Map-Reduce 哈希算法 预处理 提前计算(预处理)，最后合并 算法和数据结构 算法复杂度 大O表示【10】 时间复杂度 O(1) 数组访问 栈、链表的插入/删除 Hash Table O(log(n)) 二叉搜索树 自平衡二叉搜索树 AVL树 红黑树 B树(多路树) O(n log(n)) 快排、归并、堆 快排(分治算法【6】) O(n) O(n^2) 选择、插入、冒泡 数据结构 树，链表，栈，队列 通用优化 # 通用方法</description>
+    </item>
+  </channel>
+</rss>

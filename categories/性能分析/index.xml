@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>性能分析 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/categories/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/</link>
+    <description>Recent content in 性能分析 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 26 Dec 2018 23:23:18 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/categories/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux性能分析</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxProfile/</link>
+      <pubDate>Wed, 26 Dec 2018 23:23:18 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/Linux%E6%80%A7%E8%83%BD/linuxProfile/</guid>
+      <description>Linux observability tools | Linux 性能观测工具 # Linux性能观测工具&#xA;快速性能诊断(快速体检) # 1. 系统平均负载 # # 0.25- 1分钟负载 ， 0.22-5分钟负载， 0.23-15分钟负载&#xD;[root@10-25-3-55 /]# uptime&#xD;23:02:19 up 285 days, 11:37, 1 user, load average: 0.25, 0.22, 0.23&#xD;# 如果cpu个数是4， 则平均负载4是合理的。&#xD;[root@10-23-25-248]$grep &amp;#39;model name&amp;#39; /proc/cpuinfo | wc -l&#xD;4 平均负载: 单位时间内，系统处于可运行状态和不可中断状态的平均进程数，也就是单位时间内的活跃进程数。&#xA;场景 CPU 密集型进程，使用大量 CPU 会导致平均负载升高，此时这两者是一致的； I/O 密集型进程，等待 I/O 也会导致平均负载升高，但 CPU 使用率不一定很高； 大量等待 CPU 的进程调度也会导致平均负载升高，此时的CPU使用率也会比较高。&#xA;2. dmesg | tail : 系统信息 导致性能问题的错误 # [9927609.</description>
+    </item>
+  </channel>
+</rss>

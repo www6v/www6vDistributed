@@ -24,9 +24,9 @@
     </item>
     <item>
       <title>稳定性总结</title>
-      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</link>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</link>
       <pubDate>Tue, 09 May 2017 22:34:54 +0000</pubDate>
-      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</guid>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</guid>
       <description>&#xA;关键词: 容量规划, 压测, 强弱依赖, 关键词: 故障模型, 故障演练, 故障注入&#xA;稳定性总结 # 参考： # 超全总结 | 阿里如何应对电商故障？神秘演练细节曝光 阿里巴巴-周洋（花名中亭） 故障注入， 故障演练 稳定性思考-强弱依赖 阿里中间件团队博客 稳定性思考-强弱依赖2 阿里中间件团队博客 中间件技术及双十一实践·稳定性平台篇 阿里中间件（Aliware） 强弱依赖， 容量规划 &amp;laquo;尽在双11阿里巴巴技术演进与超越&amp;raquo; </description>
     </item>
     <item>
@@ -77,6 +77,20 @@
       <pubDate>Sun, 13 Mar 2022 15:58:58 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E5%AE%B9%E9%87%8F%E4%BF%9D%E9%9A%9C/capacityGuarantee/</guid>
       <description>容量保障Overview[2] # 大促容量保障的三项重点工作： 大促流量预估 大促容量测试 大促容量保障预案 容量预测 # 容量预测[1] # 我首先给出了**“皮尔逊相关系数”**这个工具，对服务 TPS 和 CPU 利用率之间的相关度进 行了定量分析，根据相关度的强弱，分别采取不同策略。其中，重点讲到了在两者弱相关 时的应对策略，如果能够穷举出尽可能多的相关特征，可以通过特征选取的方式对服务进 行画像，提升预测准确率；如果特征非常难找，那么可以依靠概率表的方式曲线救国。&#xA;随着服务不断迭代，容量也在不断变化，我与你分析的第二个问题，就是如何平衡好服务 迭代和容量预测频率的关系。根据服务发布窗口（或其他变更时间点）建立滑动窗口机 制，既保证了在服务变更后能够尽快地更新模型，又不至于带来大量的计算量，是一个不 错的实践方式。&#xA;业务场景变化也会导致容量变化，针对这个问题，我结合之前提到的全链路压测工作，通 过建立全链路压测和容量预测双向校准的机制，提前对变化的业务场景进行预测，识别容 量风险。&#xA;全链路压测 # 核心功能[4] # 压测-部署架构 # 施压机的分布[3]&#xA;大部分仍然是跟线上系统在同机房内，少量会在公有云节点上 以将全球（主要是国内）的 CDN 节点作为施压机 更加真实地模拟真实用户从全球节点进入的真实访问流量 成本过高，技术条件和细节难 压测的读写流量[3]&#xA;读流量 写流量 对压测的写请求做专门的标记。 当请求要写数据库时，由分布式数据库的中间件框架中的逻辑来判断这个请求是否是压测请求，如果是压测写请求则路由到对应的影子库中，而不是直接写到线上正式的库中。 改造 全链路压测[5] # 数据隔离 物理隔离 vs. 逻辑隔离 [见表1] 中间件改造 eg. MQ改造 ​ Producer: 判断请求带压测标识，转换到数据体（msg）中 ​ Consumer: 判断数据（msg）中有压测标识， 恢复压测标识至请求中 应用服务改造 绕开限制逻辑 数据隔离前置 Mock 逻辑 ​ 表1 逻辑隔离 vs.</description>
+    </item>
+    <item>
+      <title>TCP故障模式</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/tcpFault/</link>
+      <pubDate>Sat, 08 Aug 2020 23:17:36 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/tcpFault/</guid>
+      <description>一. 故障模式 # 对端无FIN包发送 # 网络中断 read TIMEOUT（setsockopt）&#xA;先write再read， 持续重传直至TIMEOUT。 之后再write()， 返回SIGPIPE信号（Broken Pipe）。&#xA;write Unreachable&#xA;系统奔溃（如断电） read()或者write()持续重传直至TIMEOUT&#xA;对端重启，read()或者write()返回RST。 read（）调用返回Connection Reset。write()返回SIGPIPE信号（Broken Pipe）。&#xA;对端有FIN包发送（如程序奔溃） # read直接感知FIN&#xA;没有read&#xA;如果不read没办法得到TCP对端的响应.&#xA;通过write()产生RST， read（）感知RST（Connection reset by peer）。&#xA;向一个关闭连接连续写导致SIGPIPE信号（Broken Pipe）。&#xA;二. Java对应的错误 # java.net.SocketTimeoutException # java.net.SocketException: Connection reset/Connect reset by peer: Socket write error # 指连接被重置。这里有两种情况，分别对应两种错误：第一种情况是通信的一方已经将Socket 关闭，可能是主动关闭或者是因为异常退出， 这时如果通信的另一方还在写数据，就会触发这个异常**（Connect reset by peer）； 如果对方还在尝试从 TCP 连接中读数据**，则会抛出 Connection reset 异常。&#xA;为了避免这些异常发生，在编写网络通信程序时要确保： 程序退出前要主动关闭所有的网络连接。 检测通信的另一方的关闭连接操作，当发现另一方关闭连接后自己也要关闭该连接。&#xA;java.net.SocketException: Broken pipe # 指通信管道已坏。发生这个异常的场景是，通信的一方在收到“Connect reset by peer:Socket write error”后，如果再继续写数据则会抛出 Broken pipe 异常，解决方法同上。</description>
+    </item>
+    <item>
+      <title>宕机检测-Lease、心跳</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/crashDetect/</link>
+      <pubDate>Sat, 12 Oct 2019 10:50:19 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/crashDetect/</guid>
+      <description>&#xA;Lease # Kubernetes: 引入了一个新的 build-in Lease API[2]&#xA;心跳 # 模式： ping-ping模式, ping-pong模式&#xA;raft： 心跳选主&#xA;参考 # 【分布式系统工程实现】如何检测一台机器是否宕机？ 阿里中间件 *** 当 K8s 集群达到万级规模，阿里巴巴如何解决系统各组件性能问题？ 曾凡松（逐灵） *** 《面向模式的软件架构-卷4》 20.15节 </description>
     </item>
     <item>
       <title>混沌工程</title>

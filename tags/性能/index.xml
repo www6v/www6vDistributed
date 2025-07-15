@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>性能 on Distributed</title>
+    <link>https://www6v.github.io/www6vDistributed/tags/%E6%80%A7%E8%83%BD/</link>
+    <description>Recent content in 性能 on Distributed</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 14 Jul 2022 11:56:50 +0000</lastBuildDate>
+    <atom:link href="https://www6v.github.io/www6vDistributed/tags/%E6%80%A7%E8%83%BD/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>性能优化-池化Pool</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performancePool/</link>
+      <pubDate>Thu, 14 Jul 2022 11:56:50 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performancePool/</guid>
+      <description>目录 # 连接池优化 # 分类 # 数据库连接池 redis连接池 http连接池 数据库连接池 # 最小连接数， 最大连接数 建议最小连接数控制在 10 左右，最大连接数控制在 20～30 左右 连接的可用性&#xA;使用连接发送**“select 1”**的命令给数据库看是否会抛出异常，如果抛出异常则将这个连接从连接池中移除，并且尝试关闭. 线程池 # JDK线程池 # 重要参数： coreThreadCount 和 maxThreadCount，&#xA;[chat] 当大量请求进入线程池时，ThreadPoolExecutor 会根据其内部的线程池参数来处理请求。具体来说，当请求进入线程池时，ThreadPoolExecutor 会首先尝试将请求放入工作队列中，如果工作队列已满，则会根据线程池的配置来执行饱和策略，例如抛出异常、直接拒绝请求、阻塞等待或调用调用者运行等待任务。&#xA;线程池中的线程会根据核心线程数和最大线程数的设置进行扩缩容。 当有新的任务提交到线程池时，如果当前线程数小于核心线程数，线程池会创建新的线程来处理该任务。 如果当前线程数已经达到核心线程数，线程池会将任务放入工作队列中，如果工作队列已满，则线程池会创建新的线程来处理该任务，直到达到最大线程数为止。 当线程池中的线程数量超过核心线程数时，空闲的线程会根据线程空闲时间的超时时间来自动销毁，以保证线程池中的线程数量不会无限制增长。 需要注意的是，在ThreadPoolExecutor中，线程池的线程数应该设置为适当的值，如果设置过小，则可能会导致线程饱和，影响任务的处理效率；如果设置过大，则会浪费系统资源，同时可能会导致线程竞争和锁的争用，影响系统的性能。因此，在使用ThreadPoolExecutor时，需要根据系统的负载和任务特性来合理地设置线程池的参数，以达到最佳的性能和效率。 [/chat]&#xA;Tomcat线程池 # Tomcat 使用的线程池就不是 JDK 原生的线程池，而是做了一些改造，当线程数超过 coreThreadCount 之后会优先创建线程，直到线程数到达maxThreadCount，这样就比较适合于 Web 系统大量 IO 操作的场景了。&#xA;最佳实践 # 大量的任务堆积会占用大量的内存空间，一旦内存空间被占满就会频繁地触发 Full GC，造成服务不可用，我之前排查过的一次 GC 引起的宕机，起因就是系统中的一个线程池使用了无界队列.&#xA;对象池 # Netty 对象池 [1][2] # netty为了避免过多的创建对象和频繁的gc使用了对象池，在需要创建ByteBuf的时候，从对象池中找，如果没有才会去创建一个新的ByteBuf。&#xA;Tomcat中的对象池 [3] # Tomcat 和 Jetty 都用到了对象池技术，这是因为处理一次 HTTP 请求的时间比较短，但是 这个过程中又需要创建大量复杂对象。</description>
+    </item>
+    <item>
+      <title>性能分析</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/performanceAnalysis/</link>
+      <pubDate>Thu, 16 Jun 2022 15:37:25 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/performanceAnalysis/</guid>
+      <description>&#xA;目录 # 方法 # 性能分析 7步法 [1] # 第一步：压力场景数据。&#xA;第二步：分析架构图。&#xA;第三步：拆分响应时间。&#xA;第四步：全局监控分析。 [3]&#xA;第五步：定向监控分析。 [3]&#xA;第六步：判断性能瓶颈点。&#xA;第七步：确定解决方案。&#xA;性能测试场景 [2] # 基准场景&#xA;容量场景&#xA;稳定性场景&#xA;异常场景&#xA;工具 # Java性能分析 工具 btrace， 慢响应，生产用 排查占cpu最多的线程 JVM 工具 参考 # 《03 | 核心分析逻辑：所有的性能分析，靠这七步都能搞定》 高楼 《10 | 设计基准场景需要注意哪些关键点？ 》 高楼 《15丨性能测试场景：如何进行监控设计？》 *** 高楼 06丨倾囊相授：我毕生所学的性能分析思路都在这里了 高楼 未 </description>
+    </item>
+    <item>
+      <title>性能测试</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/performanceTest/</link>
+      <pubDate>Wed, 15 Jun 2022 19:36:37 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/performanceTest/</guid>
+      <description>TPS和响应时间的关系[1] # 在这个图中，定义了三条曲线、三个区域、两个点以及三个状态描述。&#xA;三条曲线：吞吐量的曲线（紫色）、使用率 / 用户数曲线（绿色）、响应时间曲线（深 蓝色）。 三个区域：轻负载区（Light Load）、重负载区（Heavy Load）、塌陷区（Buckle Zone）。 两个点：最优并发用户数（The Optimum Number of Concurrent Users）、最大并发 用户数（The Maximum Number of Concurrent Users）。 三个状态描述：资源饱和（Resource Saturated）、吞吐下降（Throughput Falling）、用户受影响（End Users Effected）。 性能指标的计算方式 [2] # 公式（1）：&#xA;并发用户数计算的通用公式：C = nL/T&#xA;其中 C 是平均的并发用户数；n 是 login session 的数量；L 是 login session 的平均长 度；T 指考察的时间段长度。&#xA;公式（2）：&#xA;并发用户数峰值：&#xA;C’指并发用户数的峰值，C 就是公式（1）中得到的平均的并发用户数。该公式是假设用 户的 login session 产生符合泊松分布而估算得到的。&#xA;仔细搜索之后发现会发现这两个公式的出处是 2004 年一个叫 Eric Man Wong 的人写的一篇名叫《Method for Estimating the Number of Concurrent Users》的文章。中英文我都反复看到很多篇。同时也会网上看到有些文章中把这个文章描述成“业界公认”的计算方法。</description>
+    </item>
+    <item>
+      <title>性能优化总结 *</title>
+      <link>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/</link>
+      <pubDate>Wed, 21 Nov 2018 12:11:33 +0000</pubDate>
+      <guid>https://www6v.github.io/www6vDistributed/docs/%E6%80%A7%E8%83%BD/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/performance/</guid>
+      <description>关键词 # 锁优化，池化，数据库优化，架构优化， 系统优化，性能测试， 监控&#xA;应用优化 # 应用&#xA;锁 【4】 粒度 粗化 最小化锁范围 Eg， 单线程写文件 锁拆分，分散锁 减少竞争，race condition eg. ConcurrentHashMap，LongAdder 分离锁 读写锁 读多写少的场景 队头队尾， 两把锁 乐观锁 CAS 并行 【1】 多线程 fork-join模式【2】 本地化 Eg. ThreadLocal Actor Eg. Akka CSP Eg. Goroutie 函数式范性 不可变对象 单核单线程 Eg. Redis, Nginx 池化(重用) Eg. 线程池，数据库连接池 代码调优 字符串操作 多线程调优 锁 【4】 线程个数【9】 异步操作 【8】 简化代码 热点优化 【5】 数值精度 Eg. 双精度 单精度 算法优化 # 算法&#xA;算法调优 分而治之 【6】 fork-join【2】 Map-Reduce 哈希算法 预处理 提前计算(预处理)，最后合并 算法和数据结构 算法复杂度 大O表示【10】 时间复杂度 O(1) 数组访问 栈、链表的插入/删除 Hash Table O(log(n)) 二叉搜索树 自平衡二叉搜索树 AVL树 红黑树 B树(多路树) O(n log(n)) 快排、归并、堆 快排(分治算法【6】) O(n) O(n^2) 选择、插入、冒泡 数据结构 树，链表，栈，队列 通用优化 # 通用方法</description>
+    </item>
+  </channel>
+</rss>
