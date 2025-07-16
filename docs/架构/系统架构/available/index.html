@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="目录 # 原理 # CAP # CP系统: hbase, zookeeper AP系统: cassandra, eureka
+<meta name="description" content="原理 # CAP # CP系统: hbase, zookeeper AP系统: cassandra, eureka
 nPRT公式 [1] # 可以推导出风险期望的公式 # 控制风险的4大因素（nPRT） # 减少风险数量，n 降低风险变故障的概率（即：增加风险变故障的难度），P 减小故障影响范围，R 缩短故障影响时长，T 高可用架构设计的7大核心原则 # 少依赖原则：能不依赖的，尽可能不依赖，越少越好（n） 弱依赖原则：一定要依赖的，尽可能弱依赖，越弱越好（P） 分散原则：鸡蛋不要放一个篮子，分散风险（R） 均衡原则：均匀分散风险，避免不均衡（R） 隔离原则：控制风险不扩散，不放大（R） 无单点原则：要有冗余或其他版本,做到有路可退（T） 自我保护原则：少流血，牺牲一部分，保护另外一部分（P&amp;R&amp;T） 可用性 7 级图表 [成熟度] [5] # 当一个服务挂了的时候
 第一级：Crash with data corruption, destruction. 第二级：Crash with new data loss. 第三级：Crash without data loss. 数据高可用-冗余, destruction 测试 第四级：No crash, but with no or very limited service, low service quality.
-流控系统， eg.">
+流控系统， eg. 秒杀流量漏斗 第五级：Partial or limited service, with good to medium service quality.">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
 <meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/">
   <meta property="og:site_name" content="Distributed">
-  <meta property="og:title" content="高可用 Available">
-  <meta property="og:description" content="目录 # 原理 # CAP # CP系统: hbase, zookeeper AP系统: cassandra, eureka
+  <meta property="og:title" content="高可用 Available *">
+  <meta property="og:description" content="原理 # CAP # CP系统: hbase, zookeeper AP系统: cassandra, eureka
 nPRT公式 [1] # 可以推导出风险期望的公式 # 控制风险的4大因素（nPRT） # 减少风险数量，n 降低风险变故障的概率（即：增加风险变故障的难度），P 减小故障影响范围，R 缩短故障影响时长，T 高可用架构设计的7大核心原则 # 少依赖原则：能不依赖的，尽可能不依赖，越少越好（n） 弱依赖原则：一定要依赖的，尽可能弱依赖，越弱越好（P） 分散原则：鸡蛋不要放一个篮子，分散风险（R） 均衡原则：均匀分散风险，避免不均衡（R） 隔离原则：控制风险不扩散，不放大（R） 无单点原则：要有冗余或其他版本,做到有路可退（T） 自我保护原则：少流血，牺牲一部分，保护另外一部分（P&amp;R&amp;T） 可用性 7 级图表 [成熟度] [5] # 当一个服务挂了的时候
 第一级：Crash with data corruption, destruction. 第二级：Crash with new data loss. 第三级：Crash without data loss. 数据高可用-冗余, destruction 测试 第四级：No crash, but with no or very limited service, low service quality.
-流控系统， eg.">
+流控系统， eg. 秒杀流量漏斗 第五级：Partial or limited service, with good to medium service quality.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="website">
-<title>高可用 Available | Distributed</title>
+<title>高可用 Available * | Distributed</title>
 <link rel="icon" href="/www6vDistributed/favicon.png" >
 <link rel="manifest" href="/www6vDistributed/manifest.json">
 <link rel="canonical" href="https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/">
 <link rel="stylesheet" href="/www6vDistributed/book.min.6c8b9d2a1fc95075ed7da46ca81060b39add8fff6741ac51259f768929281e2c.css" integrity="sha256-bIudKh/JUHXtfaRsqBBgs5rdj/9nQaxRJZ92iSkoHiw=" crossorigin="anonymous">
   <script defer src="/www6vDistributed/fuse.min.js"></script>
-  <script defer src="/www6vDistributed/en.search.min.019b20270eb21863cb00bf8a078774eea787db74a1fcf9f0ff5434cb5c82d750.js" integrity="sha256-AZsgJw6yGGPLAL&#43;KB4d07qeH23Sh/Pnw/1Q0y1yC11A=" crossorigin="anonymous"></script>
+  <script defer src="/www6vDistributed/en.search.min.a0766741a75ca5094b69924d29fa1ee7fdd3fdba7469a640bfa5ebce3aff7f93.js" integrity="sha256-oHZnQadcpQlLaZJNKfoe5/3T/bp0aaZAv6Xrzjr/f5M=" crossorigin="anonymous"></script>
 
   
 
@@ -166,7 +166,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd/" class="">DDD  领域驱动设计 *</a>
   
 
           
@@ -184,7 +184,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/" class="">DDD-落地实战 Practice</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/ddd_practice/" class="">DDD-落地实战 *</a>
   
 
           
@@ -313,7 +313,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/" class="active">高可用 Available</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/" class="active">高可用 Available *</a>
   
 
           
@@ -349,7 +349,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/" class="">异地多活 总结</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/" class="">异地多活 总结 *</a>
   
 
           
@@ -388,7 +388,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/feed/" class="">Feed流 总结</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/feed/" class="">Feed流 总结 *</a>
   
 
           
@@ -481,7 +481,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/" class="">设计原则</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designPrinciple/" class="">设计原则 *</a>
   
 
           
@@ -499,7 +499,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/" class="">开闭原则 - SPI</a>
+    <a href="/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/designOCPspi/" class="">开闭原则-SPI *</a>
   
 
           
@@ -559,7 +559,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/" class="">稳定性总结</a>
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/" class="">稳定性总结 *</a>
   
 
           
@@ -761,7 +761,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/" class="">故障模型-应用层</a>
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/" class="">故障模型-应用层 *</a>
   
 
           
@@ -779,7 +779,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/" class="">故障模型-中间件层</a>
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/" class="">故障模型-中间件层 *</a>
   
 
           
@@ -797,7 +797,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/" class="">故障模型-基础设施层</a>
+    <a href="/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/" class="">故障模型-基础设施层 *</a>
   
 
           
@@ -940,7 +940,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/raft/" class="">Raft协议</a>
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE/raft/" class="">Raft协议 *</a>
   
 
           
@@ -981,7 +981,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/idempotent/" class="">幂等</a>
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/idempotent/" class="">幂等 *</a>
   
 
           
@@ -1017,7 +1017,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/consistent/" class="">分布式一致性 总结</a>
+    <a href="/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/consistent/" class="">分布式一致性 总结 *</a>
   
 
           
@@ -1335,7 +1335,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/www6vDistributed/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <h3>高可用 Available</h3>
+  <h3>高可用 Available *</h3>
 
   <label for="toc-control">
     
@@ -1351,11 +1351,6 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#目录">目录</a></li>
-      </ul>
-    </li>
     <li><a href="#原理">原理</a>
       <ul>
         <li>
@@ -1418,11 +1413,6 @@ https://github.com/alex-shpak/hugo-book
       
   <article class="markdown book-article"><p></p>
 <!-- more -->
-<h2 id="目录">
-  目录
-  <a class="anchor" href="#%e7%9b%ae%e5%bd%95">#</a>
-</h2>
-<!-- toc -->
 <h1 id="原理">
   原理
   <a class="anchor" href="#%e5%8e%9f%e7%90%86">#</a>
@@ -1716,11 +1706,6 @@ etcd - raft</p>
   
 <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#目录">目录</a></li>
-      </ul>
-    </li>
     <li><a href="#原理">原理</a>
       <ul>
         <li>

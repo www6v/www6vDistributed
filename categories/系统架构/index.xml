@@ -23,11 +23,11 @@
       <description>存算分离 存算一体 RMDB MySQL Cluster MySQL Group Replicatoin(MGR) NewSQL,HTAP TiDB[tidb,tikv] , openGaussDB[2], CockroachDB? Aurora[10], PolarDB[3], PGXC风格[1] 大数据 clickhouse, hbase ES MQ Pulsar kafka, rocketmq 文件系统 Ceph[PG, ODS], PolarFS[5] KV GaussDB(for Redis) [4], Codis redis Cluster 其他 serverless[FasS, BaaS] PolarDB [7] 基于Redo Log物理复制实现的一写多读共享存储集群 参考 # [1] 《04 | 架构风格：NewSQL和PGXC到底有啥不一样？》 王磊&#xA;[2] opengauss系统架构&#xA;[3] PolarDB Serverless: A Cloud Native Database for Disaggregated Data Centers&#xA;[4] GaussDB(for Redis)揭秘：Redis存算分离架构最全解析&#xA;[5] 阿里推出PolarFS分布式文件系统，存储与计算分开！附论文&#xA;[6] Go to Page self</description>
     </item>
     <item>
-      <title>高可用 Available</title>
+      <title>高可用 Available *</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/</link>
       <pubDate>Sun, 26 Jun 2022 21:55:43 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/available/</guid>
-      <description>目录 # 原理 # CAP # CP系统: hbase, zookeeper AP系统: cassandra, eureka&#xA;nPRT公式 [1] # 可以推导出风险期望的公式 # 控制风险的4大因素（nPRT） # 减少风险数量，n 降低风险变故障的概率（即：增加风险变故障的难度），P 减小故障影响范围，R 缩短故障影响时长，T 高可用架构设计的7大核心原则 # 少依赖原则：能不依赖的，尽可能不依赖，越少越好（n） 弱依赖原则：一定要依赖的，尽可能弱依赖，越弱越好（P） 分散原则：鸡蛋不要放一个篮子，分散风险（R） 均衡原则：均匀分散风险，避免不均衡（R） 隔离原则：控制风险不扩散，不放大（R） 无单点原则：要有冗余或其他版本,做到有路可退（T） 自我保护原则：少流血，牺牲一部分，保护另外一部分（P&amp;amp;R&amp;amp;T） 可用性 7 级图表 [成熟度] [5] # 当一个服务挂了的时候&#xA;第一级：Crash with data corruption, destruction. 第二级：Crash with new data loss. 第三级：Crash without data loss. 数据高可用-冗余, destruction 测试 第四级：No crash, but with no or very limited service, low service quality.&#xA;流控系统， eg.</description>
+      <description>原理 # CAP # CP系统: hbase, zookeeper AP系统: cassandra, eureka&#xA;nPRT公式 [1] # 可以推导出风险期望的公式 # 控制风险的4大因素（nPRT） # 减少风险数量，n 降低风险变故障的概率（即：增加风险变故障的难度），P 减小故障影响范围，R 缩短故障影响时长，T 高可用架构设计的7大核心原则 # 少依赖原则：能不依赖的，尽可能不依赖，越少越好（n） 弱依赖原则：一定要依赖的，尽可能弱依赖，越弱越好（P） 分散原则：鸡蛋不要放一个篮子，分散风险（R） 均衡原则：均匀分散风险，避免不均衡（R） 隔离原则：控制风险不扩散，不放大（R） 无单点原则：要有冗余或其他版本,做到有路可退（T） 自我保护原则：少流血，牺牲一部分，保护另外一部分（P&amp;amp;R&amp;amp;T） 可用性 7 级图表 [成熟度] [5] # 当一个服务挂了的时候&#xA;第一级：Crash with data corruption, destruction. 第二级：Crash with new data loss. 第三级：Crash without data loss. 数据高可用-冗余, destruction 测试 第四级：No crash, but with no or very limited service, low service quality.&#xA;流控系统， eg. 秒杀流量漏斗 第五级：Partial or limited service, with good to medium service quality.</description>
     </item>
     <item>
       <title>统一模型</title>
@@ -37,7 +37,7 @@
       <description>&#xA;计算密集 # 计算密集 技术 产品 微服务 RPC(2th)Service Mesh(3th)&#xA;多运行时(4th ) Dubboistio proxylessdaper 容器 编排 K8s Service Mesh Sidecar 控制面， 数据面 Envoy xDS 微软SMI 可观测 Tracing+Metric+Logs OpenTelemetry=&#xA;OpenCensus+OpenTracing Sererless Sererless+ VMSererless+容器Sererless+服务Sererless+数据库 Ali ECSAli ECIFasSAurora，TiDB Cloud 数据密集 # 数据密集 技术 产品 消息队列 CloudEvent EventMesh 数据库 分离: 存算分离(资源伸缩)&#xA;融合: HTAP(模型) TiDB(TiKV, TiFlash) ，PolarDB 大数据 流计算 Beam，Flink </description>
     </item>
     <item>
-      <title>异地多活 总结</title>
+      <title>异地多活 总结 *</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/</link>
       <pubDate>Sat, 17 Jun 2017 22:42:53 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E6%9E%B6%E6%9E%84/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/multiLive/</guid>

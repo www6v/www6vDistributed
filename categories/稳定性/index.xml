@@ -16,28 +16,28 @@
       <description>SRE [1] # SRE = PE（Production Engineer） + 工具平台开发 + 稳定性平台开发 工具平台团队，负责效能工具的研发，比如实现 CMDB、运维自动化、持续交付流水线以 及部分技术运营报表的实现，为基础运维和应用运维提供效率平台支持。 稳定性平台团队，负责稳定性保障相关的标准和平台，比如监控、服务治理相关的限流降 级、全链路跟踪、容量压测和规划。 组织架构图 [1] # 故障复盘 [2] # 黄金三问 第一问：故障原因有哪些？ 第二问：我们做什么，怎么做才能确保下次不会再出现类似故障？ 第三问：当时如果我们做了什么，可以用更短的时间恢复业务？ 故障判定的三原则 健壮性原则。 第三方默认无责。 分段判定原则。 5W 分析法 Google SRE Principle [5] # 运营是软件问题 服务水平目标SLO 减少琐事 用自动化的方式减少琐事 自动化 ** 统一环境， IaC CaC， ** IaC: Terraform, Ansible, Pulumi 生产环境中进行测试 统一 版本管理，制品库，cmdb 可观测性 降低失败成本 复盘 从失败中学习 共享所有权 个人安全，责任共担 拥抱风险 + 错误预算 Google SRE 实践总结 [5] # 确保长期关注研发工作 在保障SLO的前提下最大化迭代速度 监控系统 + insight，根因 应急事件处理 变更管理 ITIL 需求预测和容量规划 + AIOps 资源部署 效率与性能 参考 # 《09｜案例：互联网典型的SRE组织架构是怎样的？》 赵成 《08｜故障复盘：黄金三问与判定三原则》 赵成 xxx SRE 的工作介绍 SRE大佬 未 SRE核心概念与可观测性介绍 中国DevOps社区 刘峰 +《SRE google 运维解密》</description>
     </item>
     <item>
-      <title>故障模型-应用层</title>
+      <title>故障模型-应用层 *</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/</link>
       <pubDate>Sat, 27 Oct 2018 14:39:20 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel1/</guid>
       <description>故障模型-Application &amp;amp; Data # OOM # + 堆内 【10】&#xD;- PermGen&#xD;+ 原因：反射类多&#xD;+ 解决&#xD;先jmap，后btrace【11、12 case2】&#xD;- heap&#xD;解决：对比Fullgc后的相同对象的数量、大小&#xD;+ 堆外Native&#xD;参考 Go to Page self 如何排查Java内存泄露(内附各种排查工具介绍) 不闻 生产环境下持久带满导致FullGC，如何跟踪 Go to Page self 应用性能变差 # + 原因&#xD;- 锁 - heap&#xD;+ fullgc后没有空间&#xD;原因：内存泄露&#xD;工具：heap dump&#xD;+ fullgc后有空间&#xD;解决：设置门槛，过滤大量短生命周期对象【12 case1，13】&#xD;- gc停顿长&#xD;解决：【12 case3，13】&#xD;参考 Go to Page self Go to Page self 听阿里巴巴JVM工程师为你分析常见Java故障案例 *** Load过高 # + cpu load高【13】&#xD;- 启动阶段&#xD;原因：JIT编译器&#xD;解决：分层编译&#xD;- 运行阶段&#xD;原因：有热点方法&#xD;工具：MAT&#xD;- 解决&#xD;工具【8、9】&#xD;数据收集 4、5&#xD;参考</description>
     </item>
     <item>
-      <title>稳定性总结</title>
+      <title>稳定性总结 *</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</link>
       <pubDate>Tue, 09 May 2017 22:34:54 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/%E7%A8%B3%E5%AE%9A%E6%80%A7/stability/</guid>
       <description>&#xA;关键词: 容量规划, 压测, 强弱依赖, 关键词: 故障模型, 故障演练, 故障注入&#xA;稳定性总结 # 参考： # 超全总结 | 阿里如何应对电商故障？神秘演练细节曝光 阿里巴巴-周洋（花名中亭） 故障注入， 故障演练 稳定性思考-强弱依赖 阿里中间件团队博客 稳定性思考-强弱依赖2 阿里中间件团队博客 中间件技术及双十一实践·稳定性平台篇 阿里中间件（Aliware） 强弱依赖， 容量规划 &amp;laquo;尽在双11阿里巴巴技术演进与超越&amp;raquo; </description>
     </item>
     <item>
-      <title>故障模型-中间件层</title>
+      <title>故障模型-中间件层 *</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/</link>
       <pubDate>Thu, 03 May 2018 21:59:42 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel2/</guid>
       <description>故障模型-中间件层 # 故障模型-Runtime&amp;amp;Middleware&amp;amp;OS 负载均衡失效 数据库 数据库热点 数据库连接满 数据库宕机 数据库同步延迟 数据库主备延迟【参考2】 缓存 缓存热点【参考1】 缓存限流 OS资源 CPU抢占 案例 : HashMap并发访问，CPU100%【参考1】 案例：正则表达式回溯，CPU100% 内存抢占 案例：OOM killer 上下文切换 参考 # 大纲 # 超全总结 | 阿里如何应对电商故障？神秘演练细节曝光 阿里巴巴 周洋 Runtime &amp;amp; Middleware &amp;amp; OS # Go to Page self&#xA;UCloud高可用数据库UDB主从复制延时的解决</description>
     </item>
     <item>
-      <title>故障模型-基础设施层</title>
+      <title>故障模型-基础设施层 *</title>
       <link>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/</link>
       <pubDate>Thu, 03 May 2018 21:59:57 +0000</pubDate>
       <guid>https://www6v.github.io/www6vDistributed/docs/%E7%A8%B3%E5%AE%9A%E6%80%A7/SRE/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/faultModel3/</guid>

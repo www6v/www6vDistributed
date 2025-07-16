@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>幂等 on Distributed</title>
+    <title>幂等 * on Distributed</title>
     <link>https://www6v.github.io/www6vDistributed/docs/%E4%B8%80%E8%87%B4%E6%80%A7/idempotent/</link>
-    <description>Recent content in 幂等 on Distributed</description>
+    <description>Recent content in 幂等 * on Distributed</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate></lastBuildDate>
